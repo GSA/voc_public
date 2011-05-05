@@ -7,9 +7,9 @@ gem 'rails', '3.0.6'
 
 gem 'jquery-rails'
 gem 'thin'
-
+  gem 'mysql2', '< 0.3.0'
 group :development, :test do 
-	gem 'mysql2'
+
 	gem 'ruby-debug19'
 	gem 'nifty-generators'
 	gem 'annotate-models'

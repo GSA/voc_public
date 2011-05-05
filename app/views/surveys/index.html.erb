@@ -1,0 +1,18 @@
+<p class="pageTitle">All Survey's</p>
+
+<table id="surveyTable">
+  <tr>
+    <th class="col1">Name</th>
+    <th class="col2">Description</th>
+    <th colspan="5">Type</th>
+  </tr>
+
+<% @surveys.each do |survey| %>
+  <tr class="<%= cycle('white','blue') %>">
+    <td class="col1"><%= survey.name %></td>
+    <td class="col2"><%= survey.description %></td>
+    <td class="col3"><%= survey.survey_type.name.titleize %></td>
+    <td class="col4-7"><%= link_to 'Show', survey %></td>
+  </tr>
+<% end %>
+</table>

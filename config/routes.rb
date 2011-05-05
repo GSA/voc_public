@@ -1,4 +1,7 @@
 CommentToolPublic::Application.routes.draw do
+  resources :surveys
+  resources :survey_responses
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
