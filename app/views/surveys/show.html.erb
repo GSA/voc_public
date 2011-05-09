@@ -1,3 +1,5 @@
+<p class="pageTitle">View Survey</p>
+
 <% javascript 'survey.js' %>
 
 <% if @survey_version.nil? %>
@@ -6,29 +8,50 @@
 <% else %>
 	<p id="notice"><%= notice %></p>
 
-	<p>
-	  <b>Name:</b>
+	<p class="copy">
+	   <span class="copyBold">Name:</span>
 	  <%= @survey.name %>
 	</p>
 
-	<p>
-	  <b>Description:</b>
-	  <%= @survey.description %>
+	<p class="copyBoldMargin">
+		Description:
+	  <span class="copy"><%= @survey.description %></span>
 	</p>
 	
+	<p class="copyBoldMargin">
+	  Type:
+	  <span class="copy"><%= @survey.survey_type.name.capitalize %></span>
+	</p>
+	
+	<div id="survey_versions_fields" >
+		<p class="copyBoldMargin">
+			Version:
+			<span class="copy">
+				<%= @survey.newest_version.major %>.
+				<%= @survey.newest_version.minor %>
+			</span>
+		</p>
+		<p class="copyBoldMargin">
+			Published:
+			<span class="copy"><%= @survey.newest_version.published ? "Yes" : "No" %></span>
+		</p>
+	</div>
+
+
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <% index = 0%>
 		<% for page in @survey_version.pages %>
 
 			<div class="<%= page.number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.number%>">
 	      <%= hidden_field_tag :next_page, page.next_page.try(:number), :id => "page_#{page.number}_next_page" %>
+				<%= hidden_field_tag :prev_page, page.prev_page.try(:number), :id => "page_#{page.number}_prev_page" %>
+				
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
-				<ol>
+				<ol class="showList">
 				<% page.survey_elements.order("element_order asc").each do |element| %>
-					<li>
+					<li class="outter">
 						<% unless element.assetable_type == "Asset" %>
-							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_id]", element.assetable.question_content.id %>
-							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][survey_version_id]", @survey_version.id%>
+							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							
 							<%= element.assetable.question_content.statement %>
@@ -42,10 +65,10 @@
 									<% end -%>
 									
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
-								  <%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :onchange => generate_next_page_on_change(element)%>
-									
+								  <%#= select_tag "response[raw_responses_attributes][#{index}][answer]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :onchange => generate_next_page_on_change(element)%>
+									<%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_for_select(element.assetable.choice_answers.collect {|a| [a.answer, a.id]}),:include_blank => true, :onchange => generate_next_page_on_change(element)%>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
-								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true %>
+								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true, :style => "width: 100px" %>
 								
 								<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX %>
 								  <% for answer in element.assetable.choice_answers %>
@@ -68,13 +91,22 @@
 					<% index = index + 1%>
 				<% end %>
 				</ol>
-				
-				<%= link_to_function "Previous Page", "prev_page(#{page.number})" unless page.number == 1 %>
-				<%= link_to_function "Next Page", "show_next_page(#{page.number})" unless page.number == @survey_version.pages.count %>
-				<%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %>
-				
+				<div class="surveyNav">
+					<% unless page.number == 1 %>
+						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "prev_page(#{page.number})", :class=>"surveyNav"  %></span> |
+					<% end %>
+					<% unless page.number == @survey_version.pages.count %>
+						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.number})", :class=>"surveyNav" %></span>
+					<% end %>
+					<span class="surveyNavSub"><%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %></span>
+				</div>
 				
 			</div> <!-- close page div -->
 		<% end -%>
 	<% end -%>
 <% end -%>
+
+<div class="pageNav">
+	<%= link_to "View All", surveys_url, :class => "pageNav" %> |
+	<%= link_to "Edit Survey", edit_survey_url, :class => "pageNav" %>
+</div>
