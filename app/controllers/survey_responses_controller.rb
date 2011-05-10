@@ -19,7 +19,7 @@ class SurveyResponsesController < ApplicationController
     
     @survey_response.save!
     
-    redirect_to survey_responses_path
+    redirect_to surveys_path
   end
 
 end
