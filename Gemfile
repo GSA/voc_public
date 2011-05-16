@@ -7,6 +7,7 @@ gem 'rails', '3.0.6'
 
 gem 'jquery-rails'
 gem 'thin'
+gem 'kaminari'
 
 group :development, :test do 
 	gem 'ruby-debug19'
