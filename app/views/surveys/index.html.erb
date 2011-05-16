@@ -1,7 +1,4 @@
 <p class="pageTitle">All Survey's</p>
-<div class="pageNav-upper">
-	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
-</div>
 
 <table id="surveyTable">
   <tr>
@@ -11,15 +8,13 @@
   </tr>
 
 <% @surveys.each do |survey| %>
+  <% survey.survey_versions.each do |version| %>
   <tr class="<%= cycle('white','blue') %>">
-    <td class="col1"><%= survey.name %></td>
-    <td class="col2"><%= survey.description %></td>
-    <td class="col3"><%= survey.survey_type.name.titleize %></td>
-    <td class="col4-7"><%= link_to 'Show', survey %></td>
+    <td class="col1"><%= version.survey.name %> (<%= version.version_number %>)</td>
+    <td class="col2"><%= version.survey.description %></td>
+    <td class="col3"><%= version.survey.survey_type.name.titleize %></td>
+    <td class="col4-7"><%= link_to 'Show', survey_path(survey, :version => version.version_number) %></td>
   </tr>
+	<% end -%>
 <% end %>
 </table>
-
-<div class="pageNav">
-	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
-</div>
