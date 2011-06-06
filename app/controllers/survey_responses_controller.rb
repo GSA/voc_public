@@ -15,7 +15,7 @@ class SurveyResponsesController < ApplicationController
     
     @survey_response = SurveyResponse.new ({:client_id => @client_id, :survey_version_id => @survey_version_id}.merge(params[:response]))
     
-    @survey_response.raw_responses.each {|r| r.client_id = @client_id}
+    @survey_response.raw_responses.each {|r| r.client_id = @client_id; r.survey_response = @survey_response}
     
     @survey_response.save!
     

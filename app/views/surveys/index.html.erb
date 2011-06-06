@@ -8,7 +8,7 @@
   </tr>
 
 <% @surveys.each do |survey| %>
-  <% survey.survey_versions.get_unarchived.each do |version| %>
+  <% survey.survey_versions.get_unarchived.published.each do |version| %>
   <tr class="<%= cycle('white','blue') %>">
     <td class="col1"><%= version.survey.name %> (<%= version.version_number %>)</td>
     <td class="col2"><%= version.survey.description %></td>

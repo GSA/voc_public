@@ -33,7 +33,7 @@ function show_next_page(page){
 
 }
 
-function prev_page(page){
+function show_prev_page(page){
 	$("#page_"+page).hide();
 	$("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
 }
