@@ -41,13 +41,12 @@
 <% end %>
 
 <div class="surveyNav">
-	<span class="surveyNav1"><%= link_to "Add a new page", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:page_number => survey_version.pages.count + 1}), :id => "link_to_new_page", :remote => true, :method => :post, :class=>"surveyNav" %></span>  
 	<% unless survey_version.pages.count == 0 %>
-		|
-		<span class="surveyNav2"><%= link_to "Add a free answer question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_text_question" %></span> | 
+		<span class="surveyNav2"><%= link_to "Add an open-ended question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_text_question" %></span> | 
 		<span class="surveyNav3"><%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_choice_question" %></span> | 
-		<span class="surveyNav4"><%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset"  %></span>
+		<span class="surveyNav4"><%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset"  %></span> |
 	<% end %>
+	<span class="surveyNav1"><%= link_to "Add a new page", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:page_number => survey_version.pages.count + 1}), :id => "link_to_new_page", :remote => true, :method => :post, :class=>"surveyNav" %></span>
 </div>
 
 <div id="new_choice_question_modal" class="displayNone">
@@ -63,6 +62,6 @@
 </div>
 
 <div class="pageNav">
-	<%= link_to "Show Survey", survey_path(survey_version.survey), :class=>"pageNav" %> | 
+	<%= link_to "Preview Survey", survey_path(survey_version.survey), :class=>"pageNav" %> | 
 	<%= link_to 'View All', surveys_path, :class=>"pageNav" %>
 </div>
