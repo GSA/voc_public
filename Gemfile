@@ -12,7 +12,7 @@ gem 'kaminari'
 group :development, :test do 
 	gem 'ruby-debug19'
 	gem 'nifty-generators'
-	gem 'annotate-models'
+	gem 'annotate'
 end
 
 gem "mocha", :group => :test
