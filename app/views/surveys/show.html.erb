@@ -62,12 +62,14 @@
                 </tr>
                 <% for row_header in element.assetable.choice_questions do %>
                   <tr>
-                    <td><%= row_header.question_content.statement%></td>
+                    <td>
+											<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
+											<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+										</td>
                     <% row_header.choice_answers.each do |a| %>
                       <td>
                       <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
-                      <%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required, :class => "required_question" %>
-                      <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false %>
+                      <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer" %>
                       </td>
                     <% end %>
                   </tr>
@@ -84,24 +86,26 @@
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO %>
 									<% for answer in element.assetable.choice_answers %>
 										<%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-                      :onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : "Empty")%>
+                      :onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
+											:class => "question_#{element.assetable.question_content.id}_answer"
+										%>
 										<%= answer.answer%><br/>
 									<% end -%>
 									
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
-									<%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_for_select(element.assetable.choice_answers.collect {|a| [a.answer, a.id]}),:include_blank => true, :onchange => generate_next_page_on_change(element)%>
+									<%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_for_select(element.assetable.choice_answers.collect {|a| [a.answer, a.id]}),:include_blank => true, :onchange => generate_next_page_on_change(element), :class => "question_#{element.assetable.question_content.id}_answer" %>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
-								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true, :style => "width: 100px" %>
+								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true, :style => "width: 100px", :class => "question_#{element.assetable.question_content.id}_answer" %>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX %>
 								  <% for answer in element.assetable.choice_answers %>
-									  <%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]", answer.id, false, :id => "answer_#{answer.id}" %>
+									  <%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]", answer.id, false, :id => "answer_#{answer.id}", :class => "question_#{element.assetable.question_content.id}_answer" %>
 										<%= label_tag "answer_#{answer.id}", answer.answer %>
 									<% end -%>
 								<% end # if ChoiceQuestion %>
 							
 							<% elsif element.assetable_type == "TextQuestion" %>
 								<% if element.assetable.answer_type == "field" %>
-									<%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field" %>
+									<%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field", :class => "question_#{element.assetable.question_content.id}_answer" %>
 								<% elsif element.assetable.answer_type == "area" %>
 									<%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area"%>
 								<% end -%>
