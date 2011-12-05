@@ -6,7 +6,11 @@ function show_next_page(page){
 	if (!required_unanswered){
 		$("#page_" + page).hide();
 		var next_page = $("#page_" + page + "_next_page").val();
-		$("#page_"+ $("#page_"+page+"_next_page").val()).show();	
+    
+    /* Set the prev page on next page */
+   set_prev_page(page, next_page);
+    
+		$("#page_"+ next_page).show();	
 	} else {
 		alert('Please answer all required questions before moving on to the next page.');
 	}
@@ -28,7 +32,7 @@ function set_prev_page(current_page, prev_page) {
 }
 
 function check_for_unanswered_required(page) {
-	required = false
+	required = false;
 		$("#page_"+page+" input[type=hidden].required_question").each(function(index){
 			if($(this).val() == 'true'){
 				question_number = $(this).attr('id').split('_')[0];
