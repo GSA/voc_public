@@ -1,6 +1,6 @@
-<% title @survey.name %>
+<%# title @survey.name %>
 
-<p class="pageTitle">View Survey</p>
+<!-- <p class="pageTitle">View Survey</p> -->
 
 <% javascript 'survey.js' %>
 
@@ -8,7 +8,7 @@
 	<p>Could not find version <%= params[:version] %></p>
 	<%= link_to "View all", survey_path(@survey) %>
 <% else %>
-	<p id="notice"><%= notice %></p>
+<!-- 	<p id="notice"><%= notice %></p>
 
 	<p class="copy">
 	   <span class="copyBold">Name:</span>
@@ -37,16 +37,16 @@
 			Published:
 			<span class="copy"><%= @survey_version.published ? "Yes" : "No" %></span>
 		</p>
-	</div>
+	</div> -->
 
 
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <% index = 0 %>
 		<% for page in @survey_version.pages %>
 			<% question_number = 0 %>
-			<div class="<%= page.page_number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.page_number%>">
+			<div class="<%= page.page_number == (params[:page].present? ? params[:page].to_i : 1) ? 'current_page' : 'hidden_page' %>" id="page_<%=page.page_number%>">
 	      		<%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
-				<%= hidden_field_tag :prev_page, page.prev_page.try(:page_number), :id => "page_#{page.page_number}_prev_page" %>
+				<%= hidden_field_tag :prev_page, (params[:page].present? && params[:page].to_i == page.page_number ? 1 : page.prev_page.try(:page_number)), :id => "page_#{page.page_number}_prev_page" %>
 				
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
 				<ul class="showList">
@@ -67,9 +67,9 @@
 			                <% for row_header in element.assetable.choice_questions do %>
 			                  <tr>
 			                    <td>
-														<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
-														<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
-													</td>
+									<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
+									<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+								</td>
 			                    <% row_header.choice_answers.each do |a| %>
 			                      <td>
 			                      <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
@@ -91,8 +91,7 @@
 									<% for answer in element.assetable.choice_answers %>
 										<%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
                       						:onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
-											:class => "question_#{element.assetable.question_content.id}_answer",
-											:checked=>answer.is_default
+											:class => "question_#{element.assetable.question_content.id}_answer", :checked => answer.is_default
 										%>
 										<%= answer.answer%><br/>
 									<% end -%>
@@ -103,19 +102,19 @@
 										:include_blank => true, :onchange => generate_next_page_on_change(element), 
 										:class => "question_#{element.assetable.question_content.id}_answer" %>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
-									<%= select_tag "response[raw_responses_attributes][#{index}][answer][]", 
+								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", 
 										options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
 										:multiple => true, 
 										:style => "width: 100px", 
 										:class => "question_#{element.assetable.question_content.id}_answer" %>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX %>
 								  <% for answer in element.assetable.choice_answers %>
-									  <%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]", 
-									  	answer.id, 
-									  	false, 
-									  	:id => "answer_#{answer.id}", 
-									  	:class => "question_#{element.assetable.question_content.id}_answer",
-									  	:checked=>answer.is_default%>
+										<%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]", 
+																			  	answer.id, 
+																			  	false, 
+																			  	:id => "answer_#{answer.id}", 
+																			  	:class => "question_#{element.assetable.question_content.id}_answer",
+																			  	:checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
 										<%= label_tag "answer_#{answer.id}", answer.answer %>
 									<% end -%>
 								<% end # if ChoiceQuestion %>
@@ -148,7 +147,7 @@
 		<% end -%>
 	<% end -%>
 <% end -%>
-
+<!-- 
 <div class="pageNav">
 	<%= link_to "View All", surveys_url, :class => "pageNav" %>
-</div>
+</div> -->
