@@ -54,7 +54,7 @@
 					<li class="outter">
 						<% if element.assetable_type != 'Asset'  %>
 							<% question_number =+ question_number + 1  %>
-							<%= "#{question_number}." %>
+							<span class="vocquestionnumber"><%= "#{question_number}." %></span>
 						<% end %>
 						<% if element.assetable_type == "MatrixQuestion" %>
 			              <table>
@@ -85,7 +85,7 @@
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							
 							<%= element.assetable.question_content.statement %>
-							<%= "*" if element.assetable.question_content.required%><br/>
+							<div class="vocquestiontext"><%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO %>
 									<% for answer in element.assetable.choice_answers %>
