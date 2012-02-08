@@ -41,6 +41,8 @@ function check_for_unanswered_required(page) {
 					required =  true;
 				} else if( $("select.question_" + question_number + "_answer").length > 0 && $(".question_" + question_number + "_answer:selected").length == 0 ) {
 					required =  true;
+				} else if( $(".question_" + question_number + "_answer").attr('type') == "checkbox" && $(".question_" + question_number + "_answer").length > 0 && $(".question_" + question_number + "_answer:checked").length == 0 ) {
+					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "text" && $(".question_" + question_number + "_answer").val() == "") {
 					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
