@@ -6,6 +6,10 @@
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
+	<% if params[:stylesheet] %>
+		<%= stylesheet_link_tag h(params[:stylesheet]) %>
+	<% end %>
+
   </head>
   <body>
     <div id="container">
