@@ -140,7 +140,7 @@
 					<% unless page.page_number == @survey_version.pages.count %>
 						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.page_number})", :class=>"surveyNav" %></span>
 					<% end %>
-					<span class="surveyNavSub"><%= submit_tag "Submit Survey" if page.page_number == @survey_version.pages.count %></span>
+					<span class="surveyNavSub"><%= submit_tag("Submit Survey", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
 				</div>
 				
 			</div> <!-- close page div -->

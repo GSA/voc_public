@@ -19,7 +19,8 @@ class SurveyResponsesController < ApplicationController
     
     @survey_response.save!
     
-    redirect_to surveys_path
+    #TODO: redirect to a thank you page
+    redirect_to thank_you_surveys_path
   end
 
 end

@@ -1,5 +1,9 @@
 CommentToolPublic::Application.routes.draw do
-  resources :surveys
+  resources :surveys do
+    collection do
+      get 'thank_you'
+    end
+  end
   resources :survey_responses
   
   # The priority is based upon order of creation:

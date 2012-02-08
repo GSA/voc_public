@@ -50,3 +50,13 @@ function check_for_unanswered_required(page) {
 		});
 		return required;
 }
+
+function validate_before_submit(page){
+	if (!check_for_unanswered_required(page)){
+		return true;
+	} else {
+		alert('Please answer all required questions before moving on to the next page.');
+		return false;
+	}
+
+}
