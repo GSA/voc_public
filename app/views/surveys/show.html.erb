@@ -90,15 +90,18 @@
 							<div class="vocquestiontext"><span class="vocquestionnumber"><%= "#{question_number}." %> </span><%= element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
-								<% if element.assetable.answer_type == ChoiceAnswer::RADIO %>
-									<% for answer in element.assetable.choice_answers %>
-										<span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-                      						:onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
-											:class => "question_#{element.assetable.question_content.id}_answer", :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer)
-										%>
-										<%= answer.answer%></span>
-									<% end -%>
-									
+								<% if element.assetable.answer_type == ChoiceAnswer::RADIO 
+									choice_a_size = (element.assetable.choice_answers.map {answer.answer}).join.size
+									%>
+									<div class="vocradios<%= choice_a_size <= 100 ? 'short' : 'long' %>">
+										<% for answer in element.assetable.choice_answers %>
+											<span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
+	                      						:onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
+												:class => "question_#{element.assetable.question_content.id}_answer", :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer)
+											%>
+											<%= answer.answer%></span>
+										<% end -%>
+									</div>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
 									<span class="vocdropdown"><%= select_tag "response[raw_responses_attributes][#{index}][answer]", 
 										options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
