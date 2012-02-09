@@ -93,7 +93,7 @@
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO 
 									choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
 									%>
-									<div class="vocradios<%= choice_a_size <= 100 ? 'short' : 'long' %>">
+									<div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %>">
 										<% for answer in element.assetable.choice_answers %>
 											<span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
 	                      						:onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
