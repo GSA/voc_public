@@ -99,7 +99,7 @@
 	                      						:onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
 												:class => "question_#{element.assetable.question_content.id}_answer", :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer)
 											%>
-											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_answer_#{answer.id}", answer.answer%></span>
+											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", answer.answer%></span>
 										<% end -%>
 									</div>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
