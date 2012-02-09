@@ -53,11 +53,13 @@
 				<ul class="showList">
 				<% page.survey_elements.order("element_order asc").each do |element| %>
 					<li class="outter">
-						<% if element.assetable_type != 'Asset'  %>
-							<% question_number =+ question_number + 1  %>
-							<span class="vocquestionnumber"><%= "#{question_number}." %></span>
-						<% end %>
+						<% if element.assetable_type != 'Asset'
+							 question_number =+ question_number + 1  
+						end %>
 						<% if element.assetable_type == "MatrixQuestion" %>
+							<% if element.assetable_type != 'Asset'  %>
+								<span class="vocquestionnumber"><%= "#{question_number}." %></span>
+							<% end %>
 			              <table>
 			                <tr>
 			                  <th></th>
@@ -85,7 +87,7 @@
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							
-							<div class="vocquestiontext"><%= element.assetable.question_content.statement %>
+							<div class="vocquestiontext"><span class="vocquestionnumber"><%= "#{question_number}." %></span><%= element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO %>
