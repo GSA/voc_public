@@ -85,8 +85,8 @@
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							
-							<%= element.assetable.question_content.statement %>
-							<div class="vocquestiontext"><%= "*" if element.assetable.question_content.required%></div>
+							<div class="vocquestiontext"><%= element.assetable.question_content.statement %>
+							<%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO %>
 									<% for answer in element.assetable.choice_answers %>
