@@ -20,7 +20,7 @@ class SurveyResponsesController < ApplicationController
     @survey_response.save!
     
     #TODO: redirect to a thank you page
-    redirect_to thank_you_surveys_path, :stylesheet => params[:stylesheet]
+    redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]
   end
 
 end
