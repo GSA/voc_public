@@ -5,7 +5,9 @@
     <% unless params[:stylesheet] %>
 		<%= stylesheet_link_tag "application" %>
 		<style type="text/css">
+			<%# should be moved to application css %>
 			.vocradioslong .vocradio { display: block; margin-bottom: 5px; margin-top: 5px; }
+			.voccheckboxeslong .vocradio { display: block; margin-bottom: 5px; margin-top: 5px; }
 		</style>
 	<% end %>
     <%= javascript_include_tag :defaults %>
