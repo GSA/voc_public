@@ -134,7 +134,7 @@
 				<% end %>
 				</ul>
 				<div class="surveyNav">
-					<% unless page.page_number == 1 or (params[:skipfirstpage].to_s.downcase=="true" and page.page_number == 2) %>
+					<% unless page.page_number == 1 or (params[:noback].to_s.downcase=="true") %>
 						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "show_prev_page(#{page.page_number})", :class=>"surveyNav"  %></span> |
 					<% end %>
 					<% unless page.page_number == @survey_version.pages.count %>
