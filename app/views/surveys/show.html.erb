@@ -91,7 +91,7 @@
 							<%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO 
-									choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('--').size
+									choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
 									%>
 									<div class="vocradios<%= choice_a_size <= 100 ? 'short' : 'long' %>">
 										<% for answer in element.assetable.choice_answers %>
@@ -114,7 +114,7 @@
 										:style => "width: 100px", 
 										:class => "question_#{element.assetable.question_content.id}_answer" %></span>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX
-									choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('--').size
+									choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
 									%>
 									<div class="voccheckboxes<%= choice_a_size <= 90 ? 'short' : 'long' %>">
 									  <% for answer in element.assetable.choice_answers %>
