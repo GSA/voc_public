@@ -10,16 +10,10 @@ class SurveyResponsesController < ApplicationController
   end
   
   def create
-    @client_id = SecureRandom.hex(64)
-    @survey_version_id = params[:survey_version_id]
-    
-    @survey_response = SurveyResponse.new ({:client_id => @client_id, :survey_version_id => @survey_version_id}.merge(params[:response]))
-    
-    @survey_response.raw_responses.each {|r| r.client_id = @client_id; r.survey_response = @survey_response}
-    
-    @survey_response.save!
-    
-    #TODO: redirect to a thank you page
+    ## The client doesn't care if the submit actually succeeded or not.  Delay the processing
+    ## of the response so the browser will return immediately
+    SurveyResponse.delay.process_response params[:response], params[:survey_version_id]
+
     redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]
   end
 
