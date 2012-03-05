@@ -8,38 +8,6 @@
 	<p>Could not find version <%= params[:version] %></p>
 	<%= link_to "View all", survey_path(@survey) %>
 <% else %>
-<!-- 	<p id="notice"><%= notice %></p>
-
-	<p class="copy">
-	   <span class="copyBold">Name:</span>
-	  <%= @survey.name %>
-	</p>
-
-	<p class="copyBoldMargin">
-		Description:
-	  <span class="copy"><%= @survey.description %></span>
-	</p>
-	
-	<p class="copyBoldMargin">
-	  Type:
-	  <span class="copy"><%= @survey.survey_type.name.capitalize %></span>
-	</p>
-	
-	<div id="survey_versions_fields" >
-		<p class="copyBoldMargin">
-			Version:
-			<span class="copy">
-				<%= @survey_version.major %>.
-				<%= @survey_version.minor %>
-			</span>
-		</p>
-		<p class="copyBoldMargin">
-			Published:
-			<span class="copy"><%= @survey_version.published ? "Yes" : "No" %></span>
-		</p>
-	</div> -->
-
-
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <%= hidden_field_tag :stylesheet, params[:stylesheet] %>
 	  <% index = 0 %>
@@ -64,15 +32,15 @@
 			                <tr>
 			                  <th></th>
 			                  <% for column_header in element.assetable.choice_questions.first.choice_answers do %>
-			                   <th><%= column_header.answer %></th>
+			                   <th scope="col"><%= column_header.answer %></th>
 			                  <% end -%>
 			                </tr>
 			                <% for row_header in element.assetable.choice_questions do %>
 			                  <tr>
-			                    <td>
-									<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
-									<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
-								</td>
+			                    <th scope="row">
+														<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
+														<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+													</th>
 			                    <% row_header.choice_answers.each do |a| %>
 			                      <td>
 			                      <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
