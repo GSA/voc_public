@@ -14,7 +14,8 @@
 		<% for page in @survey_version.pages %>
 			<% question_number = 0 %>
 			<div class="<%= page.page_number == (params[:page].present? ? params[:page].to_i : 1) ? 'current_page' : 'hidden_page' %>" id="page_<%=page.page_number%>">
-	      		<%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
+				<a name="PAGE_<%= page.page_number%>">
+	      <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
 				<%= hidden_field_tag :prev_page, (params[:page].present? && params[:page].to_i == page.page_number ? 1 : page.prev_page.try(:page_number)), :id => "page_#{page.page_number}_prev_page" %>
 				
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
@@ -64,8 +65,10 @@
 									<div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %>">
 										<% for answer in element.assetable.choice_answers %>
 											<span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-	                      						:onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
-												:class => "question_#{element.assetable.question_content.id}_answer", :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer)
+	                      :onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
+												:class => "question_#{element.assetable.question_content.id}_answer", 
+												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
+												:id => "response[raw_responses_attributes][#{index}][answer]_#{answer.id}"
 											%>
 											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", answer.answer%></span>
 										<% end -%>
@@ -99,9 +102,9 @@
 							
 							<% elsif element.assetable_type == "TextQuestion" %>
 								<% if element.assetable.answer_type == "field" %>
-									<span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field", :class => "question_#{element.assetable.question_content.id}_answer" %></span>
+									<span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer" %></span>
 								<% elsif element.assetable.answer_type == "area" %>
-									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area"%></span>
+									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer"%></span>
 								<% end -%>
 							<% end -%>
 						<% else %>
