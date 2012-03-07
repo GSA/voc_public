@@ -11,6 +11,7 @@ function show_next_page(page){
    set_prev_page(page, next_page);
     
 		$("#page_"+ next_page).show();	
+		window.location.hash="PAGE_" + next_page;
 	} else {
 		alert('Please answer all required questions before moving on to the next page.');
 	}
@@ -20,6 +21,7 @@ function show_next_page(page){
 function show_prev_page(page){
 	$("#page_"+page).hide();
 	$("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
+	window.location.hash = "PAGE_" + page;
 }
 
 function set_next_page(current_page, next_page) {
