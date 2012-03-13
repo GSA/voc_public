@@ -14,7 +14,7 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-    @survey_version = params[:version].blank? ? @survey.newest_version : get_survey_version(@survey, params[:version])
+    @survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
     
     respond_to do |format|
       format.html # show.html.erb
