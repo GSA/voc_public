@@ -10,6 +10,7 @@
 <% else %>
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <%= hidden_field_tag :stylesheet, params[:stylesheet] %>
+		<%= hidden_field_tag "response[page_url]", params[:page_url] %>
 	  <% index = 0 %>
 		<% for page in @survey_version.pages %>
 			<% question_number = 0 %>
