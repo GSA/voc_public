@@ -1,7 +1,7 @@
 class SurveysController < ApplicationController
-  # caches_action :show, :cache_path => Proc.new {|c|
-  #   c.params.delete_if {|k,v| k.starts_with?('utm_')}
-  # }
+  caches_action :show, :cache_path => Proc.new {|c|
+    c.params.delete_if {|k,v| k.starts_with?('utm_')}
+  }
 
   # GET /surveys
   # GET /surveys.xml
