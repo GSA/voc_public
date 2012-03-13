@@ -1,4 +1,8 @@
 class SurveysController < ApplicationController
+  # caches_action :show, :cache_path => Proc.new {|c|
+  #   c.params.delete_if {|k,v| k.starts_with?('utm_')}
+  # }
+
   # GET /surveys
   # GET /surveys.xml
   def index
@@ -14,7 +18,8 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-    @survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
+    @survey_version = @survey.published_version
+    #@survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
     
     respond_to do |format|
       format.html # show.html.erb
