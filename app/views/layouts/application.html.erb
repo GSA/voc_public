@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
-    <% unless params[:stylesheet] %>
+    <% if params[:stylesheet].blank? %>
 		<%= stylesheet_link_tag "application" %>
 		<style type="text/css">
 			<%# should be moved to application css %>
@@ -16,7 +16,7 @@
   
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
-	<% if params[:stylesheet] %>
+	<% unless params[:stylesheet].blank? %>
 		<%= stylesheet_link_tag h(params[:stylesheet]) %>
 	<% end %>
   </head>
