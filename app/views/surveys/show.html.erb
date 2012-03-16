@@ -69,7 +69,7 @@
 	                      :onclick => generate_onclick(element, page, answer),
 												:class => "question_#{element.assetable.question_content.id}_answer", 
 												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
-												:id => "response[raw_responses_attributes][#{index}][answer]_#{answer.id}"
+												:id => "response_raw_responses_attributes_#{index}_answer_#{answer.id}"
 											%>
 											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", answer.answer%></span>
 										<% end -%>
