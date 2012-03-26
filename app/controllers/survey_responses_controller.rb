@@ -14,7 +14,12 @@ class SurveyResponsesController < ApplicationController
     ## of the response so the browser will return immediately
     SurveyResponse.delay.process_response params[:response], params[:survey_version_id]
 
-    redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]
+    @survey_version = SurveyVersion.find(params[:survey_version_id])
+    if @survey_version.present? && !@survey_version.thank_you_page.blank?
+      render :text => @survey_version.thank_you_page, :stylesheet => params[:stylesheet]
+    else
+      redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]
+    end
   end
 
 end
