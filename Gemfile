@@ -12,6 +12,8 @@ gem 'delayed_job', '2.1.4'
 gem 'unicorn-rails'
 gem 'memcache-client'
 gem 'authlogic'
+gem 'paperclip'
+
 
 group :development, :test do 
 	gem 'ruby-debug19'
