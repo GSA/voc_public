@@ -72,7 +72,7 @@
 												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
 												:id => "response_raw_responses_attributes_#{index}_answer_#{answer.id}"
 											%>
-											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer)%></span>
+											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style))%></span>
 										<% end -%>
 									</div>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
@@ -97,7 +97,7 @@
 																				  	:id => "answer_#{answer.id}", 
 																				  	:class => "question_#{element.assetable.question_content.id}_answer",
 																				  	:checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
-											<%= label_tag "answer_#{answer.id}", sanitize(answer.answer) %></span>
+											<%= label_tag "answer_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style)) %></span>
 										<% end -%>
 									</div>
 								<% end # if ChoiceQuestion %>
