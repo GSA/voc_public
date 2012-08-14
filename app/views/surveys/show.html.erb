@@ -15,7 +15,7 @@
 		<% for page in @survey_version.pages %>
 			<% question_number = 0 %>
 			<div class="<%= page.page_number == (params[:page].present? ? params[:page].to_i : 1) ? 'current_page' : 'hidden_page' %>" id="page_<%=page.page_number%>">
-				<a name="PAGE_<%= page.page_number%>">
+				<a name="PAGE_<%= page.page_number%>"></a>
 	      <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
 				<%= hidden_field_tag :prev_page, (params[:page].present? && params[:page].to_i == page.page_number ? 1 : page.prev_page.try(:page_number)), :id => "page_#{page.page_number}_prev_page" %>
 				
@@ -72,7 +72,7 @@
 												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
 												:id => "response_raw_responses_attributes_#{index}_answer_#{answer.id}"
 											%>
-											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", answer.answer%></span>
+											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer)%></span>
 										<% end -%>
 									</div>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
@@ -97,7 +97,7 @@
 																				  	:id => "answer_#{answer.id}", 
 																				  	:class => "question_#{element.assetable.question_content.id}_answer",
 																				  	:checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
-											<%= label_tag "answer_#{answer.id}", answer.answer %></span>
+											<%= label_tag "answer_#{answer.id}", sanitize(answer.answer) %></span>
 										<% end -%>
 									</div>
 								<% end # if ChoiceQuestion %>
