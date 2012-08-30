@@ -598,3 +598,19 @@ span.pageNum {
 }
 
 .gap {}
+
+/** Poll Result Bar **/
+.poll_result_bar {
+	/*background-color: #000; */
+	background-color: lightblue;
+	display: inline-block;
+	margin: 0px 5px;
+}
+
+.poll_answer {
+	margin: 5px 0px;
+}
+
+.question_results {
+	margin: 20px 0px;
+}
