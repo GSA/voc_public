@@ -47,9 +47,6 @@
       Survey: survey
     }
 
-    // jQuery.getScript("http://localhost:3000/javascripts/survey.js",function(data, textStatus, jqxhr){
-    //   console.log("loaded survey.js from voc server.");
-    // });
   }
 
   /* define the survey module using the revealing module pattern.          */
@@ -76,7 +73,7 @@
     function loadSurvey() {
       //console.log("loading survey " + _surveyID + " into #" + _targetID);
 
-      var _url = "http://localhost:3000/surveys/" + _surveyID + ".json";
+      var _url = "http://stage-voc.cloud.hhs.gov/surveys/" + _surveyID + ".json";
       var target = jQuery("#" + _targetID)
       var surveyID = _surveyID
 
@@ -93,10 +90,10 @@
         /* submit the survey through ajax */
         jQuery.ajax({
           type: 'POST',
-          url: 'http://localhost:3000/survey_responses',
+          url: 'http://stage-voc.cloud.hhs.gov/survey_responses',
           data: target.children("form").first().serialize(),
           success: function(data, textStatus, jqxhr){
-            jQuery.getJSON("http://localhost:3000/surveys/" + surveyID + "/thank_you_page.json", "callback=?", function(data){
+            jQuery.getJSON("http://stage-voc.cloud.hhs.gov/surveys/" + surveyID + "/thank_you_page.json", "callback=?", function(data){
             	target.html(data.html);
           	});
           }
