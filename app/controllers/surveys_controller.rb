@@ -2,6 +2,39 @@ class SurveysController < ApplicationController
   caches_action :show, :cache_path => Proc.new {|c|
     c.params.delete_if {|k,v| k.starts_with?('utm_')}
   }
+  
+  def thank_you_page
+    @survey_version = Survey.find(params[:id]).try(:published_version)
+
+    respond_to do |format|
+      if @survey_version.survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
+        @results = PollResults.new(@survey_version)
+        format.html {render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application'}
+        format.json do
+          html = render_to_string(:template => 'surveys/poll_results.html.erb', :layout => false)
+          json = {:html => html}.to_json
+          render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
+        end
+      else
+        if @survey_version.present? && @survey_version.thank_you_page.present?
+          format.html {render :text => @survey_version.thank_you_page, :stylesheet => params[:stylesheet], :layout => 'application'}
+          format.json do
+            json = {:html => @survey_version.thank_you_page }.to_json
+            render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript", :layout => false
+          end
+        else
+          format.html {redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]}
+          format.json do
+            html = render_to_string :template => "surveys/thank_you.html.erb", :layout => false
+            json = {:html => html}.to_json
+            render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript", :layout => false
+          end
+        end
+      end 
+      
+    end
+    
+  end
 
   # GET /surveys
   # GET /surveys.xml
@@ -24,6 +57,11 @@ class SurveysController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
+      format.json do
+        html = render_to_string(:template => "surveys/show.html.erb")
+        json = {:html => html}.to_json
+        render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
+      end
     end
   end
 

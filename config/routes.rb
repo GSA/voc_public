@@ -1,7 +1,10 @@
 CommentToolPublic::Application.routes.draw do
   resources :surveys do
     collection do
-      get 'thank_you'
+      get 'thank_you' 
+    end
+    member do
+      get 'thank_you_page'
     end
   end
   resources :survey_responses

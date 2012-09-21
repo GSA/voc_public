@@ -1,0 +1,598 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Test VOC Javascript Widget | Stop Bullying on the Spot | StopBullying.gov</title>
+    <meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+	<meta name="author" content="ASPA" />
+	    <meta name="keywords" content="bullying, stop bullying, stop bullying now, stop bullying immediately, respond quickly" />
+	<meta name="DCTERMS.keywords" content="bullying, stop bullying, stop bullying now, stop bullying immediately, respond quickly" />
+	    <meta name="description" content="There are simple steps adults can take to stop bullying on the spot and keep kids safe.  Find out what you can do at StopBullying.gov." />
+	<meta name="generator" content="Percussion Rhythmyx" />
+	<meta name="dc.title" content="Stop Bullying on the Spot" />
+	<meta name="dc.creator" content="ASPA" />
+	<meta name="dc.description" content="There are simple steps adults can take to stop bullying on the spot and keep kids safe.  Find out what you can do at StopBullying.gov." />
+	<meta name="dc.language" content="en-us" />
+	<meta name="dc.publisher" content="Department of Health and Human Services" />
+	<meta name="dc.date" content="2012-02-29" />
+	<meta name="DCTERMS.dateCreated" content="2012-02-29 00:00:00.0" />
+	<meta name="DC.date.reviewed" content="2012-02-29 00:00:00.0" />
+	<meta name="DCTERMS.dateModified" content="2012-02-29 00:00:00.0" />
+	<meta content="1034" name="ContentID" />
+	<meta name="google-site-verification" content="51cOPF--00ouZYnqEmZR49AgVxr3GTzCcn36eRGX9Q8" />
+	<meta content="Percussion CM System" name="generator"/>
+<meta name="perc_linkback" id="perc_linkback" content="FmRlZmF4B2RkeAFgY2J4BmZmYHgTZGVmZA=="/>
+	<style type="text/css">
+		@import "http://www.stopbullying.gov/css/bully-style.css";
+	</style>	
+	
+	<script type="text/javascript">
+		var rxs_navbase = "";
+	</script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/jquery.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/billboard_rotator.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/superfish.js"></script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/accordion.js"></script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/addthis.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/print.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/cookie.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/main.js"></script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/videolib.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/jquery.bxSlider.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/flashmap.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/statedropdown.js"></script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/gatc.js"></script>
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/gaaddons.min.js"></script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/addthis-analytics.js"></script>	
+	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/tynt.js"></script>	
+<!--[if IE]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen,print"	charset="utf-8">
+<![endif]-->
+  <script src="http://localhost:3000/javascripts/voc.widget.js"></script>
+  <link rel=StyleSheet href="http://localhost:3000/stylesheets/application.css" type="text/css">
+  <script type="text/javascript">
+  $(function(){
+  	$('form#chooseSurvey').submit(function() {
+  	var val = $('input#SurveyNum').val();
+  	if (val != "")
+  	{
+	  	var response_url = $('input#response_Url').val();
+	  	if (response_url == "")
+	  		//default response url
+	  		response_url = (window.location.origin + window.location.pathname) || "http://localhost:3000/index.html";
+	 	survey = new voc.Survey({targetID: 'widget_target', surveyID: val, pageURL: response_url }).loadSurvey();
+	}
+	else
+		alert("Survey Number cannot be blank");
+  	return false;
+	});
+  });
+  </script>
+  </head>
+<body>
+	
+	<!--the main container is the outer wrapper of the entire page, and will be centered in the browser window.  -->
+				<div id="shadow_border_contatiner"> <!--Begin of this shadow-->
+				
+	<div id="main_container">
+
+		<div id="skipmenu"><a href="#skip"  class="skippy">Skip	Navigation</a></div>
+		<a name="top"></a>
+		
+		<div id="header_container"> 	<!--contains everything in top row- logo, global nav, site search  -->
+			<div id="right_header_container">
+				<div id="global_nav_container">
+		<!-- start-template: CommonNavHeader -->
+		<ul><li>
+    	<a href="/index.html" class="titlelink">Home</a>
+      |</li><li>
+<a href="/blog/">Blog</a> |</li><li>
+    	<a href="http://www.stopbullying.gov//news/index.html" class="titlelink">Newsroom</a>
+      |</li><li>
+    	<a href="http://www.stopbullying.gov//videos/index.html" class="titlelink">Videos</a>
+      |</li><li>
+    	<a href="http://www.stopbullying.gov//resources/index.html" class="titlelink">Resources</a>
+      |</li><li>
+    	<a href="/http://www.stopbullying.gov/laws/index.html" class="titlelink">Policies & Laws</a>
+      </li></ul>		
+		<ul><li>
+<p><a href="http://www.stopbullying.gov//kids/index.html"><img alt="Kids" src="http://www.stopbullying.gov/images/sbkids.png" title="Kids" /></a></p></li></ul>		
+		
+		<!-- end-template: CommonNavHeader -->
+	</div>
+				<div id="site_search_container">
+					<form style="display: inline;" action="http://search.stopbullying.gov/search" method="get" name="stopbully" id="gs">
+						
+						<label style="display: none;" for="searchbox">Search Stopbullying.gov</label>
+						<input id="searchbox" type="text" name="q" size="32" maxlength="256" />
+						<input id="search_button" type="image" alt="search" src="/images/sys_images/sbsearch.png"/>
+						<input name="site" value="stopbullying" type="hidden"/>
+						<input name="client" value="stopbullying" type="hidden"/>
+						<input name="proxystylesheet" value="stopbullying" type="hidden"/>
+						<input name="proxyreload" value="1" type="hidden"/>
+						<input name="lr" value="lang_en" type="hidden"/>
+						<input name="oe" value="UTF-8" type="hidden"/>
+						<input name="ie" value="UTF-8" type="hidden"/>
+						<input name="output" value="xml_no_dtd" type="hidden"/>
+						<input name="sort" value="date:D:L:d1" type="hidden"/>
+						<input name="ud" value="1" type="hidden"/>
+						<input name="entqr" value="3" type="hidden"/>
+						
+					</form>
+				</div>			
+			</div>
+			<div id="logo_container">
+				<a href="http://www.stopbullying.gov/index.html"><img alt="stopbullying.gov" title="stopbullying.gov" src="http://www.stopbullying.gov/images/sys_images/sblogo.png"/></a>			
+			</div>
+		</div>	
+		<div id="top_navigation_container">
+
+			<div id="navigation_menu">	
+				<ul class='sf-menu'>
+
+	
+	     			 
+   
+	<li class="">
+		<div class="nav_item_box">
+		<a href="/what-is-bullying/index.html" id="nav_item1" class="nav_item">
+			WHAT IS BULLYING
+		</a></div>
+		
+			<ul>
+										
+								<li >	
+			<a href="/what-is-bullying/definition/index.html">Definition</a>
+		</li>		
+							
+								<li >	
+			<a href="/what-is-bullying/related-topics/index.html">Related Topics</a>
+		</li>		
+			</ul>
+			</li>
+	
+	
+	     		
+	
+	     			 
+   
+	<li class="">
+		<div class="nav_item_box">
+		<a href="/cyberbullying/index.html" id="nav_item2" class="nav_item">
+			CYBER BULLYING
+		</a></div>
+		
+			<ul>
+										
+								<li >	
+			<a href="/cyberbullying/what-is-it/index.html">What is Cyberbullying?</a>
+		</li>		
+							
+								<li >	
+			<a href="/cyberbullying/prevention/index.html">Prevent Cyberbullying</a>
+		</li>		
+							
+								<li >	
+			<a href="/cyberbullying/how-to-report/index.html">Report Cyberbullying</a>
+		</li>		
+			</ul>
+			</li>
+	
+	
+	     			 
+   
+	<li class="">
+		<div class="nav_item_box">
+		<a href="/at-risk/index.html" id="nav_item3" class="nav_item">
+			WHO IS AT RISK
+		</a></div>
+		
+			<ul>
+										
+								<li >	
+			<a href="/at-risk/factors/index.html">Risk Factors</a>
+		</li>		
+							
+								<li >	
+			<a href="/at-risk/warning-signs/index.html">Warning Signs</a>
+		</li>		
+							
+								<li >	
+			<a href="/at-risk/effects/index.html">Effects</a>
+		</li>		
+							
+								<li >	
+			<a href="/at-risk/groups/index.html">Considerations for Specific Groups</a>
+		</li>		
+			</ul>
+			</li>
+	
+	
+	     			 
+   
+	<li class="">
+		<div class="nav_item_box">
+		<a href="/prevention/index.html" id="nav_item4" class="nav_item">
+			PREVENT BULLYING
+		</a></div>
+		
+			<ul>
+										
+								<li >	
+			<a href="/prevention/talking-about-it/index.html">How to Talk About Bullying</a>
+		</li>		
+							
+								<li >	
+			<a href="/prevention/at-school/index.html">Prevention at School</a>
+		</li>		
+							
+								<li >	
+			<a href="/prevention/in-the-community/index.html">Working in the Community</a>
+		</li>		
+			</ul>
+			</li>
+	
+	
+	     			 
+   
+	<li class="active">
+		<div class="nav_item_box">
+		<a href="/respond/index.html" id="nav_item5" class="nav_item">
+			RESPOND TO BULLYING
+		</a></div>
+		
+			<ul>
+										
+								<li class="current">	
+			<a href="/respond/on-the-spot/index.html">Stop It on the Spot</a>
+		</li>		
+							
+								<li >	
+			<a href="/respond/find-out-what-happened/index.html">Find Out What Happened</a>
+		</li>		
+							
+								<li >	
+			<a href="/respond/support-kids-involved/index.html">Support the Kids Involved</a>
+		</li>		
+							
+								<li >	
+			<a href="/respond/be-more-than-a-bystander/index.html">Be More Than a Bystander</a>
+		</li>		
+			</ul>
+			</li>
+	
+	
+	     			 
+   
+	<li class="">
+		<div class="nav_item_box">
+		<a href="/get-help-now/index.html" id="nav_item6" class="nav_item">
+			GET HELP NOW
+		</a></div>
+		
+		</li>
+	
+	
+	     		
+	
+	     		
+	
+	     		
+	
+	     		
+	
+	     		
+	
+	     		
+</ul>			</div>
+			<a name="skip"></a>
+		</div>
+		
+
+		
+		<div id="breadcrumbs_container">			
+        	<div class='breadcrumb'>
+
+
+
+
+
+
+
+
+
+<!--googleof: index-->
+	 
+																																														    				           <a href="/index.html">Home</a>
+           		    
+    		    
+    		    
+    		    
+    		    
+    		    					&gt;
+	   		           <a href="/respond/index.html">Respond to Bullying</a>
+           		    					&gt;
+				    								Stop It on the Spot 
+				
+    		    
+    		    
+    		    
+    	    
+    		    
+    		    
+    		    
+    		    
+    		    
+    		    
+    		    
+    	    
+	
+
+<!--googleon: index-->
+
+</div>		</div>  <!--Placed above page_content_container even though it will be displayed in the page content window. -->
+						  
+
+    		<!-- beginning of page content container -->
+
+
+				
+				<div id="page_content_container_standard_layouts">	
+
+				
+		
+		<!-- Opening div to be one of three options above. Closed just before "end of page content container below" -->
+			
+					<div id='left_navigation'>
+
+
+
+
+
+	
+				
+					
+					
+					
+					
+					
+					                                                                                                                                                									
+					
+																	<h3><a href="/respond/index.html">RESPOND TO BULLYING</a></h3>
+    				<div id="navcol">
+						<div class="leftnav">		
+								                                                                                                                                                			<ul class="menu">
+    				
+						
+					
+					
+			            	            					
+																		<li class='active'>
+						<a href="/respond/on-the-spot/index.html">Stop It on the Spot</a>
+							                			<ul class="subnav">
+    			</ul>
+						</li>
+				    							
+						
+					
+					
+			            	    							
+																		<li>
+						<a href="/respond/find-out-what-happened/index.html">Find Out What Happened</a>
+							    			<ul class="subnav">
+    			</ul>
+						</li>
+				    							
+						
+					
+					
+			            	    							
+																		<li>
+						<a href="/respond/support-kids-involved/index.html">Support the Kids Involved</a>
+							    			<ul class="subnav">
+    			</ul>
+						</li>
+				    							
+						
+					
+					
+			            	    							
+																		<li>
+						<a href="/respond/be-more-than-a-bystander/index.html">Be More Than a Bystander</a>
+							    			<ul class="subnav">
+    			</ul>
+						</li>
+				    						</ul>
+							</div>
+					</div>
+												
+					
+					
+					
+					
+					
+					
+				
+</div>							<div id="right_sidebar">
+<div class="rxbodyfield">
+<div class="sidebar_snippet2_wrapper"></div>
+
+<div class="sidebar_snippet2">
+<h3>Trying to stop cyberbullying?</h3>
+
+<p>When cyberbullying happens, it is important to <a href="/cyberbullying/how-to-report/index.html">document and report</a>  it so it can be addressed.</p>
+</div>
+</div>
+
+<div class="rxbodyfield">
+<div class="sidebar_snippet2_wrapper"></div>
+
+<div class="sidebar_snippet2">
+
+
+<p><a href="http://www.suicidepreventionlifeline.org/"><img alt="Get Help Now" src="http://www.stopbullying.gov/snippets/right_sidebar/nspl_logo.gif" style=" border: 0;" title="Get Help Now" /></a></p>
+</div>
+</div>
+</div>		
+		
+			<div id="page_content_area"> <!--Begin of this page_content_area-->
+				                   
+											
+		
+		<div id="add_this_container">
+			
+		<!-- start-template: CommonSnToolBox -->		
+<div class="toolbox">
+	<ul class="toolbox_body">
+		<li class="print" ><a href="javascript:print()"><img title="Print Icon, opens in new window" src="http://www.stopbullying.gov/images/sys_images/addthis/toolbar-print-top.png" alt="Print"  /></a></li>   						
+	    
+<li class="email">
+	<a  shape="rect" target="_blank" href="http://api.addthis.com/oexchange/0.8/forward/email/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" ><img src="http://www.stopbullying.gov/images/sys_images/addthis/toolbar-email-top.png" alt="Email" title="Send Icon, opens in new window"/>
+	</a>
+<script type="text/javascript"> var addthis_config = { data_ga_property: 'UA-16220417-8', data_track_clickback: true }; </script> 
+</li>	
+
+<li class="facebook">
+	<a  shape="rect" target="_blank" href="http://api.addthis.com/oexchange/0.8/forward/facebook/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" ><img src="http://www.stopbullying.gov/images/sys_images/addthis/toolbar-fb-top.png" alt="Facebook Icon" title="Facebook Icon, opens in new window"/>
+	</a>
+
+</li>	
+
+<li class="twitter">
+	<a  shape="rect" target="_blank" href="http://api.addthis.com/oexchange/0.8/forward/twitter/offer?via=StopBullyingGov&username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" ><img src="http://www.stopbullying.gov/images/sys_images/addthis/toolbar-tweet-top.png" alt="TweetIcon" title="Tweet Icon, opens in new window"/>
+	</a>
+
+</li>	
+		<li class="share">
+			<a href="#"><img src="http://www.stopbullying.gov/images/sys_images/addthis/toolbar-share-top.png" alt="Share" title="Share Icon" /></a>
+			<ul>
+				<li class="addthisto">Add this to...</li>
+				<li>&nbsp;</li>
+				
+<li>
+	<a class="delicious"  href="http://api.addthis.com/oexchange/0.8/forward/delicious/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" title="Delicious Icon, opens in new window" shape="rect">
+	<span class="invisible">Bookmark Stop Bullying on the Spot on</span>
+	Delicious
+	</a>
+
+</li>	
+
+<li>
+	<a class="linkedin"  href="http://api.addthis.com/oexchange/0.8/forward/linkedin/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" title="Linkedin Icon, opens in new window" shape="rect">
+	<span class="invisible">Bookmark Stop Stop Bullying on the Spot on</span>
+	LinkedIn
+	</a>
+
+</li>	
+
+<li>
+	<a class="stumbleupon"  href="http://api.addthis.com/oexchange/0.8/forward/stumbleupon/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" title="Stumbleupon Icon, opens in new window" shape="rect">
+	<span class="invisible">Bookmark Stop Bullying on the Spot on</span>
+	Stumbleupon
+	</a>
+
+</li>	
+
+<li>
+	<a class="digg"  href="http://api.addthis.com/oexchange/0.8/forward/digg/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" title="Digg Icon, opens in new window" shape="rect">
+	<span class="invisible">Rank Prevention Stop Bullying on the Spot on</span>
+	Digg
+	</a>
+
+</li>	
+
+<li>
+	<a class="reddit"  href="http://api.addthis.com/oexchange/0.8/forward/reddit/offer?username=hhsgov&amp;url=http://www.stopbullying.gov/respond/on-the-spot/index.html&amp;title=Stop+Bullying+on+the+Spot" target="_blank" title="Reddit Icon, opens in new window" shape="rect">
+	<span class="invisible">Rank Prevention Stop Bullying on the Spot on</span>
+	Reddit
+	</a>
+
+</li>	
+				<li class="closeshare"><a href="#" class="APEdocument APEinternal">Close</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+		<!-- end-template: CommonSnToolBox -->
+			<div id="text-size">Text Size: <a title="Small size" id="smallerfont" href="javascript:smallerFont()" class="APEscript"><span class="small">A</span></a> <a title="Medium size" id="mediumfont" href="javascript:mediumFont()" class="APEscript"><span class="medium">A</span></a> <a title="Large size" id="largerfont" href="javascript:largerFont()" class="APEscript"><span class="larger">A</span></a></div>	
+			
+		</div>		<!--End of this add_this_container-->
+		<div id="MainContent">
+				       <!--End of this DIV is in the bully_basicPage-->	
+				
+			
+	  <h1>
+	    Stop Bullying on the Spot	  </h1>
+	  <p><img alt="Two students fight in class" src="http://www.stopbullying.gov/images/classroom bullying.jpg" style=" float: right;" title="Two students fight in class" />When adults respond quickly and consistently to bullying behavior they send the message that it is not acceptable. Research shows this can stop bullying behavior over time. There are simple steps adults can take to stop bullying on the spot and keep kids safe.</p><p>Do:</p><ul><li>Intervene immediately. It is ok to get another adult to help.</li><li>Separate the kids involved.</li><li>Make sure everyone is safe.</li><li>Meet any immediate medical or mental health needs.</li><li>Stay calm. Reassure the kids involved, including bystanders.</li><li>Model respectful behavior when you intervene.</li></ul><p>Avoid these common mistakes:</p><ul><li>Don’t ignore it. Don’t think kids can work it out without adult help.</li><li>Don’t immediately try to sort out the facts.</li><li>Don’t force other kids to say publicly what they saw.</li><li>Don’t question the children involved in front of other kids.</li><li>Don’t talk to the kids involved together, only separately.</li><li>Don’t make the kids involved apologize or patch up relations on the spot.</li></ul><p><a href="/get-help-now/index.html">Get police help or medical attention</a> immediately if:</p><ul type="disc"><li>A weapon is involved.</li><li>There are threats of serious physical injury.</li><li>There are threats of hate-motivated violence, such as racism or homophobia.</li><li>There is serious bodily harm.</li><li>There is sexual abuse.</li><li>Anyone is accused of an illegal act, such as robbery or extortion—using force to get money, property, or services.</li></ul><h2>Next Steps</h2><ul><li><a href="/respond/support-kids-involved/index.html">Support the kids</a> involved</li></ul>	      
+
+
+  													    				        				<div class="clear"></div>					
+ 
+
+  <div id="voc_tool_container">
+  	<form id="chooseSurvey" name="chooseSurvey" action="">
+  	<div style="background-color:#F08080;padding:5px;border-style:solid;border-width:1px;border-color:black;">
+  	<b>For Testing Purposes Only<b><br><br>
+  	<div style="width:165px;float:left;">Survey Number:</div>
+  	<div style="width:200px;float:left;"><input type="text" id="SurveyNum" maxlenth="10" size="5"></div>
+  	<div style="clear:both;height:3px;"></div>
+  	<div style="width:165px;float:left;">Response Url (<i>Override</i>):</div>
+  	<div style="width:200px;float:left;"><input type="text" id="response_Url" size="40"></div>
+  	<div style="clear:both;height:3px;"></div>
+  	<input type="submit" value="Submit">
+  	</div>
+  	</form>
+  <script type="text/javascript">
+    document.write('<div id="widget_target"></div>');
+  </script>
+  <noscript>BLARGH!</noscript>			
+    				</div> <!--End of VOC container-->
+    										</div> <!--End of this MainContent -->
+	</div> <!--end of this page_content_area-->	
+				
+
+
+
+
+		<!-- end of page content container. -->	
+		<div id="footer_container">
+		<!-- start-template: CommonNavFooter -->
+		<div class="footer-content">
+			<div class="footer-banner">				
+				<div>
+<div class="logo"><a href="/index.html"><img alt="stopbullying.gov" src="http://www.stopbullying.gov/images/footer/footer-logo.png" style=" border: 0;" title="stopbullying.gov" /></a></div><div class="text"><p>A federal government website managed by the <a href="http://www.hhs.gov">U.S. Department of Health &amp; Human Services</a><br />200 Independence Avenue, S.W. - Washington, D.C. 20201</p></div></div>			</div>
+			<div class="clear footer-line">&nbsp;</div>
+			<div id="footer_body">
+				<div class="col col1"><ul><li>
+<h3>Of Interest</h3></li><li>
+<p><a href="/about-us/index.html">About Us</a></p></li><li>
+<p><a href="http://www.hhs.gov/Accessibility.html">Accessibilty</a></p></li><li>
+<p><a href="http://www.hhs.gov/Privacy.html">Privacy Policy</a></p></li><li>
+<p><a href="http://www.hhs.gov/open/recordsandreports/plainwritingact/index.html">Plain Writing</a></p></li><li>
+<p><a href="http://www.hhs.gov/Disclaimer.html">Disclaimers</a></p></li><li>
+<p><a href="http://www.stopbullying.gov/survey/feedback/index.html">Give Feedback</a></p></li></ul></div>				<div class="col col2"><ul><li>
+<p><a href="http://www.hhs.gov/asa/eeo/no_fear_bullet_3.html">No FEAR</a></p></li><li>
+<p><a href="http://www.hhs.gov/web/tools/plugins.html">Viewers &amp; Players</a></p></li><li>
+<p><a href="http://www.hhs.gov/foia/">FOIA</a></p></li><li>
+<a href="http://www.whitehouse.gov/">WhiteHouse.gov</a></li><li>
+<p><a href="http://www.usa.gov/">USA.gov</a></p></li><li>
+<p><a href="http://www.usa.gov/gobiernousa/">GobiernoUSA.gov</a></p></li></ul></div>				<div class="col col3"><ul><li>
+<h3>Partners</h3></li><li>
+<p><a href="http://www.cdc.gov">CDC.gov</a></p></li><li>
+<p><a href="http://www.ed.gov">ED.gov</a></p></li><li>
+<p><a href="http://www.hrsa.gov">HRSA.gov</a></p></li><li>
+<p><a href="http://www.samhsa.gov">SAMHSA.gov</a></p></li></ul></div>				<div class="col col4"><ul><li>
+<h3>Stay Connected</h3></li><li>
+<a href="https://public.govdelivery.com/accounts/USHHSSB/subscriber/new"><img alt="Get email updates" src="http://www.stopbullying.gov/images/footer/email_updates.png" style=" border: 0;" /></a></li><li>
+<a href="https://www.facebook.com/StopBullying.Gov"><img alt="Facebook" src="http://www.stopbullying.gov/images/footer/facebook.png" style=" border: 0;" /></a></li><li>
+<a href="https://twitter.com/#!/stopbullyinggov"><img alt="" src="http://www.stopbullying.gov/images/footer/twitter.png" style=" border: 0;" /></a></li><li>
+<p><a href="http://www.youtube.com/user/StopBullyingGov"><img alt="YouTube" src="http://www.stopbullying.gov/images/footer/you_tube.png" style=" border: 0;" /></a></p></li><li>
+<p><a href="/stay-connected/index.html">Widgets &amp; Badges</a></p></li></ul></div>								<div class="clear">&nbsp;</div>
+			</div>
+		</div>
+	</div>	</div> <!--End of this MainContainer-->
+
+	<script type="text/javascript" src="/jscripts/quantcast.js"></script>	
+	<script type="text/javascript" src="/jscripts/footer.js"></script>	
+  </body>
+</html>
