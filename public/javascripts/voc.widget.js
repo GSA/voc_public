@@ -123,13 +123,24 @@ function show_next_page(page){
   required_unanswered = check_for_unanswered_required(page);
   
   if (!required_unanswered){
-    jQuery("#page_" + page).hide();
+    var _currPage = jQuery("#page_" + page);
+    _currPage.hide();
+    _currPage.removeClass("current_page");
+    _currPage.addClass("hidden_page");
+
+
     var next_page = jQuery("#page_" + page + "_next_page").val();
-    
+
     /* Set the prev page on next page */
-   set_prev_page(page, next_page);
-    
-    jQuery("#page_"+ next_page).show();  
+    set_prev_page(page, next_page);
+
+    var _nextPage = jQuery("#page_" + next_page);
+
+    _nextPage.show();
+
+    _nextPage.addClass("current_page");
+    _nextPage.removeClass("hidden_page");
+
     window.location.hash="PAGE_" + next_page;
   } else {
     alert('Please answer all required questions before moving on to the next page.');
@@ -138,8 +149,19 @@ function show_next_page(page){
 }
 
 function show_prev_page(page){
-  jQuery("#page_"+page).hide();
-  jQuery("#page_"+ jQuery("#page_" + page + "_prev_page").val() ).show();
+  var _currPage = jQuery("#page_"+page);
+  _currPage.hide();
+  _currPage.removeClass("current_page");
+  _currPage.addClass("hidden_page");
+
+  /* get the prev page object */
+  var _prevPage = jQuery("#page_"+ jQuery("#page_" + page + "_prev_page").val() );
+  _prevPage.removeClass("hidden_page");
+  _prevPage.addClass("current_page");
+  _prevPage.show();
+
+
+
   window.location.hash = "PAGE_" + page;
 }
 
