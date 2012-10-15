@@ -5,7 +5,7 @@
   var jQuery;
 
   /* Load jQuery if it is not present */
-  if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7.2') {
+  if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
     var script_tag = document.createElement('script');
     script_tag.setAttribute('type', 'text/javascript');
     script_tag.setAttribute('src',
