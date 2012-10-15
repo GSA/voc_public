@@ -1,0 +1,9 @@
+development:
+  host: localhost:3000
+
+test:
+  host: localhost:3000
+
+# correct for staging. for production: comment-app.hhs.gov?
+production:
+  host: stage-voc.cloud.hhs.gov

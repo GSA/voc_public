@@ -5,7 +5,7 @@
   var jQuery;
 
   /* Load jQuery if it is not present */
-  if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7.2') {
+  if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
     var script_tag = document.createElement('script');
     script_tag.setAttribute('type', 'text/javascript');
     script_tag.setAttribute('src',
@@ -47,10 +47,15 @@
       Survey: survey
     }
 
+    survey = voc.Survey({surveyID: <%= params[:survey_id].to_i %>});
+    <% unless params[:target_id].blank? %>
+      survey.setTargetID('<%= params[:target_id] %>');
+    <% end %>
+    survey.loadSurvey();
   }
 
   /* define the survey module using the revealing module pattern.          */
-  var survey = function(opts){
+  function survey(opts){
     var _opts = opts || {};
 
     var _targetID = _opts.targetID || "vocSurveyDiv";
@@ -71,12 +76,11 @@
     /* Attempt to load the survey with id _surveyID into the DOM element  */
     /* with id _targetID.                                                 */
     function loadSurvey() {
-
-      var _url = "http://stage-voc.cloud.hhs.gov/surveys/" + _surveyID + ".json";
+      var _hostname = "<%= APP_CONFIG['host'] %>";
+      var _url = "http://"+ _hostname + "/surveys/" + _surveyID + ".json";
       var target = jQuery("#" + _targetID)
       var surveyID = _surveyID
-
-
+      
       /* get the survey identified by id _surveyID and insert it into the */
       /* DOM element _targetID.                                           */
       jQuery.getJSON(_url, "callback=?&page_url=" + _pageURL, function(data){
@@ -84,17 +88,16 @@
       });
 
       jQuery(document).on("submit", "#"+_targetID+" form", function(){
-
       
         /* submit the survey through ajax */
         jQuery.ajax({
           type: 'POST',
-          url: 'http://stage-voc.cloud.hhs.gov/survey_responses',
+          url: 'http://' + _hostname + '/survey_responses',
           data: target.children("form").first().serialize(),
           success: function(data, textStatus, jqxhr){
-            jQuery.getJSON("http://stage-voc.cloud.hhs.gov/surveys/" + surveyID + "/thank_you_page.json", "callback=?", function(data){
-            	target.html(data.html);
-          	});
+            jQuery.getJSON("http://" + _hostname + "/surveys/" + surveyID + "/thank_you_page.json", "callback=?", function(data){
+              target.html(data.html);
+            });
           }
         });
       
@@ -105,7 +108,7 @@
     }
 
     return {
-			/* Define the publicly accessible methods */
+      /* Define the publicly accessible methods */
       getTargetID: getTargetID,
       getSurveyID: getSurveyID,
       getPageURL:  getPageURL,

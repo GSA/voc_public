@@ -1,4 +1,6 @@
 CommentToolPublic::Application.routes.draw do
+  get "widget/widget"
+
   resources :surveys do
     collection do
       get 'thank_you' 
