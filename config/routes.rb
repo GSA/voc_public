@@ -1,7 +1,7 @@
 CommentToolPublic::Application.routes.draw do
   get "widget/widget"
 
-  resources :surveys do
+  resources :surveys, except: :destroy do
     collection do
       get 'thank_you' 
     end
@@ -9,7 +9,7 @@ CommentToolPublic::Application.routes.draw do
       get 'thank_you_page'
     end
   end
-  resources :survey_responses
+  resources :survey_responses, except: :destroy
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

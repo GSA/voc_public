@@ -121,19 +121,8 @@ class SurveysController < ApplicationController
 #    end
 #  end
 
-  # DELETE /surveys/1
-  # DELETE /surveys/1.xml
-  def destroy
-    @survey = Survey.find(params[:id])
-    @survey.destroy
+  #TODO: AND REMOVE ROUTE
 
-    respond_to do |format|
-      format.html { redirect_to(surveys_url) }
-      format.xml  { head :ok }
-    end
-  end
-  
-  
   private
   def get_survey_version(survey, version)
     major, minor = version.split('.')
