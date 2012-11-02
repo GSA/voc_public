@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
 
   def cors_preflight_check
     if request.method == :options
-      Rails.logger.info "Received OPTIONS request from #{request.env['HTTP_ORIGIN']}"
       headers['Access-Control-Allow-Origin'] = '*'
       headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
       headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Pragma'
