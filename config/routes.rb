@@ -9,7 +9,7 @@ CommentToolPublic::Application.routes.draw do
       get 'thank_you_page'
     end
   end
-  resources :survey_responses, except: :destroy
+  resources :survey_responses, only: :create
 
   match '/surveys/thank_you' => "surveys#thank_you", :via => [:options]
 end

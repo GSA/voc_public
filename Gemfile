@@ -19,6 +19,7 @@ group :development, :test do
 	gem 'ruby-debug19'
 	gem 'nifty-generators'
 	gem 'annotate'
+	gem 'pry-rails'
 end
 
 gem "mocha", :group => :test
