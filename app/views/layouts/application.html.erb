@@ -3,23 +3,25 @@
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
     <% if params[:stylesheet].blank? %>
-		<%= stylesheet_link_tag "application" %>
-		<style type="text/css">
-			<%# should be moved to application css %>
-			.vocradioslong .vocradio { display: block; margin-bottom: 5px; margin-top: 5px; }
-			.voccheckboxeslong .voccheckbox { display: block; margin-bottom: 5px; margin-top: 5px; }
-		</style>
-	<% end %>
+			<%= stylesheet_link_tag "application" %>
+			<style type="text/css">
+				<%# should be moved to application css %>
+				.vocradioslong .vocradio { display: block; margin-bottom: 5px; margin-top: 5px; }
+				.voccheckboxeslong .voccheckbox { display: block; margin-bottom: 5px; margin-top: 5px; }
+			</style>
+		<% end %>
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'gatc-survey' %>
     <%= javascript_include_tag 'gaaddons-survey.min.js' %>
   
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
-	<% unless params[:stylesheet].blank? %>
-		<%= stylesheet_link_tag h(params[:stylesheet]) %>
-	<% end %>
+    
+		<% unless params[:stylesheet].blank? %>
+			<%= stylesheet_link_tag h(params[:stylesheet]) %>
+		<% end %>
   </head>
+  
   <body>
     <div id="container">
       <% flash.each do |name, msg| %>

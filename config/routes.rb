@@ -12,4 +12,5 @@ CommentToolPublic::Application.routes.draw do
   resources :survey_responses, only: :create
 
   match '/surveys/thank_you' => "surveys#thank_you", :via => [:options]
+  root :to => 'surveys#index'
 end
