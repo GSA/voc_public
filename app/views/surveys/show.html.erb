@@ -41,13 +41,13 @@
 			                  <tr>
 			                    <th scope="row">
 														<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
-														<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+														<%= hidden_field_tag "q_#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
 													</th>
 			                    <% row_header.choice_answers.each do |a| %>
 			                      <td>
-			                      <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
+			                      <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id, :id => nil %>
 														<%= label_tag "response_raw_responses_attributes_#{index}_answer_#{a.id}", "a.answer", :style => "display:none" %>
-			                      <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer", :id => "response_raw_responses_attributes_#{index}_answer_#{a.id}" %>
+			                      <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer" %>
 			                      </td>
 			                    <% end %>
 			                  </tr>
@@ -56,7 +56,7 @@
 			              </table>
 						<% elsif element.assetable_type != "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
-							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
+							<%= hidden_field_tag "q_#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							
 							<div class="vocquestiontext"><span class="vocquestionnumber"><%= "#{question_number}." %> </span><%= element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%></div>
