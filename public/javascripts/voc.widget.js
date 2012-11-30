@@ -85,19 +85,29 @@
 
       jQuery(document).on("submit", "#"+_targetID+" form", function(){
 
-      
-        /* submit the survey through ajax */
-        jQuery.ajax({
-          type: 'POST',
-          url: 'http://stage-voc.cloud.hhs.gov/survey_responses',
-          data: target.children("form").first().serialize(),
-          success: function(data, textStatus, jqxhr){
-            jQuery.getJSON("http://stage-voc.cloud.hhs.gov/surveys/" + surveyID + "/thank_you_page.json", "callback=?", function(data){
-            	target.html(data.html);
-          	});
-          }
+        // create and post to a hidden iframe to avoid cross-domain POST limitations
+        var iframe = jQuery("<iframe>");
+        var uniqueString = "surveyPostContainerIframe";
+        var form = target.children("form").first();
+        
+        // add the hidden iframe
+        jQuery("body").append(iframe);
+        iframe.hide();
+
+        // direct the form post into the iframe's window
+        iframe[0].contentWindow.name = uniqueString;
+        form.attr("target", uniqueString);
+        form.attr("action", 'http://stage-voc.cloud.hhs.gov/survey_responses');
+
+        // call the native submit, not the jQuery submit wrapper
+        // this is to avoid hitting this handler twice (and looping)
+        form[0].submit();
+
+        // pull back the thank you page
+        jQuery.getJSON("http://stage-voc.cloud.hhs.gov/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
+          jQuery("#" + _targetID).html(data.html);
         });
-      
+
         return false;
       });
 

@@ -48,8 +48,8 @@
 	<script type="text/javascript" src="http://www.stopbullying.gov/jscripts/tynt.js"></script>	
 <!--[if IE]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen,print"	charset="utf-8">
 <![endif]-->
-  <script src="http://localhost:3000/javascripts/voc.widget.js"></script>
-  <link rel=StyleSheet href="http://localhost:3000/stylesheets/application.css" type="text/css">
+  <script src="http://stage-voc.cloud.hhs.gov/javascripts/voc.widget.js"></script>
+  <link rel="stylesheet" href="http://stage-voc.cloud.hhs.gov/stylesheets/application.css" type="text/css">
   <script type="text/javascript">
   $(function(){
   	$('form#chooseSurvey').submit(function() {
@@ -59,7 +59,7 @@
 	  	var response_url = $('input#response_Url').val();
 	  	if (response_url == "")
 	  		//default response url
-	  		response_url = (window.location.origin + window.location.pathname) || "http://localhost:3000/index.html";
+	  		response_url = (window.location.origin + window.location.pathname) || "http://stage-voc.cloud.hhs.gov/index.html";
 	 	survey = new voc.Survey({targetID: 'widget_target', surveyID: val, pageURL: response_url }).loadSurvey();
 	}
 	else
@@ -542,11 +542,11 @@
   	<input type="submit" value="Submit">
   	</div>
   	</form>
+    				</div> <!--End of VOC container-->
   <script type="text/javascript">
     document.write('<div id="widget_target"></div>');
   </script>
   <noscript>BLARGH!</noscript>			
-    				</div> <!--End of VOC container-->
     										</div> <!--End of this MainContent -->
 	</div> <!--end of this page_content_area-->	
 				
