@@ -72,7 +72,7 @@
     /* with id _targetID.                                                 */
     function loadSurvey() {
 
-      var _url = "http://stage-voc.cloud.hhs.gov/surveys/" + _surveyID + ".json";
+      var _url = "http://comment-app.hh.gov/surveys/" + _surveyID + ".json";
       var target = jQuery("#" + _targetID)
       var surveyID = _surveyID
 
@@ -97,14 +97,14 @@
         // direct the form post into the iframe's window
         iframe[0].contentWindow.name = uniqueString;
         form.attr("target", uniqueString);
-        form.attr("action", 'http://stage-voc.cloud.hhs.gov/survey_responses');
+        form.attr("action", 'http://comment-app.hh.gov/survey_responses');
 
         // call the native submit, not the jQuery submit wrapper
         // this is to avoid hitting this handler twice (and looping)
         form[0].submit();
 
         // pull back the thank you page
-        jQuery.getJSON("http://stage-voc.cloud.hhs.gov/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
+        jQuery.getJSON("http://comment-app.hh.gov/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
           jQuery("#" + _targetID).html(data.html);
         });
 
