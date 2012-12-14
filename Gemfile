@@ -20,6 +20,7 @@ group :development, :test do
 	gem 'nifty-generators'
 	gem 'annotate'
 	gem 'pry-rails'
+	gem 'yard'
 end
 
 gem "mocha", :group => :test

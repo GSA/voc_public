@@ -1,0 +1,1361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: DisplayField
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (D)</a> &raquo;
+    
+    
+    <span class="title">DisplayField</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: DisplayField
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">ActiveRecord::Base</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next">DisplayField</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/display_field_models/display_field.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A DisplayField (at the base level) represents a column of question response
+or admin-defined data.</p>
+
+<p>The intersection of a SurveyResponse and a DisplayField is a
+DisplayFieldValue, which represents how a single respondent answered a
+specific ChoiceQuestion or TextQuestion (as MatrixQuestions are comprised
+of multiple ChoiceQuestions.)</p>
+
+<p>DisplayFields also represent admin-defined data.  These are columns which
+are not populated by a survey respondent, instead filled in through Actions
+triggered by Rules.</p>
+
+<p>DisplayFields based on questions have readonly DisplayFieldValues;
+admin-defined DisplayFields' values are editable.</p>
+
+<p>DisplayFields are also tracked by CustomViews to determine column ordering.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="DisplayFieldBoolean.html" title="DisplayFieldBoolean (class)">DisplayFieldBoolean</a></span>, <span class='object_link'><a href="DisplayFieldChoiceMultiselect.html" title="DisplayFieldChoiceMultiselect (class)">DisplayFieldChoiceMultiselect</a></span>, <span class='object_link'><a href="DisplayFieldChoiceSingle.html" title="DisplayFieldChoiceSingle (class)">DisplayFieldChoiceSingle</a></span>, <span class='object_link'><a href="DisplayFieldCurrency.html" title="DisplayFieldCurrency (class)">DisplayFieldCurrency</a></span>, <span class='object_link'><a href="DisplayFieldCurrencyInteger.html" title="DisplayFieldCurrencyInteger (class)">DisplayFieldCurrencyInteger</a></span>, <span class='object_link'><a href="DisplayFieldDate.html" title="DisplayFieldDate (class)">DisplayFieldDate</a></span>, <span class='object_link'><a href="DisplayFieldEmail.html" title="DisplayFieldEmail (class)">DisplayFieldEmail</a></span>, <span class='object_link'><a href="DisplayFieldFloat.html" title="DisplayFieldFloat (class)">DisplayFieldFloat</a></span>, <span class='object_link'><a href="DisplayFieldInteger.html" title="DisplayFieldInteger (class)">DisplayFieldInteger</a></span>, <span class='object_link'><a href="DisplayFieldPercent.html" title="DisplayFieldPercent (class)">DisplayFieldPercent</a></span>, <span class='object_link'><a href="DisplayFieldPerson.html" title="DisplayFieldPerson (class)">DisplayFieldPerson</a></span>, <span class='object_link'><a href="DisplayFieldPhone.html" title="DisplayFieldPhone (class)">DisplayFieldPhone</a></span>, <span class='object_link'><a href="DisplayFieldRtf.html" title="DisplayFieldRtf (class)">DisplayFieldRtf</a></span>, <span class='object_link'><a href="DisplayFieldText.html" title="DisplayFieldText (class)">DisplayFieldText</a></span>, <span class='object_link'><a href="DisplayFieldTextMulti.html" title="DisplayFieldTextMulti (class)">DisplayFieldTextMulti</a></span>, <span class='object_link'><a href="DisplayFieldUrl.html" title="DisplayFieldUrl (class)">DisplayFieldUrl</a></span>, <span class='object_link'><a href="DisplayFieldUrlAsLink.html" title="DisplayFieldUrlAsLink (class)">DisplayFieldUrlAsLink</a></span></p>
+</div>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_options-class_method" title="select_options (class method)">+ (Object) <strong>select_options</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Populates the Type dropdown on the DisplayField form view.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check_condition-instance_method" title="#check_condition (instance method)">- (Object) <strong>check_condition</strong>(survey_response, conditional_id, test_value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used by Criteria in Rules to process survey_responses against Conditionals.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (DisplayField) <strong>clone_me</strong>(target_sv) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Duplicates the DisplayField upon cloning a SurveyVersion.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#decrement_display_order-instance_method" title="#decrement_display_order (instance method)">- (Object) <strong>decrement_display_order</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used to reorder a DisplayField left within the SurveyResponse standard
+view.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_values-instance_method" title="#default_values (instance method)">- (Object) <strong>default_values</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Ensures, upon validation, that a DisplayField is set to be editable unless
+it has been explicitly created not to be (i.e. DB-backed.).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_my_clone_for-instance_method" title="#find_my_clone_for (instance method)">- (DisplayField) <strong>find_my_clone_for</strong>(target_sv) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the clone for this DisplayField within a cloned SurveyVersion.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_display_field_header-instance_method" title="#get_display_field_header (instance method)">- (Object) <strong>get_display_field_header</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used to retrieve the name property on the Rule show view.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#increment_display_order-instance_method" title="#increment_display_order (instance method)">- (Object) <strong>increment_display_order</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used to reorder a DisplayField right within the SurveyResponse standard
+view.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#model_type-instance_method" title="#model_type (instance method)">- (String) <strong>model_type</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Getter for the Questionable type.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#model_type%3D-instance_method" title="#model_type= (instance method)">- (Object) <strong>model_type=</strong>(m_type) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Setter for the Questionable type.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_display_field-instance_method" title="#move_display_field (instance method)">- (Object) <strong>move_display_field</strong>(target_display_order) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Invoked when increment_display_order or decrement_display_order are used;
+reorders other DisplayFields appropriately.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#populate_default_values%21-instance_method" title="#populate_default_values! (instance method)">- (Object) <strong>populate_default_values!</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates default DisplayFieldValue mappings on the current SurveyVersion's
+SurveyResponses.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#strip_choices-instance_method" title="#strip_choices (instance method)">- (Object) <strong>strip_choices</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Removes choices from DisplayFieldText (N/A) upon save.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#strip_default_value-instance_method" title="#strip_default_value (instance method)">- (Object) <strong>strip_default_value</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Removes the default value from a DisplayFieldChoiceMultiselect (N/A) upon
+save.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="select_options-class_method">
+  
+    + (<tt>Object</tt>) <strong>select_options</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Populates the Type dropdown on the DisplayField form view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+107
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 107</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_select_options'>select_options</span>
+  <span class='comment'># TODO: reenable this when display field validations have been implemented
+</span>  <span class='comment'># to allow a user to select a different display field type.
+</span>  <span class='comment'>#subclasses.map {|c| [c.to_s.titleize.split(' ')[2..-1].join(' '), c.to_s]}.sort
+</span>  <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Text</span><span class='tstring_end'>'</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>DisplayFieldText</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Dropdown</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>DisplayFieldChoiceSingle</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Checkboxes</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>DisplayFieldChoiceMultiselect</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="check_condition-instance_method">
+  
+    - (<tt>Object</tt>) <strong>check_condition</strong>(survey_response, conditional_id, test_value) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used by Criteria in Rules to process survey_responses against Conditionals</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>survey_response</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyResponse.html" title="SurveyResponse (class)">SurveyResponse</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a SurveyResponse to test</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>conditional_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the operator used to test</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>test_value</span>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value to test</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
+
+  <span class='comment'>#find the existing value displayfieldvalue
+</span>  <span class='id identifier rubyid_display_field_value'>display_field_value</span> <span class='op'>=</span> <span class='const'>DisplayFieldValue</span><span class='period'>.</span><span class='id identifier rubyid_find_or_create_by_survey_response_id_and_display_field_id'>find_or_create_by_survey_response_id_and_display_field_id</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='kw'>return</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_display_field_value'>display_field_value</span>
+  <span class='id identifier rubyid_answer'>answer</span> <span class='op'>=</span> <span class='id identifier rubyid_display_field_value'>display_field_value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
+
+  <span class='const'>ConditionTester</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clone_me-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="DisplayField (class)">DisplayField</a></span></tt>) <strong>clone_me</strong>(target_sv) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Duplicates the DisplayField upon cloning a SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion destination for the new cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="DisplayField (class)">DisplayField</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned DisplayField</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_name'>find_by_name</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_df'>df</span> <span class='kw'>if</span> <span class='id identifier rubyid_df'>df</span>
+  <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:clone_of_id</span><span class='op'>=&gt;</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='symbol'>:survey_version_id</span> <span class='op'>=&gt;</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='symbol'>:model_type</span><span class='op'>=&gt;</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='symbol'>:display_order</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="decrement_display_order-instance_method">
+  
+    - (<tt>Object</tt>) <strong>decrement_display_order</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to reorder a DisplayField left within the SurveyResponse standard
+view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_decrement_display_order'>decrement_display_order</span>
+  <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>-</span> <span class='int'>1</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_move_display_field'>move_display_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_values-instance_method">
+  
+    - (<tt>Object</tt>) <strong>default_values</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Ensures, upon validation, that a DisplayField is set to be editable unless
+it has been explicitly created not to be (i.e. DB-backed.)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 42</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_values'>default_values</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_editable'>editable</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_editable'>editable</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>return</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_my_clone_for-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="DisplayField (class)">DisplayField</a></span></tt>) <strong>find_my_clone_for</strong>(target_sv) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the clone for this DisplayField within a cloned SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion to search for the cloned copy.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="DisplayField (class)">DisplayField</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the original DisplayField</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+148
+149
+150</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 148</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_my_clone_for'>find_my_clone_for</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_clone_of_id'>find_by_clone_of_id</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_display_field_header-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_display_field_header</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to retrieve the name property on the Rule show view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+130
+131
+132</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 130</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_display_field_header'>get_display_field_header</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="increment_display_order-instance_method">
+  
+    - (<tt>Object</tt>) <strong>increment_display_order</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to reorder a DisplayField right within the SurveyResponse standard
+view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_increment_display_order'>increment_display_order</span>
+  <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>+</span> <span class='int'>1</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_move_display_field'>move_display_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="model_type-instance_method">
+  
+    - (<tt>String</tt>) <strong>model_type</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Getter for the Questionable type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the model type</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_model_type'>model_type</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="model_type=-instance_method">
+  
+    - (<tt>Object</tt>) <strong>model_type=</strong>(m_type) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Setter for the Questionable type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>m_type</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the type to set</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_model_type='>model_type=</span><span class='lparen'>(</span><span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_write_attribute'>write_attribute</span><span class='lparen'>(</span><span class='symbol'>:type</span><span class='comma'>,</span> <span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_display_field-instance_method">
+  
+    - (<tt>Object</tt>) <strong>move_display_field</strong>(target_display_order) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Invoked when increment_display_order or decrement_display_order are used;
+reorders other DisplayFields appropriately.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_display_order</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>defines the threshold index used to reorder DisplayFields</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_display_field'>move_display_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span>
+  <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_start_index'>start_index</span><span class='comma'>,</span> <span class='id identifier rubyid_end_index'>end_index</span> <span class='op'>=</span> <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>&lt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='comma'>,</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span><span class='comma'>,</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rbracket'>]</span>
+
+    <span class='comment'>#shift range from target to source (overright source with it's neighbor in direction of target)
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>&lt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>display_order &gt;= ? and display_order &lt; ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_start_index'>start_index</span><span class='comma'>,</span> <span class='id identifier rubyid_end_index'>end_index</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_order = display_order + 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>display_order &gt; ? and display_order &lt;= ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_start_index'>start_index</span><span class='comma'>,</span> <span class='id identifier rubyid_end_index'>end_index</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_order = display_order - 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='comment'>#update source to target
+</span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:display_order</span><span class='comma'>,</span> <span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="populate_default_values!-instance_method">
+  
+    - (<tt>Object</tt>) <strong>populate_default_values!</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates default DisplayFieldValue mappings on the current SurveyVersion's
+SurveyResponses.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+153
+154
+155
+156
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 153</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_populate_default_values!'>populate_default_values!</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_find_in_batches'>find_in_batches</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='op'>|</span>
+    <span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sr'>sr</span><span class='op'>|</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_field_values'>display_field_values</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span> <span class='symbol'>:survey_response_id</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_sr'>sr</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='symbol'>:value</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_value'>default_value</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_field_values'>display_field_values</span><span class='period'>.</span><span class='id identifier rubyid_find_by_survey_response_id'>find_by_survey_response_id</span><span class='lparen'>(</span><span class='id identifier rubyid_sr'>sr</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="strip_choices-instance_method">
+  
+    - (<tt>Object</tt>) <strong>strip_choices</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Removes choices from DisplayFieldText (N/A) upon save.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+55
+56
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 55</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_strip_choices'>strip_choices</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DisplayFieldText</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choices'>choices</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="strip_default_value-instance_method">
+  
+    - (<tt>Object</tt>) <strong>strip_default_value</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Removes the default value from a DisplayFieldChoiceMultiselect (N/A) upon
+save.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_strip_default_value'>strip_default_value</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DisplayFieldChoiceMultiselect</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_value'>default_value</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Fri Dec 14 09:46:13 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
