@@ -6,25 +6,31 @@ gem 'rails', '3.0.12'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'jquery-rails'
-gem 'thin'
 gem 'kaminari'
-gem 'delayed_job', '2.1.4'
-gem 'unicorn-rails'
+gem 'delayed_job'
 gem 'memcache-client'
 gem 'authlogic'
 gem 'paperclip'
 
+platform :ruby do
+  gem 'thin'
+  gem 'unicorn-rails'
+  gem 'mysql2', '< 0.3'
+end
+
+platform :jruby do
+  gem 'activerecord-jdbc-adapter'
+  gem 'jdbc-mysql'
+  gem 'activerecord-jdbcmysql-adapter'
+  gem 'delayed_job_active_record'
+  gem 'warbler'
+end
 
 group :development, :test do 
-	gem 'ruby-debug19'
-	gem 'nifty-generators'
-	gem 'annotate'
-	gem 'pry-rails'
-	gem 'yard'
+  gem 'nifty-generators'
+  gem 'annotate'
+  gem 'pry-rails'
+  gem 'yard'
 end
 
 gem "mocha", :group => :test
-
-group :mysql_db do
-	gem 'mysql2', '< 0.3'
-end
