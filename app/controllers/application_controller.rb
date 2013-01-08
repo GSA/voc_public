@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Base Controller class; provides support for
 # {http://en.wikipedia.org/wiki/Cross-origin_resource_sharing cross-origin resource sharing (CORS)}.
 class ApplicationController < ActionController::Base

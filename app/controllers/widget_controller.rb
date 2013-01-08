@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of the Javascript widget.
 class WidgetController < ApplicationController
   respond_to :js

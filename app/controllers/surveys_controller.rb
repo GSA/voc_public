@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the Survey lifecycle.
 class SurveysController < ApplicationController
   caches_action :show, :cache_path => Proc.new {|c|

@@ -94,6 +94,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -234,17 +250,17 @@ generates the Javascript logic to enforce correct page switching.</p>
       <pre class="lines">
 
 
-9
-10
 11
 12
 13
 14
 15
-16</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/surveys_helper.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/surveys_helper.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_next_page_on_change'>generate_next_page_on_change</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_q_content'>q_content</span> <span class='op'>=</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span>
@@ -356,8 +372,6 @@ to the next page upon response.</p>
       <pre class="lines">
 
 
-25
-26
 27
 28
 29
@@ -367,10 +381,12 @@ to the next page upon response.</p>
 33
 34
 35
-36</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/surveys_helper.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/surveys_helper.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_onclick'>generate_onclick</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_onclick'>onclick</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -394,7 +410,7 @@ to the next page upon response.</p>
 </div>
 
     <div id="footer">
-  Generated on Fri Dec 14 09:46:11 2012 by
+  Generated on Tue Jan  8 15:41:54 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>
