@@ -19,6 +19,7 @@ platform :ruby do
 end
 
 platform :jruby do
+  gem 'jruby-openssl', :require => false
   gem 'activerecord-jdbc-adapter'
   gem 'jdbc-mysql'
   gem 'activerecord-jdbcmysql-adapter'
