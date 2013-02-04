@@ -159,6 +159,7 @@ DEPENDENCIES
   jdbc-mysql
   jquery-rails
   jruby-openssl
+  jruby-rack
   kaminari
   memcache-client
   mocha
