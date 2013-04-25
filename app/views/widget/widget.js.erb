@@ -3,7 +3,8 @@
 
   /* Local JQuery variable */
   var jQuery;
-
+  alert(<%=page.page_number%>);
+alert(<%= params[:survey_id].to_i  %>);
   /* Load jQuery if it is not present */
   if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
     var script_tag = document.createElement('script');
@@ -46,7 +47,7 @@
     window.voc = {
       Survey: survey
     }
-
+//alert(<%= params[:survey_id] %>);
     survey = voc.Survey({surveyID: <%= params[:survey_id].to_i %>});
     <% unless params[:target_id].blank? %>
       survey.setTargetID('<%= params[:target_id] %>');
@@ -76,7 +77,8 @@
     /* Attempt to load the survey with id _surveyID into the DOM element  */
     /* with id _targetID.                                                 */
     function loadSurvey() {
-      var _hostname = "<%= APP_CONFIG['host'] %>";
+      var _hostname = "<%= APP_CONFIG['host'] %>";     
+      // alert(_hostname);
       var _url = "http://"+ _hostname + "/surveys/" + _surveyID + ".json";
       var target = jQuery("#" + _targetID)
       var surveyID = _surveyID

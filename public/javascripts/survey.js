@@ -1,9 +1,14 @@
 $(function() {
+
+var _relative_url = APP_CONFIG['relative_url'];
+ var _hostname = "<%= APP_CONFIG['host'] %>";
 	// iframe: if a page url isn't passed in on the query string, grab parent referrer.
 	var page_url = $("#response_page_url");
 	if (page_url.val() == "" && parent) {
 		page_url.val(parent.document.location.origin + parent.document.location.pathname);
 	}
+
+	alert( _relative_url);
 });
 
 function show_next_page(page){

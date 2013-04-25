@@ -6,6 +6,6 @@ class WidgetController < ApplicationController
 
   # Provides a customized (server-configured) copy of the
   # widget Javascript on demand.
-  def widget
+  def widget  	
   end
 end

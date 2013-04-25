@@ -1,3 +1,5 @@
+
+#ENV['RAILS_RELATIVE_URL_ROOT'] = "/vocsub"
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
