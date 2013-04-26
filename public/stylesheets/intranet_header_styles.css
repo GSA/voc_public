@@ -27,7 +27,7 @@
 #hhsMastHead {
   margin: 0px;
   padding: 0px;
-  background: url(/images/headerBack.jpg);
+  background: url(../images/headerBack.jpg);
 }
 
 #utilityNavigation{
@@ -35,7 +35,7 @@
   right:0px;
   top:28px;
   height:21px;
-  background:url(/images/utilityBack.jpg);
+  background:url(../images/utilityBack.jpg);
   padding-right:10px;
   min-width:24em
 }
