@@ -3,8 +3,7 @@
 
   /* Local JQuery variable */
   var jQuery;
-// var page_url = $("#response_page_url");
-// alert(page_url );
+
   /* Load jQuery if it is not present */
   if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
     var script_tag = document.createElement('script');
