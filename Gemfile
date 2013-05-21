@@ -1,19 +1,23 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '182d4e3719' # 3.0.21, see https://github.com/rails/rails/pull/9126
+# 3.0 stable as of March 15, 2013, see https://github.com/rails/rails/commits/3-0-stable
+gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '77403a9'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'memcache-client'
+gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
-gem 'delayed_job_active_record'
-gem 'memcache-client'
-gem 'authlogic'
-gem 'paperclip'
+
+# OLD! Delayed_Job for asynchronous processing
+# gem 'delayed_job_active_record'
+# gem 'daemons', :require => false
+
+# NEW: Resque
+gem 'resque'
+gem 'resque_mailer'
+gem 'resque_unit', :group => :test
 
 platform :ruby do
-  gem 'thin'
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
 end
@@ -31,10 +35,9 @@ platform :jruby do
 end
 
 group :development, :test do 
-  gem 'nifty-generators'
-  gem 'annotate'
   gem 'pry-rails'
-  gem 'yard'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 gem "mocha", :group => :test
