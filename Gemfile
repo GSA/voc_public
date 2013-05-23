@@ -8,14 +8,8 @@ gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
 
-# OLD! Delayed_Job for asynchronous processing
-# gem 'delayed_job_active_record'
-# gem 'daemons', :require => false
-
-# NEW: Resque
-gem 'resque'
-gem 'resque_mailer'
-gem 'resque_unit', :group => :test
+gem 'delayed_job_active_record'
+gem 'daemons', :require => false
 
 platform :ruby do
   gem 'unicorn-rails'
