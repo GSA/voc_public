@@ -7,6 +7,8 @@
 # the SurveyResponse links to the RawResponses, which are the historical
 # and unedited responses as entered by the survey taker.
 class SurveyResponse < ActiveRecord::Base
+  include ResqueAsyncRunner
+  @queue = :responses
 
   has_many :raw_responses, :dependent => :destroy
   has_many :display_field_values
@@ -65,7 +67,12 @@ class SurveyResponse < ActiveRecord::Base
   # kaminari setting
   paginates_per 10
 
-  # Create a SurveyResponse from the RawResponse.  This is used by Delayed::Job to process the
+  # Wrapper for Resque job worker
+  def self.perform(response, survey_version_id)
+    self.process_response(response, survey_version_id)
+  end
+
+  # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
   # 
   # @param [Hash] response the response parameter hash to process from the controller
