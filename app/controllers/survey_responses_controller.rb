@@ -7,7 +7,11 @@ class SurveyResponsesController < ApplicationController
   def create
     # The survey respondent doesn't care if the submit actually succeeded or not.  Delay the processing
     # of the response so the browser will return immediately
-    Resque.enqueue(SurveyResponseCreateJob, params[:response], params[:survey_version_id])
+    begin
+      Resque.enqueue(SurveyResponseCreateJob, params[:response], params[:survey_version_id])
+    rescue
+      ResquedJob.create(class_name: "SurveyResponseCreateJob", job_arguments: [ params[:response], params[:survey_version_id] ])
+    end
 
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
