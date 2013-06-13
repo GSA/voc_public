@@ -12,6 +12,7 @@ class SurveyResponsesController < ApplicationController
     begin
       Resque.enqueue(SurveyResponseCreateJob, *resque_args)
     rescue
+      Rails.logger.error("Error queueing Resque job: #{$!.to_s}")
       ResquedJob.create(class_name: "SurveyResponseCreateJob", job_arguments: resque_args )
     end
 
