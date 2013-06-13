@@ -53,6 +53,9 @@ GEM
       activerecord-jdbc-adapter (~> 1.2.5)
       jdbc-mysql (~> 5.1.0)
     arel (2.0.10)
+    authlogic (3.2.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     backports (3.3.0)
     better_errors (0.8.0)
       coderay (>= 1.0.0)
@@ -164,6 +167,7 @@ GEM
       jruby-rack (>= 1.0.0)
       rake (>= 0.8.7)
       rubyzip (>= 0.9.4)
+    yard (0.8.6.1)
 
 PLATFORMS
   java
@@ -172,6 +176,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-jdbc-adapter
   activerecord-jdbcmysql-adapter
+  authlogic
   better_errors
   binding_of_caller
   jdbc-mysql
@@ -191,3 +196,4 @@ DEPENDENCIES
   resque_unit
   unicorn-rails
   warbler
+  yard

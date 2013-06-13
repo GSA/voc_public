@@ -7,6 +7,7 @@ gem 'memcache-client'
 gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'authlogic'
 
 # OLD! Delayed_Job for asynchronous processing
 # gem 'delayed_job_active_record'
@@ -39,6 +40,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'yard'
 end
 
 gem "mocha", :group => :test
