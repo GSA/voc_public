@@ -7,9 +7,17 @@ gem 'memcache-client'
 gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'authlogic'
 
-gem 'delayed_job_active_record'
-gem 'daemons', :require => false
+# OLD! Delayed_Job for asynchronous processing
+# gem 'delayed_job_active_record'
+# gem 'daemons', :require => false
+
+# NEW: Resque
+gem 'resque'
+gem 'resque_mailer'
+gem 'resque-status'
+gem 'resque_unit', :group => :test
 
 platform :ruby do
   gem 'unicorn-rails'
@@ -32,6 +40,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'yard'
 end
 
 gem "mocha", :group => :test
