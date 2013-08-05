@@ -5,6 +5,7 @@ class SurveysController < ApplicationController
   before_filter :get_survey_and_version, :only => :show
   before_filter :count_visit, :only => :show
   caches_action :show, :cache_path => Proc.new {|c|
+    c.params[:survey_version_id] = @survey_version.id
     c.params.delete_if {|k,v| k.starts_with?('utm_')}
   }
   
