@@ -2,10 +2,7 @@
 #
 # Manages the Survey lifecycle.
 class SurveysController < ApplicationController
-  before_filter :get_survey_and_version, :only => :show
-  before_filter :count_visit, :only => :show
   caches_action :show, :cache_path => Proc.new {|c|
-    c.params[:survey_version_id] = @survey_version.id
     c.params.delete_if {|k,v| k.starts_with?('utm_')}
   }
   
@@ -53,6 +50,7 @@ class SurveysController < ApplicationController
 
   # GET     /surveys/:id(.:format)
   def show
+    get_survey_and_version
     #@survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
     
     respond_to do |format|
