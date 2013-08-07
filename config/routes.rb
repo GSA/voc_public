@@ -7,6 +7,7 @@ CommentToolPublic::Application.routes.draw do
     end
     member do
       get 'thank_you_page'
+      get 'visit'
     end
   end
   resources :survey_responses, only: :create

@@ -64,18 +64,21 @@ class SurveysController < ApplicationController
     end
   end
 
+  # GET     /surveys/:id/visit(.:format)
+  def visit
+    cookie_name = "survey_view_#{params[:id]}"
+    unless cookies[cookie_name].present?
+      get_survey_and_version
+      cookies[cookie_name] = {:value => true, :expires => 1.day.from_now}
+      @survey_version.visits.increment
+    end
+    render :nothing => true
+  end
+
   private
   def get_survey_and_version
     @survey = Survey.find(params[:id])
     @survey_version = @survey.published_version
-  end
-
-  def count_visit
-    cookie_name = "survey_view_#{@survey.id}"
-    unless cookies[cookie_name].present?
-      cookies[cookie_name] = {:value => true, :expires => 1.day.from_now}
-      @survey_version.visits.increment
-    end
   end
 
   def get_survey_version(survey, version)
