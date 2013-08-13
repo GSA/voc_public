@@ -22,7 +22,7 @@ function show_next_page(page){
 		window.location.hash="PAGE_" + next_page;
 
 		var title = $(document).prop("title");
-		$(document).prop("title", title.replace(/(\d+)/, page));
+		$(document).prop("title", title.replace(/(\d+)/, next_page));
 	} else {
 		alert('Please answer all required questions before moving on to the next page.');
 	}
@@ -31,12 +31,13 @@ function show_next_page(page){
 
 function show_prev_page(page){
 	$("#page_"+page).hide();
-	$("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
+	var prev_page = $("#page_" + page + "_prev_page").val();
+	$("#page_"+ prev_page ).show();
 
-	window.location.hash = "PAGE_" + page;
+	window.location.hash = "PAGE_" + prev_page;
 
 	var title = $(document).prop("title");
-	$(document).prop("title", title.replace(/(\d+)/, page));
+	$(document).prop("title", title.replace(/(\d+)/, prev_page));
 }
 
 function set_next_page(current_page, next_page) {
