@@ -1,5 +1,6 @@
 CommentToolPublic::Application.routes.draw do
-  get "widget/widget"
+  get 'widget/widget'
+  get 'scripts/gatc-survey', to: 'google_analytics#gatc_survey'
 
   resources :surveys, except: :destroy do
     member do

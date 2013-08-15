@@ -1,8 +1,20 @@
 development:
   host: localhost:3000
+  redis: localhost:6379
+  redis-expire: 86400
+  ga_id: UA-00000000-1
+  ga_site: example.gov
 
 test:
   host: localhost:3000
+  redis: localhost:6379
+  redis-expire: 86400
+  ga_id: UA-00000000-1
+  ga_site: example.gov
 
 production:
   host: yourserver.domain.local
+  redis: redis-server:6379
+  redis-expire: 86400
+  ga_id: UA-00000000-1
+  ga_site: example.gov
