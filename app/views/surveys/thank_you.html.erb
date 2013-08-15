@@ -1,3 +1,9 @@
-<div id="thank_you_text">
-	<span id="important_to_us">Your feedback is important to us.</span> Thank you for taking our survey!
-</div>
+<% title "#{survey.name} - Thank You - #{survey.survey_type.name.titleize}" %>
+
+<% if survey_version.present? && survey_version.thank_you_page.present? %>
+	<%= survey_version.thank_you_page.html_safe %>
+<% else %>
+	<div id="thank_you_text">
+		<span id="important_to_us">Your feedback is important to us.</span> Thank you for taking our survey!
+	</div>
+<% end %>
