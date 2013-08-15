@@ -6,12 +6,12 @@ class SurveysController < ApplicationController
     c.params.delete_if {|k,v| k.starts_with?('utm_')}
   }
   
-  # OPTIONS /surveys/thank_you(.:format)
+  # GET /surveys/:id/thank_you_page(.:format)
   def thank_you_page
-    @survey_version = Survey.find(params[:id]).try(:published_version)
+    get_survey_and_version
 
     respond_to do |format|
-      if @survey_version.survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
+      if @survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
         @results = PollResults.new(@survey_version)
         format.html {render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application'}
         format.json do
@@ -20,19 +20,15 @@ class SurveysController < ApplicationController
           render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
         end
       else
-        if @survey_version.present? && @survey_version.thank_you_page.present?
-          format.html {render :text => @survey_version.thank_you_page, :stylesheet => params[:stylesheet], :layout => 'application'}
-          format.json do
-            json = {:html => @survey_version.thank_you_page }.to_json
-            render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript", :layout => false
-          end
-        else
-          format.html {redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]}
-          format.json do
-            html = render_to_string :template => "surveys/thank_you.html.erb", :layout => false
+        format.html do
+          render :template => "surveys/thank_you.html.erb", :stylesheet => params[:stylesheet],
+                 locals: { survey: @survey, survey_version: @survey_version }
+        end
+        format.json do
+            html = render_to_string :template => "surveys/thank_you.html.erb", :layout => false,
+                                    :locals => { survey: @survey, survey_version: @survey_version }
             json = {:html => html}.to_json
             render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript", :layout => false
-          end
         end
       end 
     end

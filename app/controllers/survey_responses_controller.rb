@@ -15,11 +15,7 @@ class SurveyResponsesController < ApplicationController
       @results = PollResults.new(@survey_version)
       render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application'
     else
-      if @survey_version.present? && @survey_version.thank_you_page.present?
-        render :text => @survey_version.thank_you_page, :stylesheet => params[:stylesheet], :layout => 'application'
-      else
-        redirect_to :controller => 'surveys', :action => 'thank_you', :stylesheet => params[:stylesheet]
-      end
+      redirect_to thank_you_page_survey_path(@survey_version.survey), :stylesheet => params[:stylesheet]
     end
   end
 end
