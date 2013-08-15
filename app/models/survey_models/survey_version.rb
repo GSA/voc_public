@@ -5,6 +5,7 @@ require 'csv'
 # A SurveyVersion is a working copy of a survey.  Only one version may be published (and
 # therefore collecting responses from the public site application) at a time.
 class SurveyVersion < ActiveRecord::Base
+  include Redis::Objects
   include ResqueAsyncRunner
   @queue = :voc_csv
 
@@ -41,6 +42,8 @@ class SurveyVersion < ActiveRecord::Base
 
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
+
+  counter :visits
 
   # Create a CSV export of the survey responses and notify the requesting user by email
   # when the export has completed and is available for download.

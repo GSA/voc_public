@@ -6,6 +6,10 @@ $(function() {
 	}
 });
 
+function replace_page_number_in_title(title, number) {
+	return title.replace(/ - Page \d+ - /, " - Page " + number + " - ");
+}
+
 function show_next_page(page){
 	var required_unanswered = false;
 	
@@ -15,11 +19,14 @@ function show_next_page(page){
 		$("#page_" + page).hide();
 		var next_page = $("#page_" + page + "_next_page").val();
     
-    /* Set the prev page on next page */
-   set_prev_page(page, next_page);
+	    /* Set the prev page on next page */
+	    set_prev_page(page, next_page);
     
 		$("#page_"+ next_page).show();	
 		window.location.hash="PAGE_" + next_page;
+
+		var title = $(document).prop("title");
+		$(document).prop("title", replace_page_number_in_title(title, next_page));
 	} else {
 		alert('Please answer all required questions before moving on to the next page.');
 	}
@@ -28,8 +35,13 @@ function show_next_page(page){
 
 function show_prev_page(page){
 	$("#page_"+page).hide();
-	$("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
-	window.location.hash = "PAGE_" + page;
+	var prev_page = $("#page_" + page + "_prev_page").val();
+	$("#page_"+ prev_page ).show();
+
+	window.location.hash = "PAGE_" + prev_page;
+
+	var title = $(document).prop("title");
+	$(document).prop("title", replace_page_number_in_title(title, prev_page));
 }
 
 function set_next_page(current_page, next_page) {
