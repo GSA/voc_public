@@ -66,7 +66,7 @@ class SurveysController < ApplicationController
     unless cookies[cookie_name].present?
       get_survey_and_version
       cookies[cookie_name] = {:value => true, :expires => 1.day.from_now}
-      @survey_version.visits.increment
+      @survey_version.increment_temp_visit_count
     end
     render :nothing => true
   end

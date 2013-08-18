@@ -43,7 +43,11 @@ class SurveyVersion < ActiveRecord::Base
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
 
-  counter :visits
+  hash_key :temp_visit_count
+
+  def increment_temp_visit_count
+    temp_visit_count.incr(today_string, 1)
+  end
 
   # Create a CSV export of the survey responses and notify the requesting user by email
   # when the export has completed and is available for download.
@@ -243,6 +247,15 @@ class SurveyVersion < ActiveRecord::Base
 
       new_sv
     end
+  end
+
+  private
+  def today
+    Time.now.in_time_zone("Eastern Time (US & Canada)").to_date
+  end
+
+  def today_string
+    today.strftime("%Y-%m-%d")
   end
 end
 
