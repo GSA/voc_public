@@ -13,9 +13,13 @@ class SurveysController < ApplicationController
     respond_to do |format|
       if @survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
         @results = PollResults.new(@survey_version)
-        format.html {render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application'}
+        format.html do
+          render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application',
+                 locals: { survey: @survey, survey_version: @survey_version, results: @results }
+        end
         format.json do
-          html = render_to_string(:template => 'surveys/poll_results.html.erb', :layout => false)
+          html = render_to_string :template => 'surveys/poll_results.html.erb', :layout => false,
+                                  locals: { survey: @survey, survey_version: @survey_version, results: @results }
           json = {:html => html}.to_json
           render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
         end
