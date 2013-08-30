@@ -18,11 +18,6 @@ class SurveyResponsesController < ApplicationController
 
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
-    if @survey_version.survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
-      @results = PollResults.new(@survey_version)
-      render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application'
-    else
-      redirect_to thank_you_page_survey_path(@survey_version.survey), :stylesheet => params[:stylesheet]
-    end
+    redirect_to thank_you_page_survey_path(@survey_version.survey), :stylesheet => params[:stylesheet]
   end
 end
