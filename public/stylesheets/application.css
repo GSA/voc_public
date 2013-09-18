@@ -121,6 +121,18 @@ a img {
 	vertical-align: top;
 }
 
+.vocradioslong .vocradio {
+	display: block;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+.voccheckboxeslong .voccheckbox {
+	display: block;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
 textarea {
 	font-family: Verdana, Helvetica, Arial, san-serif;
 	font-size: 11px;
