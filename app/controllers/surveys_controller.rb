@@ -66,6 +66,11 @@ class SurveysController < ApplicationController
   end
 
   private
+  def get_survey_and_version
+    @survey = Survey.find(params[:id])
+    @survey_version = @survey.published_version
+  end
+
   def get_survey_version(survey, version)
     major, minor = version.split('.')
     @survey_version = survey.survey_versions.where(:major => major, :minor => minor).first
