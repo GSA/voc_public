@@ -132,27 +132,27 @@ class SurveyResponse < ActiveRecord::Base
   # @param [Date] date last run date, i.e. now
   # @return [nil, SurveyResponse] the next SurveyResponse to process, if applicable
   def self.get_next_response(worker_name, mode, *date)
-      ActiveRecord::Base.transaction do
-        
-        # get next response (locking so we can stop other workers from grabbing it)
-        response = SurveyResponse.find_by_worker_name(worker_name, :lock => true)
-        
-        if mode =="new"
-          nr_id = NewResponse.next_response.first.try(:survey_response_id)
-          return(nil) unless nr_id
-          response ||= SurveyResponse.find(nr_id, :lock => true)
-        elsif mode == "nightly"
-          response ||= SurveyResponse.where("last_processed < ? ", date[0]).first
-          return(nil) unless response
-        end
-        
-        # set its status and worker
-        response.update_attributes(:status_id => Status::PROCESSING, :worker_name => worker_name)
-        
-        # return the reponse
-        response
+    ActiveRecord::Base.transaction do
+      
+      # get next response (locking so we can stop other workers from grabbing it)
+      response = SurveyResponse.find_by_worker_name(worker_name, :lock => true)
+      
+      if mode =="new"
+        nr_id = NewResponse.next_response.first.try(:survey_response_id)
+        return(nil) unless nr_id
+        response ||= SurveyResponse.find(nr_id, :lock => true)
+      elsif mode == "nightly"
+        response ||= SurveyResponse.where("last_processed < ? ", date[0]).first
+        return(nil) unless response
       end
+      
+      # set its status and worker
+      response.update_attributes(:status_id => Status::PROCESSING, :worker_name => worker_name)
+      
+      # return the reponse
+      response
     end
+  end
 
   # Mark the SurveyResponse as archived (soft deleted.)
   def archive
