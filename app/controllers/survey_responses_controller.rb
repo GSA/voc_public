@@ -18,6 +18,6 @@ class SurveyResponsesController < ApplicationController
 
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
-    redirect_to thank_you_page_survey_path(@survey_version.survey, :stylesheet => params[:stylesheet])
+    redirect_to thank_you_page_survey_path(@survey_version.survey, params.slice(:stylesheet))
   end
 end
