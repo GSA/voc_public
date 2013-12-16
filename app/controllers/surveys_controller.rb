@@ -14,7 +14,7 @@ class SurveysController < ApplicationController
       if @survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
         @results = PollResults.new(@survey_version)
         format.html do
-          render 'surveys/poll_results', :stylesheet => params[:stylesheet], :layout => 'application',
+          render 'surveys/poll_results', :layout => 'application',
                  locals: { survey: @survey, survey_version: @survey_version, results: @results }
         end
         format.json do
@@ -25,7 +25,7 @@ class SurveysController < ApplicationController
         end
       else
         format.html do
-          render :template => "surveys/thank_you.html.erb", :stylesheet => params[:stylesheet],
+          render 'surveys/thank_you', :layout => 'application',
                  locals: { survey: @survey, survey_version: @survey_version }
         end
         format.json do
