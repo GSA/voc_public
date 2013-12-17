@@ -601,7 +601,7 @@ span.pageNum {
 .pagination a, .pagination a:link, .pagination a:visited {
 	font-weight: normal;
 	color: #243b7c;
-	text-decoration: unerline;
+	text-decoration: underline;
 }
 
 .pagination a:hover, .pagination a:active {
