@@ -3,6 +3,7 @@
 
   /* Local JQuery variable */
   var jQuery;
+  var countScriptCalled = 0; // some versions of IE will call scriptLoadHandler twice
 
   /* Load jQuery if it is not present */
   if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
@@ -12,16 +13,13 @@
       "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
 
     /* Wait for the script to load */
-    if(script_tag.readyState) {
-      // For Old versions of IE
-      script_tag.onreadystatechange = function() {
-        if(this.readyState == 'complete' || this.readyState == 'loaded') {
-          scriptLoadHandler();
-        }
-      };
-    } else {
-      //Other browsers
-      script_tag.onload = scriptLoadHandler;
+    //Other browsers
+    if(script_tag.addEventListener) {
+      script_tag.addEventListener("load", scriptLoadHandler, false);
+    }
+    // For Old versions of IE
+    else if(script_tag.readyState) {
+      script_tag.onreadystatechange = scriptLoadHandler;
     }
 
     // Try to find the head, otherwise default to the documentElement
@@ -32,11 +30,19 @@
     jQuery = window.jQuery;
     main();
   }
+
   /* Called once jQuery has been loaded */
   function scriptLoadHandler(){
+    countScriptCalled++;
+    if(countScriptCalled > 1) return;
     /* Restore jQuery and window.jQuery to their original values */
-    jQuery = window.jQuery.noConflict();
-    main();
+    var interval = setInterval(function(){
+      if(window.jQuery != "undefined") {
+        clearInterval(interval);
+        jQuery = window.jQuery.noConflict();
+        main();
+      }
+    }, 100);
   }
 
   /* main - Main function for the voc widget.  This function is called once */
