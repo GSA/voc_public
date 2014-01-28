@@ -3,7 +3,6 @@
 # Base Controller class; provides support for
 # {http://en.wikipedia.org/wiki/Cross-origin_resource_sharing cross-origin resource sharing (CORS)}.
 class ApplicationController < ActionController::Base
-  protect_from_forgery
 
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
