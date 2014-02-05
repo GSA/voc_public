@@ -12,23 +12,23 @@ function replace_page_number_in_title(title, number) {
 
 function show_next_page(page){
 	var required_unanswered = false;
-	
+
 	required_unanswered = check_for_unanswered_required(page);
-	
+
 	if (!required_unanswered){
 		$("#page_" + page).hide();
 		var next_page = $("#page_" + page + "_next_page").val();
-    
+
 	    /* Set the prev page on next page */
 	    set_prev_page(page, next_page);
-    
-		$("#page_"+ next_page).show();	
+
+		$("#page_"+ next_page).show();
 		window.location.hash="PAGE_" + next_page;
 
 		var title = $(document).prop("title");
 		$(document).prop("title", replace_page_number_in_title(title, next_page));
 	} else {
-		alert('Please answer all required questions before moving on to the next page.');
+		alert(survey_required_fields_error);
 	}
 
 }
@@ -69,7 +69,7 @@ function check_for_unanswered_required(page) {
 					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
 					required =  true;
-				} 
+				}
 			}
 		});
 		return required;
@@ -79,7 +79,7 @@ function validate_before_submit(page){
 	if (!check_for_unanswered_required(page)){
 		return true;
 	} else {
-		alert('Please answer all required questions before moving on to the next page.');
+		alert(survey_required_fields_error);
 		return false;
 	}
 
