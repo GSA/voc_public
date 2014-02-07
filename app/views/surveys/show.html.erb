@@ -140,9 +140,9 @@
 				</div>
         <script>
         <% if @survey.js_required_fields_error.blank? %>
-        var survey_required_fields_error = "Please answer all required questions before moving on to the next page."
+          var survey_required_fields_error = "Please answer all required questions before moving on to the next page."
         <% else %>
-        var survey_required_fields_error = "<%= @survey.js_required_fields_error %>";
+          var survey_required_fields_error = "<%== @survey.js_required_fields_error %>";
         <% end %>
         </script>
 			</div> <!-- close page div -->
