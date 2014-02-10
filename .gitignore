@@ -1,6 +1,6 @@
-.bundle
+.bundle\
 .ruby-gemset
-.ruby-version
+.ruby-version\
 config/*.yml
 db/*.sqlite3
 log/*.log

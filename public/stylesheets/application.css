@@ -546,12 +546,12 @@ span.surveyNav4 {
 }
 
 span.surveyNavPrev {
-	width: 105px;
+	/*width: 105px;*/
 	display: inline-block;
 }
 
 span.surveyNavNext {
-	width: 85px;
+	/*width: 85px;*/
 	display: inline-block;
 }
 
