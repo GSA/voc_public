@@ -3,6 +3,9 @@
 .ruby-version\
 config/*.yml
 db/*.sqlite3
+db/schema.rb
 log/*.log
 tmp/
 .rvmrc
+.ruby-gemset
+.ruby-version
