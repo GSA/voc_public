@@ -1,6 +1,4 @@
-.bundle\
-.ruby-gemset
-.ruby-version\
+.bundle
 config/*.yml
 db/*.sqlite3
 db/schema.rb
