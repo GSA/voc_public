@@ -16,14 +16,14 @@ $(function(){
 			getSurveyVersionList($("#survey_id").val());
 		}
 	});
-	
-	
+
+
 	/* make an ajax call to display the survey responses based on version_selection */
 	$("#survey_version_id").change(function(){
 		var survey_version_id = $(this).val();
-		
-		/* 
-		 * remove currently displayed responses if no version selected.  Otherwise 
+
+		/*
+		 * remove currently displayed responses if no version selected.  Otherwise
 		 * make an ajax call to get the display table for the selected version
 		 */
 		if(survey_version_id == "0"){
@@ -45,12 +45,12 @@ $(function(){
 		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 300);
 
 	}
-	
+
 	/* Make the pagination links ajax calls */
 	$("div.pagination a").live('ajax:success', function(event, data, status, xhr){
 		$("#survey_response_list").html(data);
 	});
-	
+
 	$(".edit_display_field_value").live('submit', function(){
 		$.modal.close();
 		refreshSurveyResponseTable();
@@ -111,13 +111,13 @@ function getUrlParams(){
 	 // associative array
 	 var params = params.split("&");
 	 var queryStringList = {};
-	 
+
 	 for(var i=0;i<params.length;i++)
 	 {
 	     var tmp = params[i].split("=");
 	     queryStringList[tmp[0]] = unescape(tmp[1]);
 	 }
-	 
+
 	 return queryStringList
 }
 
