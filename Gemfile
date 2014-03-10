@@ -8,6 +8,7 @@ gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'authlogic'
+gem 'browser'
 
 # OLD! Delayed_Job for asynchronous processing
 # gem 'delayed_job_active_record'

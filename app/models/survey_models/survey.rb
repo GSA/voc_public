@@ -66,13 +66,18 @@ end
 #
 # Table name: surveys
 #
-#  id             :integer(4)      not null, primary key
-#  name           :string(255)
-#  description    :text
-#  survey_type_id :integer(4)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  archived       :boolean(1)      default(FALSE)
-#  site_id        :integer(4)
+#  id                       :integer(4)      not null, primary key
+#  name                     :string(255)
+#  description              :text
+#  survey_type_id           :integer(4)
+#  created_at               :datetime
+#  updated_at               :datetime
+#  archived                 :boolean(1)      default(FALSE)
+#  site_id                  :integer(4)
+#  submit_button_text       :string(255)
+#  previous_page_text       :string(255)
+#  next_page_text           :string(255)
+#  js_required_fields_error :string(255)
+#  invitation_percent       :integer(4)      not null, default(100)
+#  invitation_interval      :integer(4)      not null, default(30)
 #
-

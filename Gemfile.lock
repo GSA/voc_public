@@ -63,6 +63,7 @@ GEM
     binding_of_caller (0.7.1)
       debug_inspector (>= 0.0.1)
     bouncy-castle-java (1.5.0146.1)
+    browser (0.4.0)
     builder (2.1.2)
     cocaine (0.4.2)
     coderay (1.0.8)
@@ -181,6 +182,7 @@ DEPENDENCIES
   authlogic
   better_errors
   binding_of_caller
+  browser
   jdbc-mysql
   jquery-rails
   jruby-openssl

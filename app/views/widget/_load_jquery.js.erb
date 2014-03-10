@@ -1,0 +1,44 @@
+/* Local JQuery variable */
+var jQuery;
+var countScriptCalled = 0; // some versions of IE will call scriptLoadHandler twice
+
+/* Load jQuery if it is not present */
+if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
+  var script_tag = document.createElement('script');
+  script_tag.setAttribute('type', 'text/javascript');
+  script_tag.setAttribute('src',
+    "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
+
+  /* Wait for the script to load */
+  //Other browsers
+  if(script_tag.addEventListener) {
+    script_tag.addEventListener("load", scriptLoadHandler, false);
+  }
+  // For Old versions of IE
+  else if(script_tag.readyState) {
+    script_tag.onreadystatechange = scriptLoadHandler;
+  }
+
+  // Try to find the head, otherwise default to the documentElement
+  (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+
+} else {
+  /* The site already has jQuery loaded */
+  jQuery = window.jQuery;
+  main();
+}
+
+/* Called once jQuery has been loaded */
+function scriptLoadHandler(){
+  countScriptCalled++;
+  if(countScriptCalled > 1) return;
+  /* Restore jQuery and window.jQuery to their original values */
+  var interval = setInterval(function(){
+    if(window.jQuery != "undefined") {
+      clearInterval(interval);
+      jQuery = window.jQuery.noConflict();
+      main();
+    }
+  }, 100);
+}
+
