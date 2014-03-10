@@ -7,3 +7,4 @@ tmp/
 .rvmrc
 .ruby-gemset
 .ruby-version
+public/test
