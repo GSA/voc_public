@@ -19,7 +19,7 @@
           invite = Math.random() < <%= @survey.invitation_percent %> / 100
         <% end %>
         if(invite) {
-          jQuery('#<%= params[:target_id] %>').html('invited');
+          loadModal();
           if(invitationInterval > 0) {
             createCookie(cookieName, true, invitationInterval);
           }
@@ -84,33 +84,35 @@
   // store the item that has focus before opening the modal window
   var focusedElementBeforeModal;
 
-  $(document).ready(function() {
+  function loadModal() {
+      jQuery('#<%= params[:target_id] %>').html("<%= escape_javascript(render('invite_modal')) %>");
+      showModal(jQuery('#vocModal'));
       jQuery('#startModal').click(function(e) {
-          showModal($('#modal'));
+          showModal(jQuery('#vocModal'));
       });
       jQuery('#cancel').click(function(e) {
           hideModal();
       });
-      jQuery('#cancelButton').click(function(e) {
+      jQuery('#vocCancelButton').click(function(e) {
           hideModal();
       });
-      jQuery('#enter').click(function(e) {
+      jQuery('#vocEnter').click(function(e) {
           enterButtonModal();
       });
-      jQuery('#modalCloseButton').click(function(e) {
+      jQuery('#vocModalCloseButton').click(function(e) {
           hideModal();
       });
-      jQuery('#modalCloseButton').keydown(function(event) {
-          trapSpaceKey($(this), event, hideModal);
+      jQuery('#vocModalCloseButton').keydown(function(event) {
+          trapSpaceKey(jQuery(this), event, hideModal);
       })
-      jQuery('#modal').keydown(function(event) {
-          trapTabKey($(this), event);
+      jQuery('#vocModal').keydown(function(event) {
+          trapTabKey(jQuery(this), event);
       })
-      jQuery('#modal').keydown(function(event) {
-          trapEscapeKey($(this), event);
+      jQuery('#vocModal').keydown(function(event) {
+          trapEscapeKey(jQuery(this), event);
       })
 
-  });
+  }
 
 
   function trapSpaceKey(obj, evt, f) {
@@ -204,9 +206,9 @@
 
   function showModal(obj) {
       jQuery('#mainPage').attr('aria-hidden', 'true'); // mark the main page as hidden
-      jQuery('#modalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
-      jQuery('#modal').css('display', 'block'); // make the modal window visible
-      jQuery('#modal').attr('aria-hidden', 'false'); // mark the modal window as visible
+      jQuery('#vocModalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
+      jQuery('#vocModal').css('display', 'block'); // make the modal window visible
+      jQuery('#vocModal').attr('aria-hidden', 'false'); // mark the modal window as visible
 
       // save current focus
       focusedElementBeforeModal = jQuery(':focus');
@@ -224,9 +226,9 @@
   }
 
   function hideModal() {
-      jQuery('#modalOverlay').css('display', 'none'); // remove the overlay in order to make the main screen available again
-      jQuery('#modal').css('display', 'none'); // hide the modal window
-      jQuery('#modal').attr('aria-hidden', 'true'); // mark the modal window as hidden
+      jQuery('#vocModalOverlay').css('display', 'none'); // remove the overlay in order to make the main screen available again
+      jQuery('#vocModal').css('display', 'none'); // hide the modal window
+      jQuery('#vocModal').attr('aria-hidden', 'true'); // mark the modal window as hidden
       jQuery('#mainPage').attr('aria-hidden', 'false'); // mark the main page as visible
 
       // set focus back to element that had it before the modal was opened
