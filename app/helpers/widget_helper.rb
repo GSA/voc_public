@@ -19,7 +19,7 @@ module WidgetHelper
     if @survey.invitation_reject_button_text.empty?
       "No"
     else
-      @survey.invitation_accept_button_text
+      @survey.invitation_reject_button_text
     end
   end
 end
