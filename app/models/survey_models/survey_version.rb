@@ -44,9 +44,19 @@ class SurveyVersion < ActiveRecord::Base
   delegate :name, :description, :to => :survey, :prefix => true
 
   hash_key :temp_visit_count
+  hash_key :temp_invitation_count
+  hash_key :temp_invitation_accepted_count
 
   def increment_temp_visit_count
     temp_visit_count.incr(today_string, 1)
+  end
+
+  def increment_temp_invitation_count
+    temp_invitation_count.incr(today_string, 1)
+  end
+
+  def increment_temp_invitation_accepted_count
+    temp_invitation_accepted_count.incr(today_string, 1)
   end
 
   # Create a CSV export of the survey responses and notify the requesting user by email

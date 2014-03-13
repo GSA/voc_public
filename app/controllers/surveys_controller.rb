@@ -75,6 +75,18 @@ class SurveysController < ApplicationController
     render :nothing => true
   end
 
+  def invitation
+    get_survey_and_version
+    @survey_version.increment_temp_invitation_count
+    render :nothing => true
+  end
+
+  def invitation_accept
+    get_survey_and_version
+    @survey_version.increment_temp_invitation_accepted_count
+    render :nothing => true
+  end
+
   private
   def get_survey_and_version
     @survey = Survey.find(params[:id])

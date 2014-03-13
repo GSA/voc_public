@@ -199,9 +199,11 @@
 
   function enterButtonModal() {
       // BEGIN logic for executing the Enter button action for the modal window
-      alert('form submitted');
+      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>";
+      window.open(popurl,"","width=600,height=500,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
+      jQuery.get("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
   }
 
   function showModal(obj) {

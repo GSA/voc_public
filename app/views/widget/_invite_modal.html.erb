@@ -49,6 +49,7 @@
   }
 
 </style>
+<iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation" style="display: none;"></iframe>
 <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog'>
   <p>
     <%= invitation_text.html_safe %>
