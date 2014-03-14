@@ -8,6 +8,9 @@
   function main() {
     <% if browser.mobile? || browser.tablet? %>
       jQuery('#<%= params[:mobile_target_id] %>').show();
+      jQuery('#<%= params[:mobile_target_id] %>').click(function() {
+        window.location.href = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>";
+      });
     <% else %>
       var cookieName = 'survey_invitation_<%= params[:survey_id] %>';
       var invitationInterval = <%= @survey.invitation_interval %>;
