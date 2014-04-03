@@ -203,7 +203,11 @@
   function enterButtonModal() {
       // BEGIN logic for executing the Enter button action for the modal window
       var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?page_url=" + pageurl;
+      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+      <% if params[:stylesheet] %>
+      popurl = popurl + "stylesheet=<% params[:stylesheet] %>&";
+      <% end %>
+      popurl = popurl + "page_url=" + pageurl;
       window.open(popurl,"","width=600,height=500,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
