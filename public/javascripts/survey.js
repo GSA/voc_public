@@ -8,7 +8,7 @@ $(function() {
   //setup before functions
   var changeTimer;                //timer identifier
   var changeInterval = 5000;  //time in ms, 10seconds
-  var lastSubmitted = new Date().getTime()-5000;
+  var lastSubmitted = new Date().getTime()-changeInterval;
   //on change, start countdown
   $(".voc-form").on( "change", function( event ) {
     timer_form($(this).serialize());
@@ -20,7 +20,7 @@ $(function() {
     changeTimer = setTimeout(post_form(form_data), changeInterval);
   }
   function post_form(form_data){
-    if((new Date().getTime() - lastSubmitted) > 5000){
+    if((new Date().getTime() - lastSubmitted) > changeInterval){
       lastSubmitted = new Date().getTime();
       $.post( "/survey_responses/partial",form_data);
     }
