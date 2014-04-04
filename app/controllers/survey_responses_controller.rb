@@ -5,6 +5,13 @@ class SurveyResponsesController < ApplicationController
 
   # POST    /survey_responses(.:format)
   def create
+    # save the raw submission, then queue a survey response job
+    submission = RawSubmission.find_or_create_by_uuid_key(params[:uuid_key])
+    submission.survey_id = params[:survey_id]
+    submission.survey_version_id = params[:survey_version_id]
+    submission.post = params.to_yaml
+    submission.submitted = true
+    submission.save
     # The survey respondent doesn't care if the submit actually succeeded or not.  Delay the processing
     # of the response so the browser will return immediately
     resque_args = params[:response], params[:survey_version_id]
@@ -19,5 +26,14 @@ class SurveyResponsesController < ApplicationController
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
     redirect_to thank_you_page_survey_path(@survey_version.survey, params.slice(:stylesheet).reject {|k, v| v.blank?})
+  end
+
+
+  def partial
+    submission = RawSubmission.find_or_create_by_uuid_key(params[:uuid_key])
+    submission.survey_id = params[:survey_id]
+    submission.survey_version_id = params[:survey_version_id]
+    submission.post = params.to_yaml
+    submission.save!
   end
 end

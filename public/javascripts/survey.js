@@ -35,9 +35,7 @@ function show_next_page(page){
 
 function show_prev_page(page){
 	$("#page_"+page).hide();
-	var prev_page = $("#page_" + page + "_prev_page").val();
-	$("#page_"+ prev_page ).show();
-
+  jQuery("#page_"+ jQuery("#page_" + page + "_prev_page").val() ).show();
 	window.location.hash = "PAGE_" + prev_page;
 
 	var title = $(document).prop("title");

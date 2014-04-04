@@ -22,6 +22,8 @@ gem 'resque_unit', :group => :test
 
 gem 'redis-objects'
 
+gem 'uuidtools'
+
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
@@ -39,7 +41,7 @@ platform :jruby do
   gem 'warbler'
 end
 
-group :development, :test do 
+group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
