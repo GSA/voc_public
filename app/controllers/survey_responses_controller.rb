@@ -37,8 +37,8 @@ class SurveyResponsesController < ApplicationController
 
   def raw_submission(submitted = false)
     @submission = RawSubmission.find_or_create_by_uuid_key(params[:uuid_key])
-    @submission.survey_id = params[:survey_id]
-    @submission.survey_version_id = params[:survey_version_id]
+    @submission.survey_id = params[:survey_id].to_i
+    @submission.survey_version_id = params[:survey_version_id].to_i
     @submission.post = params.to_hash
     @submission.submitted = submitted
     @submission.save
