@@ -11,7 +11,12 @@ CommentToolPublic::Application.routes.draw do
       get 'invitation_accept'
     end
   end
-  resources :survey_responses, only: :create
+  resources :survey_responses do
+    collection do
+      post '/' => "survey_responses#create"
+      post 'partial' => "survey_responses#partial"
+    end
+  end
 
   root :to => 'surveys#index'
 end

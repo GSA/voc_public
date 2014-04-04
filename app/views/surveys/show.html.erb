@@ -9,7 +9,7 @@
 	<p>Could not find version <%= params[:version] %></p>
 	<%= link_to "View all", survey_path(@survey) %>
 <% else %>
-	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
+	<%= form_tag url_for(:controller => "survey_responses", :action => "create"), :class=>"voc-form" do %>
 	  <%= hidden_field_tag :stylesheet, params[:stylesheet] %>
     <%= hidden_field_tag :uuid_key, @uuid_key %>
     <%= hidden_field_tag "survey_id", @survey.id %>

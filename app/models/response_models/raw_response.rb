@@ -28,7 +28,7 @@ class RawResponse < ActiveRecord::Base
   end
 
   # A simple setter used to ensure Arrays are stored correctly.
-  # 
+  #
   # @param [Number, String, Array] value the value to be set
   def answer=(value)
     if value.class == Array

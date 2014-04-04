@@ -4,6 +4,9 @@ $(function() {
 	if (page_url.val() == "" && parent) {
 		page_url.val(parent.document.location.origin + parent.document.location.pathname);
 	}
+  $(".voc-form").on( "change", function( event ) {
+    $.post( "/survey_responses/partial", $(this).serialize());
+  });
 });
 
 function replace_page_number_in_title(title, number) {
@@ -35,7 +38,7 @@ function show_next_page(page){
 
 function show_prev_page(page){
 	$("#page_"+page).hide();
-  jQuery("#page_"+ jQuery("#page_" + page + "_prev_page").val() ).show();
+  $("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
 	window.location.hash = "PAGE_" + prev_page;
 
 	var title = $(document).prop("title");
