@@ -4,9 +4,27 @@ $(function() {
 	if (page_url.val() == "" && parent) {
 		page_url.val(parent.document.location.origin + parent.document.location.pathname);
 	}
+
+  //setup before functions
+  var changeTimer;                //timer identifier
+  var changeInterval = 5000;  //time in ms, 10seconds
+  var lastSubmitted = new Date().getTime()-5000;
+  //on change, start countdown
   $(".voc-form").on( "change", function( event ) {
-    $.post( "/survey_responses/partial", $(this).serialize());
+    timer_form($(this).serialize());
   });
+
+  function timer_form(form_data){
+    // if not submitted in last 10 seconds, submit the survey
+    clearTimeout(changeTimer);
+    changeTimer = setTimeout(post_form(form_data), changeInterval);
+  }
+  function post_form(form_data){
+    if((new Date().getTime() - lastSubmitted) > 5000){
+      lastSubmitted = new Date().getTime();
+      $.post( "/survey_responses/partial",form_data);
+    }
+  }
 });
 
 function replace_page_number_in_title(title, number) {
