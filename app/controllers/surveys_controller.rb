@@ -54,7 +54,6 @@ class SurveysController < ApplicationController
   def show
     get_survey_and_version
     #@survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
-    @uuid_key = UUIDTools::UUID.random_create
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
