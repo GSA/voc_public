@@ -4,6 +4,27 @@ $(function() {
 	if (page_url.val() == "" && parent) {
 		page_url.val(parent.document.location.origin + parent.document.location.pathname);
 	}
+
+  //setup before functions
+  var changeTimer;                //timer identifier
+  var changeInterval = 5000;  //time in ms, 10seconds
+  var lastSubmitted = new Date().getTime()-changeInterval;
+  //on change, start countdown
+  $(".voc-form").on( "change", function( event ) {
+    timer_form($(this).serialize());
+  });
+
+  function timer_form(form_data){
+    // if not submitted in last 10 seconds, submit the survey
+    clearTimeout(changeTimer);
+    changeTimer = setTimeout(post_form(form_data), changeInterval);
+  }
+  function post_form(form_data){
+    if((new Date().getTime() - lastSubmitted) > changeInterval){
+      lastSubmitted = new Date().getTime();
+      $.post( "/survey_responses/partial",form_data);
+    }
+  }
 });
 
 function replace_page_number_in_title(title, number) {
@@ -35,9 +56,7 @@ function show_next_page(page){
 
 function show_prev_page(page){
 	$("#page_"+page).hide();
-	var prev_page = $("#page_" + page + "_prev_page").val();
-	$("#page_"+ prev_page ).show();
-
+  $("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
 	window.location.hash = "PAGE_" + prev_page;
 
 	var title = $(document).prop("title");

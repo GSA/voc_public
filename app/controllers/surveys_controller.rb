@@ -1,11 +1,12 @@
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Manages the Survey lifecycle.
+
 class SurveysController < ApplicationController
   caches_action :show, :cache_path => Proc.new {|c|
     c.params.delete_if {|k,v| k.starts_with?('utm_')}
   }
-  
+
   # GET /surveys/:id/thank_you_page(.:format)
   def thank_you_page
     get_survey_and_version
@@ -34,7 +35,7 @@ class SurveysController < ApplicationController
             json = {:html => html}.to_json
             render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript", :layout => false
         end
-      end 
+      end
     end
   end
 
@@ -52,7 +53,6 @@ class SurveysController < ApplicationController
   def show
     get_survey_and_version
     #@survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
