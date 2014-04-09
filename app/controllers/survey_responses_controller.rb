@@ -38,7 +38,7 @@ class SurveyResponsesController < ApplicationController
   def raw_submission(submitted = false)
     if cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"] == nil
       cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"] = {
-        :value => UUIDTools::UUID.random_create, :expires => 1.hour.from_now }
+        :value => SecureRandom.uuid, :expires => 1.hour.from_now }
     end
     @submission = RawSubmission.find_or_create_by_uuid_key(cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"])
     @submission.survey_id = params[:survey_id].to_i

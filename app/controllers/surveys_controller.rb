@@ -1,7 +1,6 @@
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Manages the Survey lifecycle.
-require 'uuidtools'
 
 class SurveysController < ApplicationController
   caches_action :show, :cache_path => Proc.new {|c|
