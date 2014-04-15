@@ -87,6 +87,10 @@ class SurveysController < ApplicationController
     render :nothing => true
   end
 
+  def holding_page
+    get_survey_and_version
+  end
+
   private
   def get_survey_and_version
     @survey = Survey.find(params[:id])
