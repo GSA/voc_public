@@ -216,7 +216,7 @@
       window.open(popurl,"","width=250,height=300,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
-      jQuery.get("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
+      jQuery.post("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
   }
 
   function showModal(obj) {

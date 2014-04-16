@@ -7,8 +7,8 @@ CommentToolPublic::Application.routes.draw do
     member do
       get 'thank_you_page'
       post 'visit'
-      get 'invitation'
-      get 'invitation_accept'
+      post 'invitation'
+      post 'invitation_accept'
       get 'holding_page'
     end
   end
