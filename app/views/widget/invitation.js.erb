@@ -100,9 +100,11 @@
       });
       jQuery('#cancel').click(function(e) {
           hideModal();
+          e.preventDefault();
       });
-      jQuery('#vocCancelButton').click(function(e) {
+      jQuery('.vocCancelButton').click(function(e) {
           hideModal();
+          e.preventDefault();
       });
       jQuery('#vocEnter').click(function(e) {
           enterButtonModal();
