@@ -3,7 +3,6 @@
 <!-- <p class="pageTitle">View Survey</p> -->
 
 <% javascript 'survey.js' %>
-<iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/visit" style="display: none;"></iframe>
 
 <% if @survey_version.nil? %>
 	<p>Could not find version <%= params[:version] %></p>
@@ -154,3 +153,7 @@
 <div class="pageNav">
 	<%= link_to "View All", surveys_url, :class => "pageNav" %>
 </div> -->
+
+<script type='text/javascript'>
+	jQuery.post('<%= visit_survey_url(@survey) %>');
+</script>

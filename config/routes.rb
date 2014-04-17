@@ -6,9 +6,10 @@ CommentToolPublic::Application.routes.draw do
   resources :surveys, except: :destroy do
     member do
       get 'thank_you_page'
-      get 'visit'
-      get 'invitation'
-      get 'invitation_accept'
+      post 'visit'
+      post 'invitation'
+      post 'invitation_accept'
+      get 'holding_page'
     end
   end
   resources :survey_responses do

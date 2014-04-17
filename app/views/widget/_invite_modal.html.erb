@@ -17,7 +17,7 @@
       width:50%;
       margin-left:auto;
       margin-right:auto;
-      padding: 5px;
+      padding: 25px;
       border: thin #000 solid;
       background-color:#fff;
       z-index:3; /* places the modal dialog on top of everything else */
@@ -28,6 +28,11 @@
   }
   #vocModal h1 {
       text-align:center;
+  }
+
+  .banner {
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
   }
 
   .modalCloseButton {
@@ -48,13 +53,34 @@
       top:auto;
   }
 
+  .top-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-decoration: none;
+    background-color: grey;
+    color: white;
+    font-size: 11px;
+  }
+
 </style>
-<iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation" style="display: none;"></iframe>
-<div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog'>
+<div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog' tabindex='-1'>
+  <%= link_to 'X', '', class: 'vocCancelButton top-right', alt: 'close modal' %>
+  <div class='banner'>
+    <% if browser.mobile? || browser.tablet? %>
+      <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo1.gif' %>
+    <% else %>
+      <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo-mobile.gif' %>
+    <% end %>
+  </div>
   <p>
     <%= invitation_text.html_safe %>
   </p>
   <input type="button" name="vocEnter" id="vocEnter" value="<%= invitation_accept_button_text %>">
-  <input type="button" name="vocCancelButton" id="vocCancelButton" value="<%= invitation_reject_button_text %>">
+  <input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">
 </div>
-<div id='vocModalOverlay' tabindex='-1'></div>
+<div id='vocModalOverlay'></div>
+
+<script type='text/javascript'>
+  jQuery.post('<%= invitation_survey_url(@survey) %>')
+</script>
