@@ -1,6 +1,5 @@
 /*Scaffolding Styles automatically generated.*/
 
-
 /* #container {
 	do we need this?
   width: 75%;
@@ -138,22 +137,22 @@ textarea {
 	font-size: 11px;
 }
 
-/* 
+/*
 	Survey Index Page
-	Survey Version Index Page 
+	Survey Version Index Page
 	Category Index Page
 	Manage Rules Page
 	Display Fields Page
 	Survey Response Table */
 
-#surveyTable, #versionTable, #categoryTable, 
+#surveyTable, #versionTable, #categoryTable,
 #rulesTable, #displayFieldsTable {
 	margin: 0px 0px 10px;
 	padding: 0px;
 	border-collapse: collapse;
 }
 
-#surveyTable th, #versionTable th, #categoryTable th, 
+#surveyTable th, #versionTable th, #categoryTable th,
 #rulesTable th, #displayFieldsTable th {
 	text-align: left;
 	font-size: 1.1em;
@@ -163,7 +162,7 @@ textarea {
 	color: #000000;
 }
 
-#surveyTable td, #versionTable td, #categoryTable td, 
+#surveyTable td, #versionTable td, #categoryTable td,
 #rulesTable td, #displayFieldsTable td {
 	text-align: left;
 	font-size: 1em;
@@ -172,7 +171,7 @@ textarea {
 	vertical-align: top;
 }
 
-#surveyTable .col1, #versionTable .col1, 
+#surveyTable .col1, #versionTable .col1,
 #displayFieldsTable .col2 {
 	width: 185px;
 	padding: 5px 9px 5px 1px;
@@ -189,7 +188,7 @@ textarea {
 	padding: 5px;
 }
 
-#surveyTable .col4-7, #categoryTable .col2-4, 
+#surveyTable .col4-7, #categoryTable .col2-4,
 #rulesTable .col3-5, #displayFieldsTable .col3 {
 	text-align: center;
 	width: 65px;
@@ -214,8 +213,8 @@ textarea {
 }
 
 #surveyTable a, #surveyTable a:link, #surveyTable a:visited,
-#versionTable a, #versionTable a:link, #versionTable a:visited, 
-#categoryTable a, #categoryTable a:link, #categoryTable a:visited, 
+#versionTable a, #versionTable a:link, #versionTable a:visited,
+#categoryTable a, #categoryTable a:link, #categoryTable a:visited,
 #rulesTable a, #rulesTable a:link, #rulesTable a:visited,
 #displayFieldsTable a, #displayFieldsTable a:link, #displayFieldsTable a:visited {
 	color: #243b7c;
@@ -224,7 +223,7 @@ textarea {
 
 #surveyTable a:hover, #surveyTable a:active,
 #versionTable a:hover, #versionTable a:active,
-#categoryTable a:hover, #categoryTable a:active, 
+#categoryTable a:hover, #categoryTable a:active,
 #rulesTable a:hover, #rulesTable a:active,
 #displayFieldsTable a:hover, #displayFieldsTable a:active {
 	color: #243b7c;
@@ -415,7 +414,7 @@ li.modalList {
 	padding: 0px 0px 3px;
 }
 
-#new_choice_question_modal { 
+#new_choice_question_modal {
 	padding: 10px;
 	min-width: 380px;
 }
@@ -434,7 +433,7 @@ li.modalList {
 }
 
 .current_page {
-	
+
 }
 
 .hidden_page {
@@ -448,7 +447,7 @@ li.modalList {
 }
 
 .displayNone {
-	display:none; 
+	display:none;
 }
 
 .surveyNavMargin {
@@ -530,7 +529,7 @@ div.surveyNav {
 span.surveyNav1 {
 	width: 110px;
 	display: inline-block;
-	
+
 }
 span.surveyNav2 {
 	width: 175px;

@@ -27,6 +27,7 @@
   font-size: 1.2em;
 }
 </style>
+
 <div class='content'>
   <% if browser.mobile? || browser.tablet? %>
     <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo1.gif', class: 'banner' %>
@@ -39,8 +40,7 @@
     window and return when you have completed your visit.
   </div>
 
-  <%= button_to 'Start Survey', survey_path(@survey, page_url: params[:page_url],
-    stylesheet: params[:stylesheet]), method: :get, class: 'start-survey' %>
+  <%= render 'start_survey_button' %>
 
   <div class='footer'>
     <%= link_to 'Privacy Policy', nil, class: 'float-right privacy-policy' %>
