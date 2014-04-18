@@ -90,10 +90,10 @@ class SurveysController < ApplicationController
   def holding_page
     get_survey_and_version
 
-    if @survey.holding_page.empty?
-      render :holding_page
-    else
+    if @survey.holding_page
       render text: @survey.holding_page.html_safe
+    else
+      render :holding_page
     end
   end
 
