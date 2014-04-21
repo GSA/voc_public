@@ -65,19 +65,7 @@
 
 </style>
 <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog' tabindex='-1'>
-  <%= link_to 'X', '', class: 'vocCancelButton top-right', alt: 'close modal' %>
-  <div class='banner'>
-    <% if browser.mobile? || browser.tablet? %>
-      <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo1.gif' %>
-    <% else %>
-      <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo-mobile.gif' %>
-    <% end %>
-  </div>
-  <p>
-    <%= invitation_text.html_safe %>
-  </p>
-  <input type="button" name="vocEnter" id="vocEnter" value="<%= invitation_accept_button_text %>">
-  <input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">
+  <%= invitation_text %>
 </div>
 <div id='vocModalOverlay'></div>
 

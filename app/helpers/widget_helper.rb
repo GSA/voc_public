@@ -3,12 +3,15 @@
 # View helpers for Javascript widget functionality.
 module WidgetHelper
   def invitation_text
-    text = @survey.invitation_text
-    text ||= "Would you like to take a survey?<br/>"
+    if @survey.invitation_text.blank?
+      render 'default_invite_text'
+    else
+      @survey.invitation_text.html_safe
+    end
   end
 
   def invitation_accept_button_text
-    if @survey.invitation_accept_button_text.empty? 
+    if @survey.invitation_accept_button_text.empty?
       "Yes"
     else
       @survey.invitation_accept_button_text
