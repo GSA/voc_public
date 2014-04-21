@@ -6,7 +6,10 @@ module WidgetHelper
     if @survey.invitation_text.blank?
       render 'default_invite_text'
     else
-      @survey.invitation_text.html_safe
+      text = @survey.invitation_text
+      text.gsub!('{{accept}}', invitation_accept_button_text)
+      text.gsub!('{{reject}}', invitation_reject_button_text)
+      text.html_safe
     end
   end
 
