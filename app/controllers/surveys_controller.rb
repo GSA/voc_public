@@ -92,7 +92,7 @@ class SurveysController < ApplicationController
 
     if @survey.holding_page && !@survey.holding_page.blank?
       start_button = render_to_string('_start_survey_button')
-      render text: @survey.holding_page.gsub('{{submit}}', start_button).html_safe
+      render text: @survey.holding_page.gsub('{{start}}', start_button).html_safe
     else
       render :holding_page
     end
