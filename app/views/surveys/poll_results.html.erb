@@ -13,15 +13,15 @@
         <% results.answer_counts_for_question(question).first(10).each do |answer, answer_count| %>
           <% answer_percent = total_answers == 0 ? 0 : ((answer_count.to_f / total_answers.to_f) * 100) %>
           <div class="poll_answer">
-              <div style="display: inline-block; max-width: 15%">
+              <div class="poll_answer_statement" >
                 <span class="answer_statement"><%= ChoiceAnswer.find(answer.to_i).try(:answer) %> : </span>
               </div>
-              <div class="bar_container" style="width: 85%; display:inline-block">
-                <div class="poll_result_bar" style="width:<%= answer_percent.to_i %>%">&nbsp;</div>
+              <div class="bar_container">
+                <div class="poll_result_bar" data-width='<%= answer_percent.to_i %>'>&nbsp;</div>
                 <span class="answer_percentage"><%= "#{answer_count} (#{answer_percent.round(1)}%)" %></span>
               </div>
           </div>
-          
+
         <% end -%>
       </div>
 
@@ -30,3 +30,10 @@
     </div>
   <% end -%>
 </div>
+
+<script type="text/javascript">
+  $(".poll_result_bar").each(function(index, element) {
+    var width = $(element).data('width');
+    $(element).width(width + '%');
+  });
+</script>

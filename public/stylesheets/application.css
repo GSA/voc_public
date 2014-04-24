@@ -622,6 +622,16 @@ span.pageNum {
 	margin: 5px 0px;
 }
 
+.poll_answer_statement {
+	display: inline-block;
+	max-width: 15%;
+}
+
 .question_results {
 	margin: 20px 0px;
+}
+
+.bar_container {
+	width: 85%;
+	display:inline-block;
 }

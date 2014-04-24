@@ -16,7 +16,7 @@ class PollResults
   end
 
   # Provides the answer ids and counts for a specified question.  Caches.
-  # 
+  #
   # @param [ChoiceQuestion] question the given question.
   # @return [Hash] a Hash in the form of: !{"answer_id" => count, "answer_id" => count}
   def answer_counts_for_question(question)
@@ -35,7 +35,7 @@ class PollResults
   private
 
   # Perform the actual DB querying for calculating answer counts.
-  # 
+  #
   # @param [ChoiceQuestion] question the given question.
   # @return [Hash] a Hash in the form of: !{"answer_id" => count, "answer_id" => count}
   def calculate_answer_count(question)

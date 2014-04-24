@@ -69,7 +69,7 @@ class SurveyResponse < ActiveRecord::Base
 
   # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
-  # 
+  #
   # @param [Hash] response the response parameter hash to process from the controller
   # @param [Integer] survey_version_id the id of the SurveyVersion
   def self.process_response(response, survey_version_id)
@@ -127,16 +127,16 @@ class SurveyResponse < ActiveRecord::Base
 
   # Used by the response_parser rake task to select SurveyResponses in sequence for
   # processing of nightly Rules.
-  # 
+  #
   # @param [String] worker_name the worker thread name
   # @param [Date] date last run date, i.e. now
   # @return [nil, SurveyResponse] the next SurveyResponse to process, if applicable
   def self.get_next_response(worker_name, mode, *date)
     ActiveRecord::Base.transaction do
-      
+
       # get next response (locking so we can stop other workers from grabbing it)
       response = SurveyResponse.find_by_worker_name(worker_name, :lock => true)
-      
+
       if mode =="new"
         nr_id = NewResponse.next_response.first.try(:survey_response_id)
         return(nil) unless nr_id
@@ -145,10 +145,10 @@ class SurveyResponse < ActiveRecord::Base
         response ||= SurveyResponse.where("last_processed < ? ", date[0]).first
         return(nil) unless response
       end
-      
+
       # set its status and worker
       response.update_attributes(:status_id => Status::PROCESSING, :worker_name => worker_name)
-      
+
       # return the reponse
       response
     end
