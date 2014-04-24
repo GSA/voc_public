@@ -36,4 +36,8 @@ module SurveysHelper
 
     onclick
   end
+
+  def use_fieldset?(question)
+    question.answer_type == ChoiceAnswer::RADIO || question.answer_type == ChoiceAnswer::CHECKBOX
+  end
 end

@@ -1,14 +1,8 @@
-/*Scaffolding Styles automatically generated.*/
-
-/* #container {
-	do we need this?
-  width: 75%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px;
-} */
+fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
 
 .error_messages {
   width: 400px;

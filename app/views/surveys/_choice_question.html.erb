@@ -4,6 +4,11 @@ elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT
   answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
 end -%>
 
+<% if use_fieldset?(element.assetable) %>
+  <fieldset>
+    <legend>
+<% end %>
+
 <%= render partial: 'question_statement', locals: {
     index: index,
     element: element,
@@ -11,6 +16,10 @@ end -%>
     answer_tag_id: answer_tag_id
   }
 %>
+
+<% if use_fieldset?(element.assetable) %>
+  </legend>
+<% end %>
 
 <% if element.assetable.answer_type == ChoiceAnswer::RADIO
   choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
@@ -54,3 +63,7 @@ end -%>
     <% end -%>
   </div>
 <% end # if ChoiceQuestion %>
+
+<% if use_fieldset?(element.assetable) %>
+  </fieldset>
+<% end %>
