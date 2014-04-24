@@ -1,0 +1,12 @@
+<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
+<%= hidden_field_tag "q_#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
+
+<div class="vocquestiontext">
+  <% if @survey.show_numbers? %>
+    <span class="vocquestionnumber"><%= "#{question_number}." %> </span>
+  <% end %>
+
+  <%= answer_tag_id ? label_tag(answer_tag_id, element.assetable.question_content.statement) :
+    element.assetable.question_content.statement %>
+  <%= "*" if element.assetable.question_content.required%>
+</div>

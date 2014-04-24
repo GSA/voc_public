@@ -1,0 +1,14 @@
+<% answer_tag_id = "response[raw_responses_attributes][#{index}][answer]" %>
+<%= render partial: 'question_statement', locals: {
+    index: index,
+    element: element,
+    question_number: question_number,
+    answer_tag_id: answer_tag_id
+  }
+%>
+
+<% if element.assetable.answer_type == "field" %>
+  <span class="voctextfield"><%= text_field_tag answer_tag_id, nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer" %></span>
+<% elsif element.assetable.answer_type == "area" %>
+  <span class="voctextarea"><%= text_area_tag answer_tag_id, nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer"%></span>
+<% end -%>
