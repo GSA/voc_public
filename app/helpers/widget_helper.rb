@@ -7,8 +7,10 @@ module WidgetHelper
       render 'default_invite_text'
     else
       text = @survey.invitation_text
-      text.gsub!('{{accept}}', invitation_accept_button_text)
-      text.gsub!('{{reject}}', invitation_reject_button_text)
+      accept_button = render partial: 'accept_button'
+      reject_button = render partial: 'reject_button'
+      text.gsub!('{{accept}}', accept_button)
+      text.gsub!('{{reject}}', reject_button)
       text.html_safe
     end
   end
