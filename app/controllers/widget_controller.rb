@@ -6,11 +6,6 @@ class WidgetController < ApplicationController
     c.params.delete_if {|k,v| k.starts_with?('utm_')}
   }
 
-  caches_action :invitation, :cache_path => Proc.new {|c|
-    c.params[:desktop_browser] = !(browser.mobile? || browser.tablet?)
-    c.params.delete_if {|k,v| k.starts_with?('utm_')}
-  }
-
   respond_to :js
 
   # Provides a customized (server-configured) copy of the
