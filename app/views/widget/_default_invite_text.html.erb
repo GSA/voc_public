@@ -1,4 +1,5 @@
-<%= link_to 'X', '', class: 'vocCancelButton top-right', alt: 'close modal' %>
+<%= button_to 'X', 'javascript: void(0);', class: 'vocCancelButton top-right', alt: 'close modal',
+  id: 'cancel' %>
 <div class='banner'>
   <% if browser.mobile? || browser.tablet? %>
     <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo-mobile.gif' %>
