@@ -1,0 +1,69 @@
+<% if element.assetable.answer_type == ChoiceAnswer::DROPDOWN
+  answer_tag_id = "response[raw_responses_attributes][#{index}][answer]"
+elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT
+  answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
+end -%>
+
+<% if use_fieldset?(element.assetable) %>
+  <fieldset>
+    <legend>
+<% end %>
+
+<%= render partial: 'question_statement', locals: {
+    index: index,
+    element: element,
+    question_number: question_number,
+    answer_tag_id: answer_tag_id
+  }
+%>
+
+<% if use_fieldset?(element.assetable) %>
+  </legend>
+<% end %>
+
+<% if element.assetable.answer_type == ChoiceAnswer::RADIO
+  choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
+  %>
+  <div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
+    <% for answer in element.assetable.choice_answers %>
+      <span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
+                    :onclick => generate_onclick(element, page, answer),
+        :class => "question_#{element.assetable.question_content.id}_answer",
+        :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
+        :id => "response_raw_responses_attributes_#{index}_answer_#{answer.id}"
+      %>
+      <%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href))%></span>
+      <% if element.assetable.answer_placement %><br/><% end %>
+    <% end -%>
+  </div>
+<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
+  <span class="vocdropdown"><%= select_tag answer_tag_id,
+    options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
+    :include_blank => true, :onchange => generate_next_page_on_change(element),
+    :class => "question_#{element.assetable.question_content.id}_answer" %></span>
+<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
+  <span class="vocmultiselect"><%= select_tag answer_tag_id,
+    options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
+    :multiple => true,
+    :style => "width: 100px",
+    :class => "question_#{element.assetable.question_content.id}_answer" %></span>
+<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX
+  choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
+  %>
+  <div class="voccheckboxes<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
+    <% for answer in element.assetable.choice_answers %>
+      <span class="voccheckbox"><%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]",
+                            answer.id,
+                            false,
+                            :id => "answer_#{answer.id}",
+                            :class => "question_#{element.assetable.question_content.id}_answer",
+                            :checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
+      <%= label_tag "answer_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
+      <% if element.assetable.answer_placement %><br/><% end %>
+    <% end -%>
+  </div>
+<% end # if ChoiceQuestion %>
+
+<% if use_fieldset?(element.assetable) %>
+  </fieldset>
+<% end %>

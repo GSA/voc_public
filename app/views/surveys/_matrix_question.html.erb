@@ -1,0 +1,30 @@
+<% if element.assetable_type != 'Asset'  %>
+  <% if @survey.show_numbers? %>
+    <span class="vocquestionnumber"><%= "#{question_number}." %></span>
+  <% end %>
+  <%= element.assetable.question_content.statement %>
+<% end %>
+  <table>
+    <tr>
+      <th></th>
+      <% for column_header in element.assetable.choice_questions.first.choice_answers do %>
+       <th scope="col"><%= column_header.answer %></th>
+      <% end -%>
+    </tr>
+    <% for row_header in element.assetable.choice_questions do %>
+      <tr>
+        <th scope="row">
+          <%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
+          <%= hidden_field_tag "q_#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+        </th>
+        <% row_header.choice_answers.each do |a| %>
+          <td>
+          <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id, :id => nil %>
+          <%= label_tag "response_raw_responses_attributes_#{index}_answer_#{a.id}", "a.answer", :style => "display:none" %>
+          <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer" %>
+          </td>
+        <% end %>
+      </tr>
+      <% index = index + 1%>
+    <% end -%>
+  </table>
