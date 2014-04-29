@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= language_attribute %>">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
     <% if params[:stylesheet].blank? %>
