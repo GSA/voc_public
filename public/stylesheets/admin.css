@@ -30,10 +30,10 @@ body {
 }
 h1 {
 	font-weight: normal;
-	font-size: 26px;
+	font-size: 2em;
 }
 p, label, li {
-	font-size: 13px;
+	font-size: 1em;
 	font-weight: normal;
 }
 .bold {
@@ -46,7 +46,7 @@ p, label, li {
 	font-style: italic;
 }
 .notation {
-	font-size: 11px;
+	font-size: 0.846em;
 	font-style: italic;
 	font-weight: normal;
 }
@@ -62,7 +62,7 @@ tr:first-child, tr:first-child:hover {
 	border: none;
 }
 th {
-	font-size: 13px;
+	font-size: 1.0em;
 	text-align: left;
 	font-weight: bold;
 	padding: 0px 5px 3px;
@@ -70,7 +70,7 @@ th {
 	vertical-align: bottom;
 }
 td {
-	font-size: 11px;
+	font-size: 0.846em;
 	padding: 5px;
 	vertical-align: top;
 }
@@ -83,7 +83,7 @@ td {
 	border: 1px solid #f5f7f8;
 }
 .displayNone {
-	display:none; 
+	display:none;
 }
 .inline {
 	display: inline-block;
@@ -101,7 +101,7 @@ br {
 a {
 	color: #003e7a;
 	text-decoration: none;
-	font-size: 13px;
+	font-size: 0.846em;
 }
 a:hover {
 	color: #003e7a;
@@ -117,17 +117,17 @@ th a:hover {
 a.newlink, a.cancelLink,
 a.refresh, a.manage {
 	color: #404041;
-	font-size: 11px;
+	font-size: 0.846em;
 }
 a.newlink:hover, a.cancelLink:hover,
 a.refresh:hover, a.manage:hover {
 	color: #ffad05;
 	text-decoration: none;
-	font-size: 11px;
+	font-size: 0.846em;
 }
 a.cancelLink-inline {
 	color: #404041;
-	font-size: 11px;
+	font-size: 0.846em;
 	vertical-align: top;
 	margin: 10px 10px 0px 0px;
 	display: inline-block;
@@ -138,7 +138,7 @@ a.cancelLink-inline:hover {
 }
 a.manage-inline {
 	color: #404041;
-	font-size: 11px;
+	font-size: 0.846em;
 	vertical-align: top;
 	margin: 10px 10px 0px 0px;
 	display: inline-block;
@@ -215,16 +215,16 @@ a.newlink:hover {
 	margin: 20px 0px;
 }
 td a {
-	font-size: 13px;
+	font-size: 1.0em;
 	color: #3378ac;
 }
 td a:hover {
-	font-size: 13px;
+	font-size: 1.0em;
 	color: #396393;
 }
 .looklikelink {
 	color: #404041;
-	font-size: 11px;
+	font-size: 0.846em;
 }
 .align_cancel {
 	display: block;
@@ -253,7 +253,7 @@ td a:hover {
 }
 a.logout {
 	color: #fff;
-	font-size: 11px;
+	font-size: 0.846em;
 	text-decoration: none;
 }
 p.user {
@@ -261,7 +261,7 @@ p.user {
 	*display: inline;
 	color: #fff;
 	font-family: helvetica;
-	font-size: 11px;
+	font-size: 0.846em;
 	margin: 0px;
 	padding: 0px;
 }
@@ -275,7 +275,7 @@ p.user {
 	border-left: 1px solid #98afd5;
 	border-right: 1px solid #98afd5;
 	text-align: center;
-	font-size: 12px;
+	font-size: 0.923em;
 	font-weight: normal;
 	color: #aaaaaa;
 	*padding: 15px 0px 0px;
@@ -310,7 +310,7 @@ a.navActive {
 	display: block;
 }
 .login_box p {
-	font-size: 14px;
+	font-size: 1.077em;
 	margin: 8px 0px;
 }
 .login_box .left_side {
@@ -342,7 +342,7 @@ a.navActive {
 	*float: left;
 }
 .login_box p.reset {
-	font-size: 13px;
+	font-size: 1.0em;
 	display: inline-block;
 	margin: 8px 0px 0px 10px;
 	vertical-align: top;
@@ -391,8 +391,8 @@ a.navActive {
 /** Advance Search Box **/
 #advanced_search {
 	background-color: #f5f7f8;
-	border: 1px solid black; 
-	margin: 0px 0px 20px; 
+	border: 1px solid black;
+	margin: 0px 0px 20px;
 	padding: 10px;
 }
 #advanced_search .boxtitle {
@@ -414,7 +414,7 @@ a.navActive {
 	display: inline-block;
 	vertical-align: top;
 	padding: 7px 0px;
-	font-size: 14px;
+	font-size: 1.077em;
 	font-weight: bold;
 }
 #showpage .left_side {
@@ -422,7 +422,7 @@ a.navActive {
 }
 #surveys .left_side label,
 #showpage .left_side label {
-	font-size: 14px;
+	font-size: 1.077em;
 	font-weight: bold;
 }
 #surveys .right_side,
@@ -443,12 +443,12 @@ a.navActive {
 	margin: 0px;
 	padding: 0px;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 1.231em;
 }
 #surveys .right_side p.version,
 #showpage .right_side p.version {
 	font-weight: normal;
-	font-size: 16px;
+	font-size: 1.231em;
 	margin: 0px;
 	padding: 0px;
 }
@@ -474,12 +474,12 @@ a.navActive {
 }
 #survey_info .top_side,
 #survey_info .top_side label {
-	font-size: 14px;
+	font-size: 1.077em;
 	font-weight: bold;
 	margin: 20px 0px 0px;
 }
 #survey_info .bottom_side span {
-	font-size: 13px;
+	font-size: 1.0em;
 	font-weight: normal;
 	margin: 0px 15px 0px 0px;
 }
@@ -588,19 +588,19 @@ a.navActive {
 	*display: inline;
 }
 .page_number {
-	font-size: 11px;
+	font-size: 0.846em;
 	font-weight: bold;
 	width: 40px;
 	display: inline-block;
 }
 .page_next {
 	display: inline-block;
-	font-size: 11px;
+	font-size: 0.846em;
 	font-weight: bold;
 	width: 400px;
 }
 .page_next label, .page_next select {
-	font-size: 11px;
+	font-size: 0.846em;
 	font-weight: bold;
 	display: inline-block;
 }
@@ -614,7 +614,7 @@ a.navActive {
 	margin: 5px 15px;
 	padding: 10px;
 	background-color: #fff;
-	font-size: 13px;
+	font-size: 1.0em;
 	min-height: 35px;
 }
 ol.outter, ul.outter {
@@ -659,7 +659,7 @@ li.outter tr:last-child {
 	width: 210px;
 	vertical-align: top;
 	text-align: right;
-	font-size: 11px;
+	font-size: 0.846em;
 	font-weight: bold;
 	*display: inline;
 }
@@ -683,7 +683,7 @@ li.inner {
 	background-color: #F5F7F8;
 	padding: 3px 5px;
 	margin: 0px 5px;
-	font-size: 11px; 
+	font-size: 0.846em;
 	color: #9f9f9f;
 }
 .showList li {
@@ -778,7 +778,7 @@ fieldset {
 	padding: 5px 10px;
 }
 legend {
-	font-size: 14px;
+	font-size: 1.077em;
 	font-weight: bold;
 }
 fieldset .left_side {
@@ -786,7 +786,7 @@ fieldset .left_side {
 	padding: 5px 10px 5px 0px;
 	display: inline-block;
 	vertical-align: top;
-	font-size: 13px;
+	font-size: 1.0em;
 	font-weight: bold;
 }
 fieldset .left_side label {
@@ -797,7 +797,7 @@ fieldset .right_side {
 	display: inline-block;
 	vertical-align: top;
 	width: 700px;
-	font-size: 13px;
+	font-size: 1.0em;
 	font-weight: normal;
 }
 fieldset .right_side input[type=text],
@@ -814,7 +814,7 @@ fieldset .db_action span {
 	font-weight: bold;
 	width: 40px;
 	text-align: center;
-	font-size: 13px;
+	font-size: 1.0em;
 }
 fieldset .db_action select,
 fieldset .db_action input[type=text] {
@@ -847,7 +847,7 @@ fieldset .center_side .middle_links {
 	display: block;
 	padding: 5px 0px;
 }
-fieldset .left_side_c select, 
+fieldset .left_side_c select,
 fieldset .right_side_c select {
 	width: 320px;
 	min-height: 100px;
@@ -862,14 +862,14 @@ fieldset .center a {
 
 /**** Images ****/
 #images_index_table .col1 {
-	width: 848px;	
+	width: 848px;
 }
 #images_index_table td.col1 {
-	font-size: 13px;
+	font-size: 1.0em;
 	color: #3378AC;
 }
 #images_index_table td.col1:hover {
-	font-size: 13px;
+	font-size: 1.0em;
 	color: #396393;
 }
 #images_index_table .col2 {
@@ -922,7 +922,7 @@ fieldset .center a {
 	margin: 0px 0px 0px;
 	font-family: helvetica;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 0.923em;
 	color: #fff;
 	*float: right;
 	*margin: -30px 50px 0px 0px;
@@ -937,27 +937,27 @@ fieldset .center a {
 }
 #error_explanation .title, .modalErrorBox .title {
 	color: #980024;
-	font-size: 12px;
+	font-size: 0.923em;
 	font-weight:bold;
 	margin: 0px 0px 5px;
 	padding: 0px;
 }
 #error_explanation ul.list, .modalErrorBox ul.list {
 	color: #980024;
-	font-size: 12px;
+	font-size: 0.923em;
 	margin: 0px;
 	padding: 0px;
 }
 #error_explanation ul.list li.list, .modalErrorBox ul.list li.list {
 	color: #980024;
-	font-size: 12px;
+	font-size: 0.923em;
 	margin: 0px 0px 0px 25px;
 	padding: 0px 0px 3px;
 }
 #notice, #flash_notice {
   color: #008000;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 0.923em;
   margin: -10px 0px 10px;
   border: 1px solid green;
   padding: 5px;
@@ -966,7 +966,7 @@ fieldset .center a {
 #flash_error {
   color: #980024;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 0.923em;
   margin: -10px 0px 10px;
   border: 1px solid #980024;
   padding: 5px;
@@ -999,7 +999,7 @@ fieldset .center a {
 /**** Modal ****/
 #modalDiv h2, .modalTitle, #edit_modal h2 {
 	color: #464646;
-	font-size: 18px;
+	font-size: 1.385em;
 	font-weight: normal;
 	margin: 0px 0px 15px;
 }
@@ -1008,7 +1008,7 @@ fieldset .center a {
 	overflow: auto;
 }
 .simplemodal-wrap {
-	overflow: visible !important;	
+	overflow: visible !important;
 }
 #modalDiv #surveys .left_side {
 	width: 100px;
@@ -1016,7 +1016,7 @@ fieldset .center a {
 #modalDiv #surveys .left_side p,
 #modalDiv #surveys .left_side label {
 	font-weight: normal;
-	font-size: 12px;
+	font-size: 0.923em;
 }
 #modalDiv .align_cancel {
 	margin: -30px 0px 0px 0px;
@@ -1038,12 +1038,12 @@ span.first, span.last, span.prev, span.next {
 span.pageNum {
 	padding: 0px 10px 0px 0px;
 	display: inline-block;
-	font-size: 11px;
+	font-size: 0.846em;
 	font-weight: bold;
 }
 .pagination a, .pagination a:link, .pagination a:visited {
 	font-weight: normal;
-	font-size: 11px;
+	font-size: 0.846em;
 	color: #404041;
 	text-decoration: none;
 }
