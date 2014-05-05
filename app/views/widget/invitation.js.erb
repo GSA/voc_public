@@ -222,7 +222,7 @@
       popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
       popurl = popurl + "page_url=" + pageurl;
-      window.open(popurl,"","width=250,height=300,scrollbars,");
+      window.open(popurl,"","width=600,height=270,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
       jQuery.post("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
