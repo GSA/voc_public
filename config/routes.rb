@@ -1,6 +1,7 @@
 CommentToolPublic::Application.routes.draw do
   get 'widget/widget'
   get 'widget/invitation'
+  get 'widget/:survey_id/invitation', to: 'widget#invitation'
   get 'scripts/gatc-survey', to: 'google_analytics#gatc_survey'
 
   resources :surveys, except: :destroy do
