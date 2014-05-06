@@ -30,4 +30,12 @@ module WidgetHelper
       @survey.invitation_reject_button_text
     end
   end
+
+  def start_screen_button_text
+    if @survey.start_screen_button_text.blank?
+      "Start"
+    else
+      @survey.start_screen_button_text
+    end
+  end  
 end
