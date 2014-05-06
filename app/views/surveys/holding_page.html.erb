@@ -1,3 +1,9 @@
+<% title @survey.start_page_title if @survey.start_page_title.present? %>
+
+<% if @survey.holding_page.present? %>
+  <%= @survey.holding_page.gsub('{{start}}', render('start_survey_button')).html_safe %>
+<% else %>
+
 <style>
 .content {
   margin: 25px 15px 25px 15px;
@@ -47,3 +53,4 @@
     <%= link_to 'Privacy Policy', nil, class: 'float-right privacy-policy' %>
   </div>
 </div>
+<% end %>
