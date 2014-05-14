@@ -1,6 +1,12 @@
 /* Use an immediately invoked function to isolate variables */
 (function(){
 
+  // jQuery formatted selector to search for focusable items
+  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
+
+  // store the item that has focus before opening the modal window
+  var focusedElementBeforeModal;
+
   <%= render 'load_jquery' %>
 
   /* main - Main function for the voc invitation.  This function is called once */
@@ -92,12 +98,6 @@
   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
-
-  // jQuery formatted selector to search for focusable items
-  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
-
-  // store the item that has focus before opening the modal window
-  var focusedElementBeforeModal;
 
   function loadModal() {
       jQuery('#<%= params[:target_id] %>').html("<%= escape_javascript(render('invite_modal')) %>");
