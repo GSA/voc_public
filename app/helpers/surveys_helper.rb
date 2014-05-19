@@ -40,4 +40,14 @@ module SurveysHelper
   def use_fieldset?(question)
     question.answer_type == ChoiceAnswer::RADIO || question.answer_type == ChoiceAnswer::CHECKBOX
   end
+
+  def device_type
+    if browser.tablet?
+      'tablet'
+    elsif browser.mobile?
+      'mobile'
+    else
+      'PC'
+    end
+  end
 end
