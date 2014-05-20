@@ -43,11 +43,11 @@ module SurveysHelper
 
   def device_type
     if browser.tablet?
-      'tablet'
+      'Tablet'
     elsif browser.mobile?
-      'mobile'
+      'Mobile'
     else
-      'PC'
+      'Desktop'
     end
   end
 end
