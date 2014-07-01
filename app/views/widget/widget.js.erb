@@ -144,7 +144,7 @@ function check_for_unanswered_required(page) {
           required =  true;
         } else if( jQuery(".question_" + question_number + "_answer").attr('type') == "text" && jQuery(".question_" + question_number + "_answer").val() == "") {
           required =  true;
-        } else if( $(".question_" + question_number + "_answer").prop('tagName').toLowerCase() == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
+        } else if( jQuery(".question_" + question_number + "_answer").prop('tagName').toLowerCase() == "textarea" && jQuery(".question_" + question_number + "_answer").val() == "") {
           /* a textarea does not have a an attr('type') so use the prop('tagName') */
           required =  true;
         }

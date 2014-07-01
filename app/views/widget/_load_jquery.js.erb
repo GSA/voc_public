@@ -47,7 +47,7 @@ function scriptLoadHandler(){
   if(countScriptCalled > 1) return;
   /* Restore jQuery and window.jQuery to their original values */
   var interval = setInterval(function(){
-    if(window.jQuery != "undefined") {
+    if((typeof window.jQuery !== "undefined") && window.jQuery.fn.jquery == '1.7.2') {
       clearInterval(interval);
       jQuery = window.jQuery.noConflict();
 
