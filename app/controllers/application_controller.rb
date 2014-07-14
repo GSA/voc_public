@@ -4,15 +4,14 @@
 # {http://en.wikipedia.org/wiki/Cross-origin_resource_sharing cross-origin resource sharing (CORS)}.
 class ApplicationController < ActionController::Base
 
+  before_filter :cors_set_shared_headers
   before_filter :cors_preflight_check
   after_filter :cors_set_access_control_headers
 
   # For all responses in this controller, return the CORS access control headers.
+  # At this point, the shared headers have already been set
   def cors_set_access_control_headers
     Rails.logger.info "Allowing request from #{request.env['HTTP_ORIGIN']}"
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-    headers['Access-Control-Max-Age'] = "1728000"
     headers['Access-Control-Allow-Headers'] = 'Pragma, Cache-Control'
   end
 
@@ -21,11 +20,21 @@ class ApplicationController < ActionController::Base
   # text/plain.
   def cors_preflight_check
     if request.method == :options
-      headers['Access-Control-Allow-Origin'] = '*'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
       headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Pragma'
-      headers['Access-Control-Max-Age'] = '1728000'
       render :text => '', :content_type => 'text/plain'
     end
+  end
+
+  private
+
+  def cors_set_shared_headers
+    # Working in the context of a survey, reach through to site url
+    if survey_id = params[:survey_id]
+      site_url = Site.where(surveys: { id: survey_id }).joins(:surveys).first.try(:url)
+      headers['Access-Control-Allow-Origin'] = site_url
+    end
+
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    headers['Access-Control-Max-Age'] = '108000'
   end
 end
