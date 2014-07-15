@@ -31,7 +31,12 @@ class ApplicationController < ActionController::Base
     # Working in the context of a survey, reach through to site url
     if survey_id = params[:survey_id]
       site_url = Site.where(surveys: { id: survey_id }).joins(:surveys).first.try(:url)
-      headers['Access-Control-Allow-Origin'] = site_url
+
+      if site_url
+        site_url = request.protocol + site_url.split('://').last
+
+        headers['Access-Control-Allow-Origin'] = site_url
+      end
     end
 
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
