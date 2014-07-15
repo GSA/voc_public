@@ -27,9 +27,11 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Working in the context of a survey, reach through to site url for origin
+  # This is not going to work if we ever key off anything other than a
+  # survey id in the future
   def cors_set_shared_headers
-    # Working in the context of a survey, reach through to site url
-    if survey_id = params[:survey_id]
+    if survey_id = params[:id].presence || params[:survey_id].presence
       site_url = Site.where(surveys: { id: survey_id }).joins(:surveys).first.try(:url)
 
       if site_url
