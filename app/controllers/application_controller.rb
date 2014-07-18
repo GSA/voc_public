@@ -31,16 +31,7 @@ class ApplicationController < ActionController::Base
   # This is not going to work if we ever key off anything other than a
   # survey id in the future
   def cors_set_shared_headers
-    if survey_id = params[:id].presence || params[:survey_id].presence
-      site_url = Site.where(surveys: { id: survey_id }).joins(:surveys).first.try(:url)
-
-      if site_url
-        site_url = request.protocol + site_url.split('://').last
-
-        headers['Access-Control-Allow-Origin'] = site_url
-      end
-    end
-
+    headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
     headers['Access-Control-Max-Age'] = '108000'
   end
