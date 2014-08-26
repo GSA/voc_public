@@ -77,5 +77,25 @@
 <% end -%>
 
 <script type='text/javascript'>
-	jQuery.post('<%= visit_survey_url(@survey) %>');
+jQuery(function() {
+  // create and post to a hidden iframe to avoid cross-domain POST limitations
+  var uniqueString = "surveyVisitContainerIframe";
+
+  // embed iframe name specifically since IE is buggy with .attr
+  var iframe = jQuery('<iframe name="' + uniqueString + '">');
+  var form = jQuery("<form>",
+  	{
+  		target: uniqueString,
+  		action: '<%= visit_survey_url(@survey) %>',
+  		method: 'POST'
+  	}
+  );
+
+  // add the hidden iframe
+  jQuery("body").append(iframe);
+  iframe.hide();
+  jQuery("body").append(form);
+
+  form.submit();
+});
 </script>
