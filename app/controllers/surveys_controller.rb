@@ -41,11 +41,16 @@ class SurveysController < ApplicationController
 
   # GET     /surveys(.:format)
   def index
-    @surveys = Survey.all
+    if Rails.env != 'development'
+      render nothing: true
+    else
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @surveys }
+      @surveys = Survey.all
+
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @surveys }
+      end
     end
   end
 
