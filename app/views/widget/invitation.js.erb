@@ -232,7 +232,7 @@
       hideModal();
       jQuery.post("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
 
-      if (window.focus) {
+      if (new_window != null && window.focus) {
         new_window.focus();
       }
   }
