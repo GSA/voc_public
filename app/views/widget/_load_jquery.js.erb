@@ -13,7 +13,13 @@ function loadMobileBrowserDetection() {
 }
 
 /* Load jQuery if it is not present */
-if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
+if(existing_jquery != undefined && existing_jquery.fn != undefined && existing_jquery.fn.jquery == '1.7.2') {
+  console.log("An existing jQuery 1.7.2 load was passed in.  Using the passed in jQuery.");
+  jQuery = existing_jquery;
+  loadMobileBrowserDetection();
+  main();
+} else if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
+  console.log("jQuery 1.7.2 was not detected.  Loading from googleapis");
   var script_tag = document.createElement('script');
   script_tag.setAttribute('type', 'text/javascript');
   script_tag.setAttribute('src',
@@ -33,6 +39,7 @@ if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
   (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
 
 } else {
+  console.log("jQuery 1.7.2 is loaded and exists in window.jQuery");
   /* The site already has jQuery loaded */
   jQuery = window.jQuery;
 
