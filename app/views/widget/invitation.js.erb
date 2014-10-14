@@ -1,5 +1,5 @@
 /* Use an immediately invoked function to isolate variables */
-(function(){
+(function(existing_jquery){
 
   // jQuery formatted selector to search for focusable items
   var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
@@ -227,10 +227,14 @@
       popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
       popurl = popurl + "page_url=" + pageurl;
-      window.open(popurl,"","width=600,height=270,scrollbars,");
+      new_window = window.open(popurl,"","width=600,height=270,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
       jQuery.post("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
+
+      if (new_window != null && window.focus) {
+        new_window.focus();
+      }
   }
 
   function showModal(obj) {
@@ -267,4 +271,4 @@
       focusedElementBeforeModal.focus();
   }
 
-})();
+})(<%= params[:jquery] || 'undefined' %>);
