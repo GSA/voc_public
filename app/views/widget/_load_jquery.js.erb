@@ -13,7 +13,8 @@ function loadMobileBrowserDetection() {
 }
 
 /* Load jQuery if it is not present */
-if(existing_jquery != undefined && existing_jquery.fn != undefined && existing_jquery.fn.jquery == '1.7.2') {
+if(typeof existing_jquery != "undefined" && typeof existing_jquery.fn != "undefined"
+    && existing_jquery.fn.jquery == '1.7.2') {
   jQuery = existing_jquery;
   loadMobileBrowserDetection();
   main();

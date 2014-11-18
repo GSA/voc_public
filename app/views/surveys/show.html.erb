@@ -30,7 +30,7 @@
 						%>
 
 						<% if element.assetable_type == "MatrixQuestion" %>
-							<%= render partial: 'matrix_question', locals: {
+							<%= render partial: 'matrix_question.html.erb', locals: {
 									element: element,
 									question_number: question_number,
 									index: index,
@@ -38,7 +38,7 @@
 								}
 							%>
 						<% elsif element.assetable_type == "TextQuestion" %>
-							<%= render partial: 'text_question', locals: {
+							<%= render partial: 'text_question.html.erb', locals: {
 									element: element,
 									question_number: question_number,
 									index: index,
@@ -46,7 +46,7 @@
 								}
 							%>
 						<% elsif element.assetable_type == "ChoiceQuestion" %>
-							<%= render partial: 'choice_question', locals: {
+							<%= render partial: 'choice_question.html.erb', locals: {
 									element: element,
 									question_number: question_number,
 									index: index,
@@ -60,7 +60,7 @@
 					<% index = index + 1%>
 				<% end %>
 				</ul>
-				<%= render partial: 'survey_navigation', locals: {
+				<%= render partial: 'survey_navigation.html.erb', locals: {
 						page: page
 					}
 				%>
