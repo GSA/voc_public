@@ -20,5 +20,6 @@ class WidgetController < ApplicationController
 
   def invitation
     @survey = Survey.find(params[:survey_id])
+    @test_invitation = params[:test_invitation].present?
   end
 end

@@ -14,23 +14,28 @@
         <% if params[:stylesheet] %>
             popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
         <% end %>
+        <% if @test_invitation %>
+          popurl = popurl + "&test_invitation=true"
+        <% end %>
         popurl = popurl + "page_url=" + pageurl;
         window.location.href = popurl;
     <% else %>
       var cookieName = 'survey_invitation_<%= params[:survey_id] %>';
       var invitationInterval = <%= @survey.invitation_interval %>;
-      if(invitationInterval == 0 || readCookie(cookieName) == null) {
+      if(invitationInterval == 0 || readCookie(cookieName) == null || <%= @test_invitation %>) {
         var invite = false;
-        <% if @survey.invitation_percent == 100 %>
+        <% if @survey.invitation_percent == 100 || @test_invitation %>
           invite = true
         <% elsif @survey.invitation_percent > 0 %>
           invite = Math.random() < <%= @survey.invitation_percent %> / 100
         <% end %>
         if(invite) {
           loadModal();
-          if(invitationInterval > 0) {
-            createCookie(cookieName, true, invitationInterval);
-          }
+          <% unless @test_invitation %>
+            if(invitationInterval > 0) {
+              createCookie(cookieName, true, invitationInterval);
+            }
+          <% end %>
         }
       }
     <% end %>
@@ -213,10 +218,17 @@
       popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
       popurl = popurl + "page_url=" + pageurl;
+      <% if @test_invitation %>
+        popurl = popurl + "&test_invitation=true"
+      <% end %>
       window.open(popurl,"","width=600,height=500,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
-      jQuery.get("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
+      invitationurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept"
+      <% if @test_invitation %>
+        invitationurl = invitationurl + "?test_invitation=true"
+      <% end %>
+      jQuery.get(invitationurl);
   }
 
   function showModal(obj) {
