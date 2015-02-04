@@ -4,4 +4,4 @@ Testing survey <%= params[:id] %>
   <iframe src="<%= survey_path(params[:id]) %>"></iframe>
 </noscript>
 <script type="text/javascript"
-        src="<%= widget_invitation_path(survey_id: params[:id], target_id: "survey_target", test_invitation: true) %>"></script>
+        src="<%= widget_invitation_path(format: :js, survey_id: params[:id], target_id: "survey_target", test_invitation: true) %>"></script>
