@@ -9,6 +9,7 @@ CommentToolPublic::Application.routes.draw do
       get 'visit'
       get 'invitation'
       get 'invitation_accept'
+      get 'test_invitation'
     end
   end
   resources :survey_responses do

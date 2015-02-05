@@ -64,6 +64,10 @@ class SurveysController < ApplicationController
     end
   end
 
+  # GET      /surveys/:id/test_invitation
+  def test_invitation
+  end
+
   # GET     /surveys/:id/visit(.:format)
   def visit
     cookie_name = "survey_view_#{params[:id]}"
@@ -77,13 +81,15 @@ class SurveysController < ApplicationController
 
   def invitation
     get_survey_and_version
-    @survey_version.increment_temp_invitation_count
+    @test_invitation = params[:test_invitation].present?
+    @survey_version.increment_temp_invitation_count unless @test_invitation
     render :nothing => true
   end
 
   def invitation_accept
     get_survey_and_version
-    @survey_version.increment_temp_invitation_accepted_count
+    @test_invitation = params[:test_invitation].present?
+    @survey_version.increment_temp_invitation_accepted_count unless @test_invitation
     render :nothing => true
   end
 
