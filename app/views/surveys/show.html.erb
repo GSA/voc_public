@@ -121,7 +121,7 @@
 								<% end -%>
 							<% end -%>
 						<% else %>
-              				<%= element.assetable.snippet.html_safe%>
+            	<%= element.assetable.snippet.gsub('{{omb_expiration_date}}', @survey.omb_expiration_date.to_s).html_safe%>
 						<% end %>
 					</li>
 					<% index = index + 1%>
