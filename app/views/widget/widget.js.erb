@@ -54,7 +54,7 @@
       jQuery(document).on("submit", "#"+_targetID+" form", function(){
 
         // create and post to a hidden iframe to avoid cross-domain POST limitations
-        var iframe = jQuery("<iframe>");
+        var iframe = jQuery("<iframe height='0' width='0' tabindex='-1' title='empty'>");
         var uniqueString = "surveyPostContainerIframe";
         var form = target.children("form").first();
 

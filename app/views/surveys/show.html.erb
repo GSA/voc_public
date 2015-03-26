@@ -3,7 +3,8 @@
 <!-- <p class="pageTitle">View Survey</p> -->
 
 <% javascript 'survey.js' %>
-<iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/visit" style="display: none;"></iframe>
+<iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/visit" style="display: none;"
+	height="0" width="0" tabindex="-1" title="empty"></iframe>
 
 <% if @survey_version.nil? %>
 	<p>Could not find version <%= params[:version] %></p>
