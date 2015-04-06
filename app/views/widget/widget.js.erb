@@ -3,9 +3,18 @@
 
   <%= render 'load_jquery' %>
 
+  // Fix for window.location.origin for IE
+  if (!window.location.origin) {
+    window.location.origin = window.location.protocol + "//" +
+      window.location.hostname + (window.location.port ? ':' +
+      window.location.port: '');
+  }
+
   /* main - Main function for the voc widget.  This function is called once */
   /* jQuery has been loaded.                                                */
   function main() {
+    /* create window jquery object */
+    window.VOCjQuery = jQuery;
     /* create the voc object */
     window.voc = {
       Survey: survey
@@ -95,6 +104,15 @@
 })();
 
 /******************* Survey.js ******************************************/
+function focus_on_page(page){
+  input_element = jQuery("#page_" + page + " :input:enabled:visible:first");
+  if(input_element.length) {
+    input_element.focus();
+  } else {
+    jQuery("#page_" + page).focus();
+  }
+}
+
 function show_next_page(page){
   var required_unanswered = false;
 
@@ -105,10 +123,11 @@ function show_next_page(page){
     var next_page = jQuery("#page_" + page + "_next_page").val();
 
     /* Set the prev page on next page */
-   set_prev_page(page, next_page);
+    set_prev_page(page, next_page);
 
     jQuery("#page_"+ next_page).show();
     window.location.hash="PAGE_" + next_page;
+    focus_on_page(next_page)
   } else {
     alert(survey_required_fields_error);
   }
@@ -117,8 +136,10 @@ function show_next_page(page){
 
 function show_prev_page(page){
   jQuery("#page_"+page).hide();
-  jQuery("#page_"+ jQuery("#page_" + page + "_prev_page").val() ).show();
-  window.location.hash = "PAGE_" + page;
+  var prev_page = jQuery("#page_" + page + "_prev_page").val();
+  jQuery("#page_"+ prev_page).show();
+  window.location.hash = "PAGE_" + prev_page;
+  focus_on_page(prev_page)
 }
 
 function set_next_page(current_page, next_page) {
