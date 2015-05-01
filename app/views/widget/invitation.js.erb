@@ -211,31 +211,39 @@
   }
 
   function enterButtonModal() {
-      // BEGIN logic for executing the Enter button action for the modal window
-      var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
-      <% if params[:stylesheet] %>
-      popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
-      <% end %>
-      popurl = popurl + "page_url=" + pageurl;
-      <% if @test_invitation %>
-        popurl = popurl + "&test_invitation=true"
-      <% end %>
-      window.open(popurl,"","width=600,height=500,scrollbars,");
-      // END logic for executing the Enter button action for the modal window
-      hideModal();
-      invitationurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept"
-      <% if @test_invitation %>
-        invitationurl = invitationurl + "?test_invitation=true"
-      <% end %>
-      jQuery.get(invitationurl);
+    openSurveyInNewWindow();
+    incrementInvitationAcceptCount();
+  }
+
+  function incrementInvitationAcceptCount() {
+    invitationurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept"
+    <% if @test_invitation %>
+      invitationurl = invitationurl + "?test_invitation=true"
+    <% end %>
+    jQuery.get(invitationurl);
+  }
+
+  function openSurveyInNewWindow() {
+    // BEGIN logic for executing the Enter button action for the modal window
+    var pageurl  = window.location.origin + window.location.pathname;
+    var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+    <% if params[:stylesheet] %>
+    popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
+    <% end %>
+    popurl = popurl + "page_url=" + pageurl;
+    <% if @test_invitation %>
+      popurl = popurl + "&test_invitation=true"
+    <% end %>
+    window.open(popurl,"","width=600,height=500,scrollbars,");
+    // END logic for executing the Enter button action for the modal window
+    hideModal();
   }
 
   function showModal(obj) {
       jQuery('#mainPage').attr('aria-hidden', 'true'); // mark the main page as hidden
       jQuery('#vocModalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
-      jQuery('#vocModal').css('display', 'block'); // make the modal window visible
-      jQuery('#vocModal').attr('aria-hidden', 'false'); // mark the modal window as visible
+      obj.css('display', 'block'); // make the modal window visible
+      obj.attr('aria-hidden', 'false'); // mark the modal window as visible
 
       // save current focus
       focusedElementBeforeModal = jQuery(':focus');
@@ -248,8 +256,6 @@
 
       // set the focus to the first keyboard focusable item
       o.filter(focusableElementsString).filter(':visible').first().focus();
-
-
   }
 
   function hideModal() {
