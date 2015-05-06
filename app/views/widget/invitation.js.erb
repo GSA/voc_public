@@ -99,47 +99,46 @@
 
   function loadModal() {
     var targetId = '#<%= params[:target_id] %>';
-      jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
-      showModal(jQuery('#vocModal'));
-      jQuery('#startModal').click(function(e) {
-          showModal(jQuery('#vocModal'));
-      });
-      jQuery('#cancel').click(function(e) {
-          hideModal();
-      });
-      jQuery('#vocCancelButton').click(function(e) {
-          hideModal();
-      });
-      jQuery('#vocEnter').click(function(e) {
-          enterButtonModal();
-      });
-      jQuery('#vocModalCloseButton').click(function(e) {
-          hideModal();
-      });
-      jQuery('#vocModalCloseButton').keydown(function(event) {
-          trapSpaceKey(jQuery(this), event, hideModal);
-      })
-      jQuery
-      jQuery('#vocModal').keydown(function(event) {
-          trapTabKey(jQuery(this), event);
-      })
-      jQuery('body').keydown(function(event) {
-          trapEscapeKey(jQuery(this), event);
-      })
-      jQuery('#vocModalOverlay').on('click', function(event) {
+    jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
+    showModal(jQuery('#vocModal'));
+    jQuery('#startModal').click(function(e) {
+        showModal(jQuery('#vocModal'));
+    });
+    jQuery('#cancel').click(function(e) {
         hideModal();
-      })
+    });
+    jQuery('#vocCancelButton').click(function(e) {
+        hideModal();
+    });
+    jQuery('#vocEnter').click(function(e) {
+        enterButtonModal();
+    });
+    jQuery('#vocModalCloseButton').click(function(e) {
+        hideModal();
+    });
+    jQuery('#vocModalCloseButton').keydown(function(event) {
+        trapSpaceKey(jQuery(this), event, hideModal);
+    })
+    jQuery
+    jQuery('#vocModal').keydown(function(event) {
+        trapTabKey(jQuery(this), event);
+    })
+    jQuery('body').keydown(function(event) {
+        trapEscapeKey(jQuery(this), event);
+    })
+    jQuery('#vocModalOverlay').on('click', function(event) {
+      hideModal();
+    })
 
   }
 
-
   function trapSpaceKey(obj, evt, f) {
-      // if space key pressed
-      if (evt.which == 32) {
-          // fire the user passed event
-          f();
-          evt.preventDefault();
-      }
+    // if space key pressed
+    if (evt.which == 32) {
+        // fire the user passed event
+        f();
+        evt.preventDefault();
+    }
   }
 
   function trapEscapeKey(obj, evt) {
