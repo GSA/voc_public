@@ -98,7 +98,8 @@
   var focusedElementBeforeModal;
 
   function loadModal() {
-      jQuery('#<%= params[:target_id] %>').html("<%= escape_javascript(render('invite_modal')) %>");
+    var targetId = '#<%= params[:target_id] %>';
+      jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
       showModal(jQuery('#vocModal'));
       jQuery('#startModal').click(function(e) {
           showModal(jQuery('#vocModal'));
@@ -118,11 +119,15 @@
       jQuery('#vocModalCloseButton').keydown(function(event) {
           trapSpaceKey(jQuery(this), event, hideModal);
       })
+      jQuery
       jQuery('#vocModal').keydown(function(event) {
           trapTabKey(jQuery(this), event);
       })
-      jQuery('#vocModal').keydown(function(event) {
+      jQuery('body').keydown(function(event) {
           trapEscapeKey(jQuery(this), event);
+      })
+      jQuery('#vocModalOverlay').on('click', function(event) {
+        hideModal();
       })
 
   }
@@ -138,21 +143,12 @@
   }
 
   function trapEscapeKey(obj, evt) {
-
-      // if escape pressed
-      if (evt.which == 27) {
-
-          // get list of all children elements in given object
-          var o = obj.find('*');
-
-          // get list of focusable items
-          var cancelElement;
-          cancelElement = o.filter("#cancel")
-
-          // close the modal window
-          cancelElement.click();
-          evt.preventDefault();
-      }
+    console.log("trapEscapeKey", evt.which);
+    // if escape pressed
+    if (evt.which == 27) {
+      hideModal();
+      evt.preventDefault();
+    }
 
   }
 
