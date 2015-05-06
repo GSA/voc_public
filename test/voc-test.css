@@ -1,0 +1,46 @@
+.hidden_page {
+  display: none;
+}
+
+ol.outter, ul.outter {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 10px 0px 0px 40px;
+}
+
+ul.showList, ol.showList {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	/*margin: 3px 0px 0px 30px;*/
+	margin: 0px;
+}
+
+li.outter {
+	margin: 0px 0px 15px 10px;
+	padding: 0px;
+	list-style-type: none;
+	list-style-position: outside;
+}
+
+li.inner {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 0px 0px 2px;
+}
+
+li.showList-ul {
+	padding: 0px 0px 3px;
+	list-style-type: none;
+}
+
+li.showList-ol {
+	padding: 0px 0px 3px;
+	list-style-type: decimal;
+	list-style-position: inside;
+}
