@@ -211,7 +211,12 @@
   }
 
   function enterButtonModal() {
-    openSurveyInNewWindow();
+    var modalSurvey = <%= params[:modal] == 'true' %>;
+    if(modalSurvey) {
+      openSurveyInModal();
+    } else {
+      openSurveyInNewWindow();
+    }
     incrementInvitationAcceptCount();
   }
 
@@ -221,6 +226,15 @@
       invitationurl = invitationurl + "?test_invitation=true"
     <% end %>
     jQuery.get(invitationurl);
+  }
+
+  function openSurveyInModal() {
+    console.log("Opening survey in the modal");
+    var widgetUrl = "http://<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>"
+    jQuery.getScript(widgetUrl).done(function() {
+      hideModal();
+      showModal(jQuery("#vocModal"));
+    });
   }
 
   function openSurveyInNewWindow() {
