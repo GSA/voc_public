@@ -1,11 +1,12 @@
-var VOC = {}
+window.VOC = window.VOC || {};
 
-VOC = (function($) {
-	var voc = {};
+window.VOC = (function($, voc) {
 	var page_url,
 		changeTimer,
 		changeInterval = 5000,
 		lastSubmitted;
+
+	voc.Url = voc.Url || "";
 
 	/* Private Functions */
 	function show_next_page(page) {
@@ -85,7 +86,7 @@ VOC = (function($) {
 	}
 
 	/* Publicly available functions through the VOC object */
-	voc.onPageLoad = function() {
+	function onPageLoad() {
 		page_url = $("#response_page_url");
 		if(page_url.val() == "" && parent) {
 			page_url.val(parent.document.location.origin + parent.document.location.pathname);
@@ -107,14 +108,19 @@ VOC = (function($) {
 		function post_form(form_data){
 	    if((new Date().getTime() - lastSubmitted) > changeInterval){
 	      lastSubmitted = new Date().getTime();
-	      $.post( "/survey_responses/partial",form_data);
+	      $.post( voc.Url + "/survey_responses/partial",form_data);
 	    }
 	  }
 	}
+
 	voc.show_next_page = show_next_page;
 	voc.show_prev_page = show_prev_page;
+	voc.set_next_page = set_next_page;
+	voc.set_prev_page = set_prev_page;
+	voc.onPageLoad = onPageLoad;
 	voc.validate_before_submit = validate_before_submit;
-	return voc;
-})(jQuery);
 
-$(VOC.onPageLoad);
+	return voc;
+})(jQuery, window.VOC);
+
+jQuery(VOC.onPageLoad);
