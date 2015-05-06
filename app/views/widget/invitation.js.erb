@@ -229,7 +229,6 @@
   }
 
   function openSurveyInModal() {
-    console.log("Opening survey in the modal");
     var widgetUrl = "http://<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>"
     jQuery.getScript(widgetUrl).done(function() {
       hideModal();

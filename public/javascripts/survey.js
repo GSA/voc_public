@@ -58,8 +58,9 @@ window.VOC = (function($, voc) {
 	}
 
 	function show_prev_page(page){
+		var prev_page = $("#page_" + page + "_prev_page").val();
 		$("#page_"+page).hide();
-	  $("#page_"+ $("#page_" + page + "_prev_page").val() ).show();
+	  $("#page_"+ prev_page ).show();
 		window.location.hash = "PAGE_" + (prev_page || 1);
 
 		var title = $(document).prop("title");
