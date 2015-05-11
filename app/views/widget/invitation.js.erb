@@ -30,6 +30,12 @@
           invite = Math.random() < <%= @survey.invitation_percent %> / 100
         <% end %>
         if(invite) {
+          /* Load the passed stylesheet into the page */
+          var stylesheet = '<%= params[:stylesheet] %>';
+          if(stylesheet.length > 0) {
+            jQuery('head').append('<link rel="stylesheet" href="' + stylesheet + '" type="text/css" />');
+          }
+
           loadModal();
           <% unless @test_invitation %>
             if(invitationInterval > 0) {
