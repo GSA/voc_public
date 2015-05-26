@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= language_attribute %>" xml:lang="<%= language_attribute %>">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
     <% if params[:stylesheet].blank? %>
 			<%= stylesheet_link_tag "application" %>
