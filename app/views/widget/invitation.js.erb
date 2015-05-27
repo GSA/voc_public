@@ -124,17 +124,13 @@
     });
     jQuery('#vocModalCloseButton').keydown(function(event) {
         trapSpaceKey(jQuery(this), event, hideModal);
-    })
-    jQuery
+    });
     jQuery('#vocModal').keydown(function(event) {
         trapTabKey(jQuery(this), event);
-    })
+    });
     jQuery('body').keydown(function(event) {
         trapEscapeKey(jQuery(this), event);
-    })
-    jQuery('#vocModalOverlay').on('click', function(event) {
-      hideModal();
-    })
+    });
 
   }
 
