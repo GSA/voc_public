@@ -1,8 +1,8 @@
-.hidden_page {
+.voc-form .hidden_page {
   display: none;
 }
 
-ol.outter, ul.outter {
+.voc-form ol.outter, .voc-form ul.outter {
 	font-weight: normal;
 	color: #000;
 	line-height: normal;
@@ -10,7 +10,7 @@ ol.outter, ul.outter {
 	margin: 10px 0px 0px 40px;
 }
 
-ul.showList, ol.showList {
+.voc-form ul.showList, .voc-form ol.showList {
 	font-weight: normal;
 	color: #000;
 	line-height: normal;
@@ -19,14 +19,14 @@ ul.showList, ol.showList {
 	margin: 0px;
 }
 
-li.outter {
+.voc-form li.outter {
 	margin: 0px 0px 15px 10px;
 	padding: 0px;
 	list-style-type: none;
 	list-style-position: outside;
 }
 
-li.inner {
+.voc-form li.inner {
 	font-weight: normal;
 	color: #000;
 	line-height: normal;
@@ -34,12 +34,12 @@ li.inner {
 	margin: 0px 0px 2px;
 }
 
-li.showList-ul {
+.voc-form li.showList-ul {
 	padding: 0px 0px 3px;
 	list-style-type: none;
 }
 
-li.showList-ol {
+.voc-form li.showList-ol {
 	padding: 0px 0px 3px;
 	list-style-type: decimal;
 	list-style-position: inside;
