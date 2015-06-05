@@ -36,4 +36,14 @@ module SurveysHelper
 
     onclick
   end
+
+  def device_type
+    if browser.tablet?
+      'Tablet'
+    elsif browser.mobile?
+      'Mobile'
+    else
+      'Desktop'
+    end
+  end
 end
