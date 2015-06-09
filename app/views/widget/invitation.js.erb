@@ -23,7 +23,7 @@
       var $target = jQuery('#<%= params[:mobile_target_id] %>');
       var targetHTML = $target.html();
       var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+      var popurl = "https://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
       <% if params[:stylesheet] %>
           popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
@@ -222,7 +222,7 @@
   function enterButtonModal() {
       // BEGIN logic for executing the Enter button action for the modal window
       var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/holding_page?"
+      var popurl = "https://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/holding_page?"
       <% if params[:stylesheet] %>
       popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
@@ -230,7 +230,7 @@
       new_window = window.open(popurl,"","width=600,height=270,scrollbars,");
       // END logic for executing the Enter button action for the modal window
       hideModal();
-      jQuery.post("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
+      jQuery.post("https://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
 
       if (new_window != null && window.focus) {
         new_window.focus();
