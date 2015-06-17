@@ -1,0 +1,14 @@
+<%= button_to 'X', 'javascript: void(0);', class: 'vocCancelButton top-right', alt: 'close modal',
+  id: 'cancel' %>
+<div class='banner'>
+  <% if browser.mobile? || browser.tablet? %>
+    <%= image_tag 'https://www.usa.gov/resources/images/usagov_logo-mobile.gif' %>
+  <% else %>
+    <%= image_tag 'https://www.usa.gov/resources/images/usagov_logo1.gif' %>
+  <% end %>
+</div>
+<p>
+  Would you like to take a survey?
+</p>
+<input type="button" name="vocEnter" id="vocEnter" value="<%= invitation_accept_button_text %>">
+<input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">

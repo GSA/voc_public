@@ -4,14 +4,19 @@
 module WidgetHelper
   def invitation_text
     if @survey.invitation_text.blank?
-      "Would you like to take a survey?<br/>"
+      render 'default_invite_text'
     else
-      @survey.invitation_text
+      text = @survey.invitation_text
+      accept_button = render partial: 'accept_button'
+      reject_button = render partial: 'reject_button'
+      text.gsub!('{{accept}}', accept_button)
+      text.gsub!('{{reject}}', reject_button)
+      text.html_safe
     end
   end
 
   def invitation_accept_button_text
-    if @survey.invitation_accept_button_text.blank? 
+    if @survey.invitation_accept_button_text.blank?
       "Yes"
     else
       @survey.invitation_accept_button_text
