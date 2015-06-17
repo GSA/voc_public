@@ -47,6 +47,15 @@
       height:1px;
       top:auto;
   }
+  .top-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-decoration: none;
+    background-color: grey;
+    color: white;
+    font-size: 11px;
+  }
 
 </style>
 <iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation<%= '?test_invitation=true' if @test_invitation %>"
