@@ -61,6 +61,11 @@
 <iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation<%= '?test_invitation=true' if @test_invitation %>"
   height="0" width="0" tabindex="-1" title="empty" style="display: none;"></iframe>
 <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog' tabindex='-1'>
+  <div id="modalDescription" class="screen-reader-offscreen">
+    Beginning of dialog window.  Survey invitation form.  Escape will cancel and close the window.
+    Accepting the invitation will load the survey form.  Declining the invitation will cancel and
+    close the window.
+  </div>
   <%= invitation_text %>
 </div>
 <div id='vocModalOverlay' tabindex='-1'></div>
