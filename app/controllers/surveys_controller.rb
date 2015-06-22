@@ -3,10 +3,6 @@
 # Manages the Survey lifecycle.
 
 class SurveysController < ApplicationController
-  caches_action :show, :cache_path => Proc.new {|c|
-    c.params.delete_if {|k,v| k.starts_with?('utm_')}
-  }
-
   # GET /surveys/:id/thank_you_page(.:format)
   def thank_you_page
     get_survey_and_version
