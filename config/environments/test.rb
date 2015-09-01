@@ -35,4 +35,5 @@ CommentToolPublic::Application.configure do
 
   config.serve_static_files = true
   config.static_cache_control = 'public, max-age=3600'
+  config.active_recorc.mass_assignment_sanitizer = :strict
 end

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.12'
+gem 'rails', '3.2.21'
 
 gem 'memcache-client'
 gem 'paperclip'
@@ -22,8 +22,8 @@ gem 'resque_unit', :group => :test
 gem 'redis-objects'
 
 group :assets do
-  gem 'sass-rails', '~> 3.1.7'
-  gem 'coffee-rails','~> 3.1.1'
+  gem 'sass-rails', '~> 3.2.6'
+  gem 'coffee-rails','~> 3.2.2'
   gem 'uglifier', '>= 1.0.3'
 end
 
