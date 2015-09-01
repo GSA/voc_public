@@ -49,4 +49,9 @@ CommentToolPublic::Application.configure do
 
   # Config memcached
   # config.cache_store = :mem_cache_store, "127.0.0.1:11211", { :namespace => 'VOC', :expires_in => 1.day, :compress => true }
+
+  # Asset configuration
+  config.assets.compress = true
+  config.assets.compile = true
+  config.assets.digest = true
 end

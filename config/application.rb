@@ -43,5 +43,9 @@ module CommentToolPublic
     config.filter_parameters += [:password]
       
     config.autoload_paths += Dir["#{config.root}/app/models/**/"]
+
+    # upgrade to 3.1 configuration settings
+    config.assets.enabled = false
+    config.assets.version = 1.0
   end
 end
