@@ -1,25 +1,35 @@
 /* Use an immediately invoked function to isolate variables */
 (function(){
 
+  // Fix for window.location.origin for IE
+  if (!window.location.origin) {
+    window.location.origin = window.location.protocol + "//" +
+      window.location.hostname + (window.location.port ? ':' +
+      window.location.port: '');
+  }
+
   <%= render 'load_jquery' %>
 
   /* main - Main function for the voc invitation.  This function is called once */
   /* jQuery has been loaded.                                                */
   function main() {
-    <% if browser.mobile? || browser.tablet? %>
-      jQuery('#<%= params[:mobile_target_id] %>').show();
-      jQuery('#<%= params[:mobile_target_id] %>').click(function() {
-        var pageurl  = window.location.origin + window.location.pathname;
-        var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
-        <% if params[:stylesheet] %>
-            popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
-        <% end %>
-        <% if @test_invitation %>
-          popurl = popurl + "&test_invitation=true"
-        <% end %>
-        popurl = popurl + "page_url=" + pageurl;
-        window.location.href = popurl;
-    <% else %>
+    /* Browser detected as: <%= browser.inspect %> */
+    if(jQuery.browser.mobile) {
+      var $target = jQuery('#<%= params[:mobile_target_id] %>');
+      var targetHTML = $target.html();
+      var pageurl  = window.location.origin + window.location.pathname;
+      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+      <% if params[:stylesheet] %>
+          popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
+      <% end %>
+      <% if @test_invitation %>
+        popurl = popurl + "&test_invitation=true"
+      <% end %>
+      popurl = popurl + "page_url=" + pageurl;
+      var aTag = "<a href='" + popurl + "' target='_blank'>" + targetHTML + "</a>";
+      $target.html(aTag);
+    } else {
+      jQuery('#<%= params[:mobile_target_id] %>').hide();
       var cookieName = 'survey_invitation_<%= params[:survey_id] %>';
       var invitationInterval = <%= @survey.invitation_interval %>;
       if(invitationInterval == 0 || readCookie(cookieName) == null || <%= @test_invitation %>) {
@@ -44,7 +54,7 @@
           <% end %>
         }
       }
-    <% end %>
+    }
   }
 
   function createCookie(name,value,days) {
