@@ -107,6 +107,7 @@ window.VOC = (function($, voc) {
 
   function validate_before_submit(page) {
     if (!check_for_unanswered_required(page)) {
+      clearPartialTimeout();
       return true;
     } else {
       alert(survey_required_fields_error);
@@ -134,8 +135,12 @@ window.VOC = (function($, voc) {
 
     function timer_form(form_data) {
       // if not submitted in the last 10 seconds, submit the survey
-      clearTimeout(changeTimer);
+      clearPartialTimeout();
       changeTimer = setTimeout(post_form(form_data), changeInterval);
+    }
+
+    function clearPartialTimeout() {
+      clearTimeout(changeTimer);
     }
 
     function post_form(form_data) {
