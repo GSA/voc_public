@@ -68,9 +68,10 @@
 							   elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT
 							   	answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
 							   end -%>
-							<div class="vocquestiontext"><% if @survey.show_numbers? %> <span class="vocquestionnumber"><%= "#{question_number}." %> </span> <% end %>
-							<%= answer_tag_id ? label_tag(answer_tag_id, element.assetable.question_content.statement) : element.assetable.question_content.statement %>
-							<%= "*" if element.assetable.question_content.required%></div>
+							<div class="vocquestiontext">
+								<% if @survey.show_numbers? %> <span class="vocquestionnumber"><%= "#{question_number}." %> </span> <% end %>
+								<%= answer_tag_id ? label_tag(answer_tag_id, label_for_element(element)) : element.assetable.question_content.statement %>
+							</div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO
 									choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size

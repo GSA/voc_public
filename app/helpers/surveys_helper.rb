@@ -46,4 +46,8 @@ module SurveysHelper
       'Desktop'
     end
   end
+
+  def label_for_element(element)
+    "#{element.assetable.question_content.statement}#{' *' if element.assetable.question_content.required}"
+  end
 end
