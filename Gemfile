@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
-# 3.0 stable as of March 15, 2013, see https://github.com/rails/rails/commits/3-0-stable
-gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '77403a9'
+gem 'rails', '3.2.21'
 
 gem 'memcache-client'
 gem 'paperclip'
@@ -22,9 +21,15 @@ gem 'resque_unit', :group => :test
 
 gem 'redis-objects'
 
+group :assets do
+  gem 'sass-rails', '~> 3.2.6'
+  gem 'coffee-rails','~> 3.2.2'
+  gem 'uglifier', '>= 1.0.3'
+end
+
 platform :ruby do
   gem 'unicorn-rails'
-  gem 'mysql2', '< 0.3'
+  gem 'mysql2'
 end
 
 platform :jruby do
