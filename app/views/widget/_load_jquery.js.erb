@@ -14,7 +14,6 @@ function loadMobileBrowserDetection() {
 
 /* Load jQuery if it is not present */
 if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
-  console.log("jQuery is not loaded");
   var script_tag = document.createElement('script');
   script_tag.setAttribute('type', 'text/javascript');
   script_tag.setAttribute('src',
@@ -34,7 +33,6 @@ if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
   (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
 
 } else {
-  console.log("Using existing jQuery", window.jQuery);
   /* The site already has jQuery loaded */
   jQuery = window.jQuery;
   loadMobileBrowserDetection();
