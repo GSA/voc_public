@@ -3,6 +3,11 @@
 # View helpers for SurveyResponse functionality.
 module SurveysHelper
 
+  def display_poll_results?(survey, survey_version)
+    survey.survey_type_id == SurveyType::POLL &&
+      survey_version.choice_questions.any? {|q| q.display_results? }
+  end
+
   # For a given ChoiceQuestion with flow control at the ChoiceAnswer level,
   # generates the Javascript logic to enforce correct page switching.
   #
