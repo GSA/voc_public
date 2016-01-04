@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.21'
+gem 'rails', '4.0.13'
 
 gem 'memcache-client'
 gem 'paperclip'
@@ -9,9 +9,7 @@ gem 'kaminari'
 gem 'authlogic'
 gem 'browser'
 
-# OLD! Delayed_Job for asynchronous processing
-# gem 'delayed_job_active_record'
-# gem 'daemons', :require => false
+gem "protected_attributes"
 
 # NEW: Resque
 gem 'resque'
@@ -21,15 +19,13 @@ gem 'resque_unit', :group => :test
 
 gem 'redis-objects'
 
-group :assets do
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'coffee-rails','~> 3.2.2'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier', '>= 1.0.3'
 
 platform :ruby do
   gem 'unicorn-rails'
-  gem 'mysql2'
+  gem 'mysql2', "~> 0.3.18"
 end
 
 platform :jruby do
@@ -49,6 +45,13 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'yard'
+
+  gem "rspec-rails", "~> 3.4.0"
+  gem "factory_girl_rails"
 end
 
-gem "mocha", :group => :test
+group :test do
+  gem "capybara-webkit"
+  gem "shoulda-matchers"
+end
+
