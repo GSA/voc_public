@@ -5,17 +5,17 @@
     <% if params[:stylesheet].blank? %>
 			<%= stylesheet_link_tag "application" %>
 		<% end %>
-    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "application" %>
     <%= javascript_include_tag '/scripts/gatc-survey' %>
-  
+
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
-    
+
 		<% unless params[:stylesheet].blank? %>
 			<%= stylesheet_link_tag h(params[:stylesheet]) %>
 		<% end %>
   </head>
-  
+
   <body>
     <div id="container">
       <% flash.each do |name, msg| %>
