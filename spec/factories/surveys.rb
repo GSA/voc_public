@@ -3,7 +3,6 @@ FactoryGirl.define do
     sequence(:name) {|n| "Default Survey #{n}"}
     description "Default Survey Description"
     association(:site)
-    association(:survey_type)
 
     trait :site_survey do
       survey_type {

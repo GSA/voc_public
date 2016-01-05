@@ -13,12 +13,12 @@ class Survey < ActiveRecord::Base
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  scope :get_archived,            where(:archived => true)
-  scope :get_unarchived,          where(:archived => false)
-  scope :get_alpha_list,          order('name asc')
-  scope :search,          ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
+  scope :get_alpha_list, -> { order('name asc') }
+  scope :search, ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
 
-  default_scope where(:archived => false)
+  default_scope { where(:archived => false) }
 
   after_create :create_new_major_version
 

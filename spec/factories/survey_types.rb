@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :survey_type do
-    name "Default Survey Type"
+    sequence(:name) {|n| "Default Survey Type #{n}"}
   end
 end
