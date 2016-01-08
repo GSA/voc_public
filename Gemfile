@@ -10,6 +10,7 @@ gem 'authlogic'
 gem 'browser'
 
 gem "protected_attributes"
+gem "rails-observers"
 
 # NEW: Resque
 gem 'resque'
