@@ -3,17 +3,17 @@
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
     <% if params[:stylesheet].blank? %>
-			<%= stylesheet_link_tag "application" %>
-		<% end %>
+      <%= stylesheet_link_tag "application", media: "all"  %>
+    <% end %>
     <%= javascript_include_tag "application" %>
     <%= javascript_include_tag '/scripts/gatc-survey' %>
 
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
 
-		<% unless params[:stylesheet].blank? %>
-			<%= stylesheet_link_tag h(params[:stylesheet]) %>
-		<% end %>
+    <% unless params[:stylesheet].blank? %>
+      <%= stylesheet_link_tag h(params[:stylesheet]) %>
+    <% end %>
   </head>
 
   <body>
