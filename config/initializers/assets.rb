@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += ['survey.js']
+Rails.application.config.assets.precompile += ['survey.js', 'application.js', 'application.css']

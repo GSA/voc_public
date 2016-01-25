@@ -55,5 +55,5 @@ CommentToolPublic::Application.configure do
   # Asset configuration
   config.assets.compress = true
   config.assets.compile = true
-  config.assets.digest = true
+  config.assets.digest = false
 end
