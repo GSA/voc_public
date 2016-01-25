@@ -87,7 +87,7 @@
       });
 
       /* Add the survey control methods to the voc object */
-      jQuery.getScript('http://<%= APP_CONFIG["host"] %>/javascripts/survey.js?target=' + _targetID)
+      jQuery.getScript('http://<%= APP_CONFIG["host"] %>/assets/survey.js')
         .done(function() { VOC.onPageLoad(); });
 
       return _this;
