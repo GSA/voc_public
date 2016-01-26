@@ -150,9 +150,5 @@
     <% end -%>
   <% end -%>
 <% end -%>
-<!--
-<div class="pageNav">
-  <%= link_to "View All", surveys_url, :class => "pageNav" %>
-</div> -->
 
-<%= javascript_include_tag 'survey.js' %>
+<%= javascript_include_tag 'survey.js' unless params[:callback].present? %>

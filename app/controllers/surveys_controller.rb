@@ -40,9 +40,8 @@ class SurveysController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
       format.json do
-        html = render_to_string(:template => "surveys/show.html.erb")
-        json = {:html => html}.to_json
-        render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
+        html = render_to_string(action: "show", layout: false, formats: [:html])
+        render json: {html: html}, callback: params[:callback]
       end
     end
   end
