@@ -58,7 +58,7 @@
         target.html(data.html);
       });
 
-      jQuery(document).on("submit", "#"+_targetID+" form", function(){
+      jQuery(document).on("submit", "#"+_targetID+" form", function(e){
 
         // create and post to a hidden iframe to avoid cross-domain POST limitations
         var iframe = jQuery("<iframe height='0' width='0' tabindex='-1' title='empty'>");
@@ -83,6 +83,7 @@
           jQuery("#" + _targetID).html(data.html);
         });
 
+        e.preventDefault();
         return false;
       });
 
