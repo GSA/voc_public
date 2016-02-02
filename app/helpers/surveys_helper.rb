@@ -36,7 +36,7 @@ module SurveysHelper
     end
 
     if element.assetable.auto_next_page
-      onclick += "VOC.show_next_page(#{page.page_number});"
+      onclick += "VOC.show_next_page(this, #{page.page_number});"
     end
 
     onclick

@@ -9,21 +9,22 @@ window.VOC = (function($, voc) {
   voc.Url = voc.Url || "";
 
   /* Private Functions */
-  function show_next_page(page) {
+  function show_next_page(link, page) {
+    var _this = link;
     var required_unanswered = false;
-    required_unanswered = check_for_unanswered_required(page);
+    var surveyContainer = $(_this).parents("form.voc-form");
+
+    required_unanswered = check_for_unanswered_required(surveyContainer, page);
 
     if (!required_unanswered) {
-      $("#page_" + page)
-        .hide();
-      var next_page = $("#page_" + page + "_next_page")
+      surveyContainer.find("#page_" + page).hide();
+      var next_page = surveyContainer.find("#page_" + page + "_next_page")
         .val();
 
       /* Set the prev page on next page */
-      set_prev_page(page, next_page);
+      set_prev_page(surveyContainer, page, next_page);
 
-      $("#page_" + next_page)
-        .show();
+      surveyContainer.find("#page_" + next_page).show();
       window.location.hash = "PAGE_" + next_page;
 
       var title = $(document)
@@ -35,9 +36,9 @@ window.VOC = (function($, voc) {
     }
   }
 
-  function check_for_unanswered_required(page) {
+  function check_for_unanswered_required(surveyContainer, page) {
     required = false;
-    $("#page_" + page + " input[type=hidden].required_question")
+    surveyContainer.find("#page_" + page + " input[type=hidden].required_question")
       .each(function(index) {
         if ($(this)
           .val() == 'true') {
@@ -45,26 +46,26 @@ window.VOC = (function($, voc) {
             .attr('id')
             .split('_')[1]; // q_{number}_required
           /* if the element is a radio button that is required then check to make sure one is checked */
-          if ($(".question_" + question_number + "_answer")
-            .attr('type') == "radio" && $(".question_" + question_number + "_answer:checked")
+          if (surveyContainer.find(".question_" + question_number + "_answer")
+            .attr('type') == "radio" && surveyContainer.find(".question_" + question_number + "_answer:checked")
             .length == 0) {
             required = true;
-          } else if ($("select.question_" + question_number + "_answer")
-            .length > 0 && $("select.question_" + question_number + "_answer")
+          } else if (surveyContainer.find("select.question_" + question_number + "_answer")
+            .length > 0 && surveyContainer.find("select.question_" + question_number + "_answer")
             .val() == "") {
             required = true;
-          } else if ($(".question_" + question_number + "_answer")
-            .attr('type') == "checkbox" && $(".question_" + question_number + "_answer")
-            .length > 0 && $(".question_" + question_number + "_answer:checked")
+          } else if (surveyContainer.find(".question_" + question_number + "_answer")
+            .attr('type') == "checkbox" && surveyContainer.find(".question_" + question_number + "_answer")
+            .length > 0 && surveyContainer.find(".question_" + question_number + "_answer:checked")
             .length == 0) {
             required = true;
-          } else if ($(".question_" + question_number + "_answer")
-            .attr('type') == "text" && $(".question_" + question_number + "_answer")
+          } else if (surveyContainer.find(".question_" + question_number + "_answer")
+            .attr('type') == "text" && surveyContainer.find(".question_" + question_number + "_answer")
             .val() == "") {
             required = true;
-          } else if ($(".question_" + question_number + "_answer")
+          } else if (surveyContainer.find(".question_" + question_number + "_answer")
             .prop('tagName')
-            .toLowerCase() == "textarea" && $(".question_" + question_number + "_answer")
+            .toLowerCase() == "textarea" && surveyContainer.find(".question_" + question_number + "_answer")
             .val() == "") {
             /* a textarea does not have a an attr('type') so use the prop('tagName') */
             required = true;
@@ -78,12 +79,14 @@ window.VOC = (function($, voc) {
     return title.replace(/ - Page \d+ - /, " - Page " + number + " - ");
   }
 
-  function show_prev_page(page) {
-    var prev_page = $("#page_" + page + "_prev_page")
+  function show_prev_page(link, page) {
+    var _this = link;
+    var surveyContainer = $(_this).parents("form.voc-form");
+    var prev_page = surveyContainer.find("#page_" + page + "_prev_page")
       .val();
-    $("#page_" + page)
+    surveyContainer.find("#page_" + page)
       .hide();
-    $("#page_" + prev_page)
+    surveyContainer.find("#page_" + prev_page)
       .show();
     window.location.hash = "PAGE_" + (prev_page || 1);
 
@@ -93,20 +96,22 @@ window.VOC = (function($, voc) {
       .prop("title", replace_page_number_in_title(title, prev_page));
   }
 
-  function set_next_page(current_page, next_page) {
-    $("#page_" + current_page + "_next_page")
+  function set_next_page(surveyContainer, current_page, next_page) {
+    surveyContainer.find("#page_" + current_page + "_next_page")
       .val(next_page);
-    $("#page_" + next_page + "_prev_page")
+    surveyContainer.find("#page_" + next_page + "_prev_page")
       .val(current_page);
   }
 
-  function set_prev_page(current_page, prev_page) {
-    $("#page_" + prev_page + "_prev_page")
+  function set_prev_page(surveyContainer, current_page, prev_page) {
+    surveyContainer.find("#page_" + prev_page + "_prev_page")
       .val(current_page);
   }
 
-  function validate_before_submit(page) {
-    if (!check_for_unanswered_required(page)) {
+  function validate_before_submit(button, page) {
+    var _this = button;
+    var surveyContainer = $(_this).parents("form.voc-form");
+    if (!check_for_unanswered_required(surveyContainer, page)) {
       clearPartialTimeout();
       return true;
     } else {

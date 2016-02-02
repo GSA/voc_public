@@ -25,7 +25,7 @@
 
   }
 
-  /* define the survey module using the revealing module pattern.          */
+  /* define the survey module using the revealing module pattern. */
   function survey(opts){
     var _opts = opts || {};
 
@@ -62,7 +62,7 @@
 
         // create and post to a hidden iframe to avoid cross-domain POST limitations
         var iframe = jQuery("<iframe height='0' width='0' tabindex='-1' title='empty'>");
-        var uniqueString = "surveyPostContainerIframe";
+        var uniqueString = "surveyPostContainerIframe" + _targetID;
         var form = target.children("form").first();
 
         // add the hidden iframe
@@ -87,7 +87,7 @@
       });
 
       /* Add the survey control methods to the voc object */
-      jQuery.getScript('http://<%= APP_CONFIG["host"] %>/javascripts/survey.js')
+      jQuery.getScript('http://<%= APP_CONFIG["host"] %>/javascripts/survey.js?target=' + _targetID)
         .done(function() { VOC.onPageLoad(); });
 
       return _this;
