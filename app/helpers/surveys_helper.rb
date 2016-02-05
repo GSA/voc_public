@@ -32,7 +32,7 @@ module SurveysHelper
   def generate_onclick(element, page, answer)
     onclick = ""
     if element.assetable.question_content.flow_control
-      onclick += "VOC.set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)});"
+      onclick += "VOC.set_next_page(this, #{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)});"
     end
 
     if element.assetable.auto_next_page
