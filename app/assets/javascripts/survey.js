@@ -96,7 +96,8 @@ window.VOC = (function($, voc) {
       .prop("title", replace_page_number_in_title(title, prev_page));
   }
 
-  function set_next_page(surveyContainer, current_page, next_page) {
+  function set_next_page(element, current_page, next_page) {
+    var surveyContainer = $(element).parents("form.voc-form");
     surveyContainer.find("#page_" + current_page + "_next_page")
       .val(next_page);
     surveyContainer.find("#page_" + next_page + "_prev_page")
