@@ -31,9 +31,21 @@ window.VOC = (function($, voc) {
         .prop("title");
       $(document)
         .prop("title", replace_page_number_in_title(title, next_page));
+
+      /* Focus the first focusable on the limit */
+      focusFirstElementIn(surveyContainer.find("#page_"+next_page));
     } else {
       alert(survey_required_fields_error);
     }
+
+  }
+
+  function focusFirstElementIn(obj) {
+    console.log("Focusing element in: ", obj);
+    var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
+    focusableItems = obj.find("*")
+      .filter(focusableElementsString).filter(':visible');
+    focusableItems.get(0).focus();
   }
 
   function check_for_unanswered_required(surveyContainer, page) {
@@ -94,6 +106,8 @@ window.VOC = (function($, voc) {
       .prop("title");
     $(document)
       .prop("title", replace_page_number_in_title(title, prev_page));
+
+    focusFirstElementIn(surveyContainer.find("#page_" + prev_page));
   }
 
   function set_next_page(surveyContainer, current_page, next_page) {

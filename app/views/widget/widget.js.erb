@@ -56,6 +56,11 @@
       /* DOM element _targetID.                                           */
       jQuery.getJSON(_url, "callback=?&page_url=" + _pageURL, function(data){
         target.html(data.html);
+        var focus = '<%= params[:focus] %>';
+        if(focus == 'true') {
+          console.log("Focusing widet survey in: ", _targetID);
+          focusSurvey(_targetID);
+        }
       });
 
       jQuery(document).on("submit", "#"+_targetID+" form", function(e){
@@ -92,6 +97,16 @@
         .done(function() { VOC.onPageLoad(); });
 
       return _this;
+    }
+
+    function focusSurvey(targetID) {
+      var _surveyContainer = $("#"+targetID);
+      var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
+      var focusableItems = _surveyContainer.find("*")
+        .filter(focusableElementsString)
+        .filter("*:visible");
+      console.log("FocusableItems:", focusableItems);
+      focusableItems.first().focus();
     }
 
     return {

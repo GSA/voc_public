@@ -114,32 +114,31 @@
   var focusedElementBeforeModal;
 
   function loadModal() {
-    var targetId = '#<%= params[:target_id] %>';
-    jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
-    showModal(jQuery('#vocModal'));
+    showInvitation();
+
     jQuery('#startModal').click(function(e) {
-        showModal(jQuery('#vocModal'));
+      showModal(jQuery('#vocModal'));
     });
     jQuery('#cancel').click(function(e) {
-        hideModal();
+      hideModal();
     });
     jQuery('#vocCancelButton').click(function(e) {
-        hideModal();
+      hideModal();
     });
     jQuery('#vocEnter').click(function(e) {
-        enterButtonModal();
+      enterButtonModal();
     });
     jQuery('#vocModalCloseButton').click(function(e) {
-        hideModal();
+      hideModal();
     });
     jQuery('#vocModalCloseButton').keydown(function(event) {
-        trapSpaceKey(jQuery(this), event, hideModal);
+      trapSpaceKey(jQuery(this), event, hideModal);
     });
     jQuery('#vocModal').keydown(function(event) {
-        trapTabKey(jQuery(this), event);
+      trapTabKey(jQuery(this), event);
     });
     jQuery('body').keydown(function(event) {
-        trapEscapeKey(jQuery(this), event);
+      trapEscapeKey(jQuery(this), event);
     });
 
   }
@@ -207,23 +206,26 @@
   }
 
   function setInitialFocusModal(obj) {
-      // get list of all children elements in given object
-      var o = obj.find('*');
+    // get list of all children elements in given object
+    var o = obj.find('*');
 
-      // set focus to first focusable item
-      var focusableItems;
-      focusableItems = o.filter(focusableElementsString).filter(':visible').first().focus();
+    // set focus to first focusable item
+    var focusableItems;
+    focusableItems = o.filter(focusableElementsString).filter(':visible').first().focus();
 
+    console.log("focusing first object in ", obj);
   }
 
   function enterButtonModal() {
     var modalSurvey = <%= params[:modal] == 'true' %>;
+    incrementInvitationAcceptCount();
     if(modalSurvey) {
       openSurveyInModal();
     } else {
       openSurveyInNewWindow();
     }
-    incrementInvitationAcceptCount();
+
+
   }
 
   function incrementInvitationAcceptCount() {
@@ -235,7 +237,7 @@
   }
 
   function openSurveyInModal() {
-    var widgetUrl = "http://<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>"
+    var widgetUrl = "http://<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>&focus=true"
     jQuery.getScript(widgetUrl).done(function() {
       hideModal();
       showModal(jQuery("#vocModal"));
@@ -258,6 +260,12 @@
     hideModal();
   }
 
+  function showInvitation() {
+    var targetId = '#<%= params[:target_id] %>';
+    jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
+    showModal(jQuery('#vocModal'));
+  }
+
   function showModal(obj) {
       jQuery('#mainPage').attr('aria-hidden', 'true'); // mark the main page as hidden
       jQuery('#vocModalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
@@ -274,7 +282,7 @@
       // if VoiceOver in Safari is used, set the initial focus to the modal window itself instead of the first keyboard focusable item. This causes VoiceOver to announce the aria-labelled attributes. Otherwise, Safari and VoiceOver will not announce the labels attached to the modal window.
 
       // set the focus to the first keyboard focusable item
-      o.filter(focusableElementsString).filter(':visible').first().focus();
+      o.filter(focusableElementsString).filter('*:visible').first().focus();
   }
 
   function hideModal() {
