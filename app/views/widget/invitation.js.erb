@@ -271,6 +271,7 @@
       jQuery('#vocModalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
       obj.css('display', 'block'); // make the modal window visible
       obj.attr('aria-hidden', 'false'); // mark the modal window as visible
+      jQuery('body').css('overflow', 'hidden'); // hide the main content scrollbar
 
       // save current focus
       focusedElementBeforeModal = jQuery(':focus');
@@ -288,6 +289,7 @@
   function hideModal() {
       jQuery('#vocModalOverlay').css('display', 'none'); // remove the overlay in order to make the main screen available again
       jQuery('#vocModal').css('display', 'none'); // hide the modal window
+      jQuery('body').css('overflow', 'visible');  // Re-enable the scrollbar
       jQuery('#vocModal').attr('aria-hidden', 'true'); // mark the modal window as hidden
       jQuery('#mainPage').attr('aria-hidden', 'false'); // mark the main page as visible
 
