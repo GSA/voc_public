@@ -41,7 +41,6 @@ window.VOC = (function($, voc) {
   }
 
   function focusFirstElementIn(obj) {
-    console.log("Focusing element in: ", obj);
     var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
     focusableItems = obj.find("*")
       .filter(focusableElementsString).filter(':visible');

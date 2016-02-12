@@ -58,7 +58,6 @@
         target.html(data.html);
         var focus = '<%= params[:focus] %>';
         if(focus == 'true') {
-          console.log("Focusing widet survey in: ", _targetID);
           focusSurvey(_targetID);
         }
       });
