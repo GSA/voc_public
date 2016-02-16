@@ -66,6 +66,6 @@
     Accepting the invitation will load the survey form.  Declining the invitation will cancel and
     close the window.
   </div>
-  <%= invitation_text %>
+  <%= invitation_text unless params[:modal] == 'true' && @survey.suppress_invitation %>
 </div>
 <div id='vocModalOverlay' tabindex='-1'></div>
