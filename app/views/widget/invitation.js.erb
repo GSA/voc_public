@@ -205,15 +205,6 @@
 
   }
 
-  function setInitialFocusModal(obj) {
-    // get list of all children elements in given object
-    var o = obj.find('*');
-
-    // set focus to first focusable item
-    var focusableItems;
-    focusableItems = o.filter(focusableElementsString).filter(':visible').first().focus();
-  }
-
   function enterButtonModal() {
     var modalSurvey = <%= params[:modal] == 'true' %>;
     incrementInvitationAcceptCount();
@@ -222,8 +213,6 @@
     } else {
       openSurveyInNewWindow();
     }
-
-
   }
 
   function incrementInvitationAcceptCount() {
@@ -266,8 +255,9 @@
 
   function showModal(obj) {
       jQuery('#mainPage').attr('aria-hidden', 'true'); // mark the main page as hidden
-      jQuery('#vocModalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
+      jQuery('#vocModalOverlay').css('display', 'block'); // show overlay
       obj.css('display', 'block'); // make the modal window visible
+      jQuery(obj).show(0);
       obj.attr('aria-hidden', 'false'); // mark the modal window as visible
       jQuery('body').css('overflow', 'hidden'); // hide the main content scrollbar
 
@@ -277,16 +267,14 @@
       // get list of all children elements in given object
       var o = obj.find('*');
 
-      // Safari and VoiceOver shim
-      // if VoiceOver in Safari is used, set the initial focus to the modal window itself instead of the first keyboard focusable item. This causes VoiceOver to announce the aria-labelled attributes. Otherwise, Safari and VoiceOver will not announce the labels attached to the modal window.
-
       // set the focus to the first keyboard focusable item
-      o.filter(focusableElementsString).filter('*:visible').first().focus();
+      var focusedItem = o.filter(focusableElementsString).filter('*:visible').first();
+      setTimeout(function() { focusedItem.focus(); }, 75);
       return obj;
   }
 
   function hideModal() {
-      jQuery('#vocModalOverlay').css('display', 'none'); // remove the overlay in order to make the main screen available again
+      jQuery('#vocModalOverlay').css('display', 'none'); // hide overlay
       jQuery('#vocModal').css('display', 'none'); // hide the modal window
       jQuery('body').css('overflow', 'visible');  // Re-enable the scrollbar
       jQuery('#vocModal').attr('aria-hidden', 'true'); // mark the modal window as hidden
@@ -295,5 +283,4 @@
       // set focus back to element that had it before the modal was opened
       focusedElementBeforeModal.focus();
   }
-
 })();
