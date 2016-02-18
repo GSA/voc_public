@@ -108,37 +108,39 @@
   */
 
   // jQuery formatted selector to search for focusable items
-  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
+  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]:not([tabindex='-1'])";
 
   // store the item that has focus before opening the modal window
   var focusedElementBeforeModal;
 
   function loadModal() {
-    showInvitation();
+    jQuery(function() {
+      showInvitation();
 
-    jQuery('#startModal').click(function(e) {
-      showModal(jQuery('#vocModal'));
-    });
-    jQuery('#cancel').click(function(e) {
-      hideModal();
-    });
-    jQuery('#vocCancelButton').click(function(e) {
-      hideModal();
-    });
-    jQuery('#vocEnter').click(function(e) {
-      enterButtonModal();
-    });
-    jQuery('#vocModalCloseButton').click(function(e) {
-      hideModal();
-    });
-    jQuery('#vocModalCloseButton').keydown(function(event) {
-      trapSpaceKey(jQuery(this), event, hideModal);
-    });
-    jQuery('#vocModal').keydown(function(event) {
-      trapTabKey(jQuery(this), event);
-    });
-    jQuery('body').keydown(function(event) {
-      trapEscapeKey(jQuery(this), event);
+      jQuery('#startModal').click(function(e) {
+        showModal(jQuery('#vocModal'));
+      });
+      jQuery('#cancel').click(function(e) {
+        hideModal();
+      });
+      jQuery('#vocCancelButton').click(function(e) {
+        hideModal();
+      });
+      jQuery('#vocEnter').click(function(e) {
+        enterButtonModal();
+      });
+      jQuery('#vocModalCloseButton').click(function(e) {
+        hideModal();
+      });
+      jQuery('#vocModalCloseButton').keydown(function(event) {
+        trapSpaceKey(jQuery(this), event, hideModal);
+      });
+      jQuery('#vocModal').keydown(function(event) {
+        trapTabKey(jQuery(this), event);
+      });
+      jQuery('body').keydown(function(event) {
+        trapEscapeKey(jQuery(this), event);
+      });
     });
 
   }
@@ -257,24 +259,29 @@
     showModal(jQuery('#vocModal'));
   }
 
+  function setFocusToFirstItemInModal(obj){
+    // get list of all children elements in given object
+    var o = obj.find('*');
+
+    // set the focus to the first keyboard focusable item
+    o.filter(focusableElementsString).filter(':visible').first().focus();
+  }
+
   function showModal(obj) {
-      jQuery('#mainPage').attr('aria-hidden', 'true'); // mark the main page as hidden
+      jQuery('#site-wrapper').attr('aria-hidden', 'true'); // mark the main page as hidden
       jQuery('#vocModalOverlay').css('display', 'block'); // show overlay
       obj.css('display', 'block'); // make the modal window visible
-      jQuery(obj).show(0);
       obj.attr('aria-hidden', 'false'); // mark the modal window as visible
       jQuery('body').css('overflow', 'hidden'); // hide the main content scrollbar
 
+      // attach a listener to redirect the tab to the modal window if the user somehow gets out of the modal window
+      jQuery('body').on('focusin','#site-wrapper',function() {
+          setFocusToFirstItemInModal(obj);
+      })
+
       // save current focus
       focusedElementBeforeModal = jQuery(':focus');
-
-      // get list of all children elements in given object
-      var o = obj.find('*');
-
-      // set the focus to the first keyboard focusable item
-      var focusedItem = o.filter(focusableElementsString).filter('*:visible').first();
-      setTimeout(function() { focusedItem.focus(); }, 150);
-      return obj;
+      setFocusToFirstItemInModal(obj);
   }
 
   function hideModal() {
