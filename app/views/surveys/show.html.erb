@@ -68,6 +68,7 @@
               <div class="vocquestiontext">
                 <% if @survey.show_numbers? %> <span class="vocquestionnumber"><%= "#{question_number}." %> </span> <% end %>
                 <%= answer_tag_id ? label_tag(answer_tag_id, label_for_element(element)) : element.assetable.question_content.statement %>
+                <%= "*" if element.assetable.required %>
               </div>
               <% if element.assetable_type == "ChoiceQuestion" %>
                 <% if element.assetable.answer_type == ChoiceAnswer::RADIO
@@ -134,10 +135,7 @@
           <% end %>
           <% unless page.page_number == @survey_version.pages.count %>
             <% next_page_text = @survey.next_page_text.blank? ? "Next Page" : @survey.next_page_text %>
-            <span class="surveyNavNext">
-              <%= link_to next_page_text, "javascript:void(0);", class: "suveyNav",
-                onclick: "VOC.show_next_page(this, #{page.page_number});" %>
-            </span>
+            <span class="surveyNavNext"><%= link_to_function next_page_text, "VOC.show_next_page(this, #{page.page_number})", :class=>"surveyNav" %></span>
           <% end %>
           <% submit_button_text = @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text %>
           <span class="surveyNavSub"><%= submit_tag(submit_button_text, :onclick=>"return VOC.validate_before_submit(this, #{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
