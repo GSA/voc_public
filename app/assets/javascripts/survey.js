@@ -25,7 +25,6 @@ window.VOC = (function($, voc) {
       set_prev_page(surveyContainer, page, next_page);
 
       surveyContainer.find("#page_" + next_page).show();
-      window.location.hash = "PAGE_" + next_page;
 
       var title = $(document)
         .prop("title");
@@ -99,7 +98,6 @@ window.VOC = (function($, voc) {
       .hide();
     surveyContainer.find("#page_" + prev_page)
       .show();
-    window.location.hash = "PAGE_" + (prev_page || 1);
 
     var title = $(document)
       .prop("title");

@@ -151,7 +151,6 @@ function show_next_page(page){
     _nextPage.addClass("current_page");
     _nextPage.removeClass("hidden_page");
 
-    window.location.hash="PAGE_" + next_page;
   } else {
     alert('Please answer all required questions before moving on to the next page.');
   }
@@ -172,7 +171,6 @@ function show_prev_page(page){
 
 
 
-  window.location.hash = "PAGE_" + page;
 }
 
 function set_next_page(current_page, next_page) {
