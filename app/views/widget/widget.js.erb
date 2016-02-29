@@ -14,7 +14,7 @@
     /* create the voc object */
     window.VOC = {
       Survey: survey,
-      Url: "http://<%= APP_CONFIG['host'] %>"
+      Url: "//<%= APP_CONFIG['host'] %>"
     }
 
     survey = VOC.Survey({surveyID: <%= params[:survey_id].to_i %>});
@@ -48,7 +48,7 @@
     /* with id _targetID.                                                 */
     function loadSurvey() {
       var _hostname = "<%= APP_CONFIG['host'] %>";
-      var _url = "http://"+ _hostname + "/surveys/" + _surveyID + ".json";
+      var _url = "//"+ _hostname + "/surveys/" + _surveyID + ".json";
       var target = jQuery("#" + _targetID)
       var surveyID = _surveyID
 
@@ -76,14 +76,14 @@
         // direct the form post into the iframe's window
         iframe[0].contentWindow.name = uniqueString;
         form.attr("target", uniqueString);
-        form.attr("action", 'http://' + _hostname + '/survey_responses');
+        form.attr("action", '//' + _hostname + '/survey_responses');
 
         // call the native submit, not the jQuery submit wrapper
         // this is to avoid hitting this handler twice (and looping)
         form[0].submit();
 
         // pull back the thank you page
-        jQuery.getJSON("http://" + _hostname + "/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
+        jQuery.getJSON("//" + _hostname + "/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
           jQuery("#" + _targetID).html(data.html);
         });
 
@@ -92,7 +92,7 @@
       });
 
       /* Add the survey control methods to the voc object */
-      jQuery.getScript('http://<%= APP_CONFIG["host"] %>/assets/survey.js')
+      jQuery.getScript('//<%= APP_CONFIG["host"] %>/assets/survey.js')
         .done(function() { VOC.onPageLoad(); });
 
       return _this;
