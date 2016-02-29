@@ -18,7 +18,7 @@
       var $target = jQuery('#<%= params[:mobile_target_id] %>');
       var targetHTML = $target.html();
       var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+      var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
       <% if params[:stylesheet] %>
           popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
@@ -218,7 +218,7 @@
   }
 
   function incrementInvitationAcceptCount() {
-    invitationurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept"
+    invitationurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept"
     <% if @test_invitation %>
       invitationurl = invitationurl + "?test_invitation=true"
     <% end %>
@@ -226,7 +226,7 @@
   }
 
   function openSurveyInModal() {
-    var widgetUrl = "http://<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>&focus=true"
+    var widgetUrl = "//<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>&focus=true"
     jQuery.getScript(widgetUrl).done(function() {
       hideModal();
       showModal(jQuery("#vocModal"));
@@ -236,7 +236,7 @@
   function openSurveyInNewWindow() {
     // BEGIN logic for executing the Enter button action for the modal window
     var pageurl  = window.location.origin + window.location.pathname;
-    var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+    var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
     <% if params[:stylesheet] %>
     popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
     <% end %>

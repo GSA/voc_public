@@ -58,7 +58,7 @@
   }
 
 </style>
-<iframe src="http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation<%= '?test_invitation=true' if @test_invitation %>"
+<iframe src="//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation<%= '?test_invitation=true' if @test_invitation %>"
   height="0" width="0" tabindex="-1" title="empty" style="display: none;"></iframe>
 <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog' tabindex='-1'>
   <div id="modalDescription" class="screen-reader-offscreen">
