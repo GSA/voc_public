@@ -253,7 +253,7 @@
     var targetId = '#<%= params[:target_id] %>';
     var modalSurvey = <%= params[:modal] == 'true' %>;
     jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
-    if(modalSurvey == true && '<%= @survey.suppress_invitation %>' == 'true') {
+    if(modalSurvey == true)  {
       enterButtonModal();
     }
     showModal(jQuery('#vocModal'));
