@@ -1,8 +1,7 @@
 window.VOC = window.VOC || {};
 
 window.VOC = (function($, voc) {
-  var page_url,
-    changeTimer,
+  var changeTimer,
     changeInterval = 5000,
     lastSubmitted;
 
@@ -135,11 +134,6 @@ window.VOC = (function($, voc) {
 
   /* Publicly available functions through the VOC object */
   function onPageLoad() {
-    page_url = $("#response_page_url");
-    if (page_url.val() == "" && parent) {
-      page_url.val(parent.document.location.origin + parent.document.location.pathname);
-    }
-
     lastSubmitted = new Date()
       .getTime() - changeInterval;
 
