@@ -1,5 +1,6 @@
 /* Use an immediately invoked function to isolate variables */
 (function(){
+  var _mainContentId = "<%= params[:content_id] || 'main-content' %>";
 
   // Fix for window.location.origin for IE
   if (!window.location.origin) {
@@ -268,7 +269,7 @@
   }
 
   function showModal(obj) {
-      jQuery('#site-wrapper').attr('aria-hidden', 'true'); // mark the main page as hidden
+      jQuery('#'+ _mainContentId).attr('aria-hidden', 'true'); // mark the main page as hidden
       jQuery('#vocModalOverlay').css('display', 'block'); // show overlay
       obj.css('display', 'block'); // make the modal window visible
       obj.attr('aria-hidden', 'false'); // mark the modal window as visible
@@ -289,7 +290,7 @@
       jQuery('#vocModal').css('display', 'none'); // hide the modal window
       jQuery('body').css('overflow', 'visible');  // Re-enable the scrollbar
       jQuery('#vocModal').attr('aria-hidden', 'true'); // mark the modal window as hidden
-      jQuery('#mainPage').attr('aria-hidden', 'false'); // mark the main page as visible
+      jQuery('#'+ _mainContentId).attr('aria-hidden', 'false'); // mark the main page as visible
 
       // set focus back to element that had it before the modal was opened
       focusedElementBeforeModal.focus();
