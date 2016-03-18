@@ -227,7 +227,7 @@
   }
 
   function openSurveyInModal() {
-    var widgetUrl = "//<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=vocModal&survey_id=<%= @survey.id %>&focus=true"
+    var widgetUrl = "//<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=modalContents&survey_id=<%= @survey.id %>&focus=true"
     jQuery.getScript(widgetUrl).done(function() {
       hideModal();
       showModal(jQuery("#vocModal"));
