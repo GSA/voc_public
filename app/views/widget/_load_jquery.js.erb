@@ -1,6 +1,7 @@
 /* Local JQuery variable */
 var jQuery;
 var countScriptCalled = 0; // some versions of IE will call scriptLoadHandler twice
+var _requiredJQueryVersion = "1.7.2";
 
 function loadMobileBrowserDetection() {
   /**
@@ -13,11 +14,11 @@ function loadMobileBrowserDetection() {
 }
 
 /* Load jQuery if it is not present */
-if (window.jQuery === undefined || window.jQuery.fn.jquery != '1.7.2') {
+if (window.jQuery === undefined || window.jQuery.fn.jquery != _requiredJQueryVersion) {
   var script_tag = document.createElement('script');
   script_tag.setAttribute('type', 'text/javascript');
   script_tag.setAttribute('src',
-    "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js");
+    "//ajax.googleapis.com/ajax/libs/jquery/"+ _requiredJQueryVersion +"/jquery.min.js");
 
   /* Wait for the script to load */
   //Other browsers
@@ -45,7 +46,7 @@ function scriptLoadHandler(){
   if(countScriptCalled > 1) return;
   /* Restore jQuery and window.jQuery to their original values */
   var interval = setInterval(function(){
-    if((typeof window.jQuery !== "undefined") && window.jQuery.fn.jquery == '1.7.2') {
+    if((typeof window.jQuery !== "undefined") && window.jQuery.fn.jquery == _requiredJQueryVersion) {
       clearInterval(interval);
       jQuery = window.jQuery.noConflict();
       loadMobileBrowserDetection();
