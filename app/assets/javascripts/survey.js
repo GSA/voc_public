@@ -24,6 +24,9 @@ window.VOC = (function($, voc) {
       set_prev_page(surveyContainer, page, next_page);
 
       surveyContainer.find("#page_" + next_page).show();
+      if(surveyContainer.find("input[type='submit']").is(":visible")) {
+        surveyContainer.find("input[type='submit']").prop("disabled", false);
+      }
 
       var title = $(document)
         .prop("title");
