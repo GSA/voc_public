@@ -145,7 +145,9 @@
           <% end %>
           <% submit_button_text = @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text %>
           <span class="surveyNavSub">
-            <%= submit_tag(submit_button_text, :onclick=>"return VOC.validate_before_submit(this, #{page.page_number})", :disabled => true) if page.page_number == @survey_version.pages.count %>
+            <% if page.page_number == @survey_version.pages.count %>
+              <%= submit_tag(submit_button_text, :onclick=>"return VOC.validate_before_submit(this, #{page.page_number})", :disabled => (@survey_version.pages.count > 1)) %>
+            <% end -%>
           </span>
         </div>
         <script>
