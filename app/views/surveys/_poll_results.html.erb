@@ -3,7 +3,7 @@
 <div id="poll_results">
   <% results.questions.each do |question| %>
     <% total_answers = results.total_answers_for_question(question) %>
-    <div class="question_results">
+    <div class="question_results" data-question="<%= question.question_content.statement %>">
       <div class="question_statement">
         <%= question.question_content.statement %> ( <%= total_answers %> responses)
       </div>
@@ -12,7 +12,7 @@
         <% results.answer_counts_for_question(question).first(10).each do |answer, answer_count| %>
           <% next if !(answer =~ /\A[-+]?\d+\z/) || ChoiceAnswer.where(id: answer.to_i).empty? %>
           <% answer_percent = total_answers == 0 ? 0 : ((answer_count.to_f / total_answers.to_f) * 100) %>
-          <div class="poll_answer">
+          <div class="poll_answer" data-answer="<%= ChoiceAnswer.find(answer.to_i).try(:answer) %>">
               <div style="display: inline-block; max-width: 15%">
                 <span class="answer_statement"><%= ChoiceAnswer.find(answer.to_i).try(:answer) %> : </span>
               </div>

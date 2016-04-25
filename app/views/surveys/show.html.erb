@@ -75,16 +75,19 @@
                   choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
                   %>
                   <div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
-                    <% for answer in element.assetable.choice_answers %>
-                      <span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-                                    :onclick => generate_onclick(element, page, answer),
-                        :class => "question_#{element.assetable.question_content.id}_answer",
-                        :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
-                        :id => "response_raw_responses_attributes_#{index}_answer_#{answer.id}"
-                      %>
-                      <%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href))%></span>
-                      <% if element.assetable.answer_placement %><br/><% end %>
-                    <% end -%>
+                    <fieldset>
+                      <legend><span class="legendText">Select answer:</span></legend>
+                      <% for answer in element.assetable.choice_answers %>
+                        <span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
+                                      :onclick => generate_onclick(element, page, answer),
+                          :class => "question_#{element.assetable.question_content.id}_answer",
+                          :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
+                          :id => "response_raw_responses_attributes_#{index}_answer_#{answer.id}"
+                        %>
+                        <%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href))%></span>
+                        <% if element.assetable.answer_placement %><br/><% end %>
+                      <% end -%>
+                    </fieldset>
                   </div>
                 <% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
                   <span class="vocdropdown"><%= select_tag answer_tag_id,
@@ -101,16 +104,19 @@
                   choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
                   %>
                   <div class="voccheckboxes<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
-                    <% for answer in element.assetable.choice_answers %>
-                      <span class="voccheckbox"><%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]",
-                                            answer.id,
-                                            false,
-                                            :id => "answer_#{answer.id}",
-                                            :class => "question_#{element.assetable.question_content.id}_answer",
-                                            :checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
-                      <%= label_tag "answer_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
-                      <% if element.assetable.answer_placement %><br/><% end %>
-                    <% end -%>
+                    <fieldset>
+                      <legend><span class="legendText">Select answer(s):</span></legend>
+                      <% for answer in element.assetable.choice_answers %>
+                        <span class="voccheckbox"><%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]",
+                                              answer.id,
+                                              false,
+                                              :id => "answer_#{answer.id}",
+                                              :class => "question_#{element.assetable.question_content.id}_answer",
+                                              :checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
+                        <%= label_tag "answer_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
+                        <% if element.assetable.answer_placement %><br/><% end %>
+                      <% end -%>
+                    </fieldset>
                   </div>
                 <% end # if ChoiceQuestion %>
 
@@ -138,7 +144,11 @@
             <span class="surveyNavNext"><%= link_to_function next_page_text, "VOC.show_next_page(this, #{page.page_number})", :class=>"surveyNav" %></span>
           <% end %>
           <% submit_button_text = @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text %>
-          <span class="surveyNavSub"><%= submit_tag(submit_button_text, :onclick=>"return VOC.validate_before_submit(this, #{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
+          <span class="surveyNavSub">
+            <% if page.page_number == @survey_version.pages.count %>
+              <%= submit_tag(submit_button_text, :onclick=>"return VOC.validate_before_submit(this, #{page.page_number})", :disabled => (@survey_version.pages.count > 1)) %>
+            <% end -%>
+          </span>
         </div>
         <script>
         <% if @survey.js_required_fields_error.blank? %>
