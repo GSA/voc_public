@@ -104,10 +104,7 @@ window.VOC = window.VOC || {};
     surveyContainer.find("#page_" + prev_page)
       .show();
 
-    var title = $(document)
-      .prop("title");
-    $(document)
-      .prop("title", replace_page_number_in_title(title, prev_page));
+    document.title = replace_page_number_in_title(document.title, prev_page);
 
     focusFirstElementIn(surveyContainer.find("#page_" + prev_page));
   }
