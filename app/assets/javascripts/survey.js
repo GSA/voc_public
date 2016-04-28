@@ -135,17 +135,28 @@ window.VOC = (function(voc) {
 
   }
 
+  function serializeForm(form) {
+    var formData = Array.prototype.filter.call(form.elements, function(el) {
+      return !(el.type in ['checkbox', 'radio'] || el.checked)
+    })
+    .filter(function(el) { return !!el.name; })
+    .filter(function(el) { return !el.disabled; })
+    .map(function(el) {
+      return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
+    }).join('&');
+
+    return formData;
+  }
+
   /* Publicly available functions through the VOC object */
   function onPageLoad() {
     lastSubmitted = new Date()
       .getTime() - changeInterval;
 
     // Add on change handlers
-    $(".voc-form")
-      .on("change", function(event) {
-        timer_form($(this)
-          .serialize());
-      })
+    document.querySelector(".voc-form").addEventListener("change", function(event) {
+      timer_form(serializeForm(this));
+    });
 
     function timer_form(form_data) {
       // if not submitted in the last 10 seconds, submit the survey
