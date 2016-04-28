@@ -13,30 +13,29 @@ window.VOC = window.VOC || {};
   function show_next_page(link, page) {
     var _this = link;
     var required_unanswered = false;
-    var surveyContainer = $(_this).parents("form.voc-form");
+    var surveyContainer = VOC.fn.getParents(_this, ".voc-form")[0];
 
     required_unanswered = check_for_unanswered_required(surveyContainer, page);
 
     if (!required_unanswered) {
-      surveyContainer.find("#page_" + page).hide();
-      var next_page = surveyContainer.find("#page_" + page + "_next_page")
-        .val();
+      var currentPage = surveyContainer.querySelector("#page_" + page);
+      VOC.fn.removeClass(currentPage, "current_page");
+      VOC.fn.addClass(currentPage, "hidden_page");
+
+      var next_page_number = surveyContainer
+        .querySelector("#page_" + page + "_next_page").value;
 
       /* Set the prev page on next page */
-      set_prev_page(surveyContainer, page, next_page);
+      set_prev_page(surveyContainer, page, next_page_number);
 
-      surveyContainer.find("#page_" + next_page).show();
-      if(surveyContainer.find("input[type='submit']").is(":visible")) {
-        surveyContainer.find("input[type='submit']").prop("disabled", false);
-      }
+      var nextPage = surveyContainer.querySelector("#page_" + next_page_number);
+      VOC.fn.removeClass(nextPage, "hidden_page");
+      VOC.fn.addClass(nextPage, "current_page");
 
-      var title = $(document)
-        .prop("title");
-      $(document)
-        .prop("title", replace_page_number_in_title(title, next_page));
+      document.title = replace_page_number_in_title(document.title, next_page_number);
 
       /* Focus the first focusable on the limit */
-      focusFirstElementIn(surveyContainer.find("#page_"+next_page));
+      focusFirstElementIn(nextPage);
     } else {
       alert(survey_required_fields_error);
     }
