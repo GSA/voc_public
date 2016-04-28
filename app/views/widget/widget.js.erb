@@ -1,124 +1,136 @@
 /* Use an immediately invoked function to isolate widget variables */
 (function(){
+  var countScriptCalled = 0;
+  var _Hostname = "//<%= APP_CONFIG['host'] %>";
 
-  /* main - Main function for the voc widget.  This function is called once */
-  /* jQuery has been loaded.                                                */
+  /* main - Main function for the voc widget.  This function is called once
+   * the VOC library has been loaded.
+   */
   function main() {
     var changeTimer,
       changeInterval = 5000,
       lastSubmitted;
 
     /* create the voc object */
-    window.VOC = {
-      Survey: survey,
-      Url: "//<%= APP_CONFIG['host'] %>"
-    }
+    VOC.Survey =  Survey;
+    VOC.HOSTNAME = "//<%= APP_CONFIG['host'] %>";
 
-    survey = VOC.Survey({surveyID: <%= params[:survey_id].to_i %>});
-    <% unless params[:target_id].blank? %>
-      survey.setTargetID('<%= params[:target_id] %>');
-    <% end %>
+    var survey = new VOC.Survey(<%= params[:survey_id].to_i %>, "<%= params[:target_id] %>");
     survey.loadSurvey();
 
   }
 
-  /* define the survey module using the revealing module pattern. */
-  function survey(opts){
-    var _opts = opts || {};
-
-    var _targetID = _opts.targetID || "vocSurveyDiv";
-    var _pageURL  = _opts.pageURL  || (window.location.origin + window.location.pathname);
-    var _surveyID = _opts.surveyID;
+  function Survey(surveyId, targetId) {
     var _this = this;
+    _this.targetId = targetId;
+    _this.surveyId = surveyId;
+    _this.pageURL = (window.location.origin + window.location.pathname);
+    _this.surveyContainer = document.getElementById(_this.targetId);
 
-    /* getters and setters for private variables */
-    function getTargetID()         { return _targetID; }
-    function getSurveyID()         { return _surveyID; }
-    function getPageURL()          { return _pageURL;  }
-
-    function setTargetID(targetID) { _targetID = targetID; }
-    function setPageURL(url)       { _pageURL = url; }
-
-
-    /* loadSurvey(success: FunctionPointer, error: FunctionPointer)       */
-    /* Attempt to load the survey with id _surveyID into the DOM element  */
-    /* with id _targetID.                                                 */
-    function loadSurvey() {
-      var _hostname = "<%= APP_CONFIG['host'] %>";
-      var _url = "//"+ _hostname + "/surveys/" + _surveyID + ".json";
-      var target = jQuery("#" + _targetID)
-      var surveyID = _surveyID
-
-      /* get the survey identified by id _surveyID and insert it into the */
-      /* DOM element _targetID.                                           */
-      jQuery.getJSON(_url, "callback=?&page_url=" + _pageURL, function(data){
-        target.html(data.html);
-        var focus = '<%= params[:focus] %>';
-        if(focus == 'true') {
-          focusSurvey(_targetID);
-        }
+    /*
+     * Load the survey into the target container
+     */
+    _this.loadSurvey = function() {
+      var surveyUrl = _Hostname + '/surveys/' + _this.surveyId + '.json?page_url' +
+        _this.pageURL;
+      VOC.fn.getJSON(surveyUrl, function(data) {
+        _this.surveyContainer.innerHTML = data.html;
+        bindSubmitForm();
+        VOC.fn.bindPaginationLinks(_this.surveyContainer);
       });
+    };
 
-      jQuery(document).on("submit", "#"+_targetID+" form", function(e){
+    /* Create a hidden iFrame to post to in order to avoid cross-domain
+     * POST limitations.
+     */
+    _this.postToIFrame = function(form) {
+      var uniqueString = "surveyPostContainerIframe" + _this.targetId;
 
-        // create and post to a hidden iframe to avoid cross-domain POST limitations
-        var iframe = jQuery("<iframe height='0' width='0' tabindex='-1' title='empty'>");
-        var uniqueString = "surveyPostContainerIframe" + _targetID;
-        var form = target.children("form").first();
+      var hiddenIFrame = document.createElement("iframe");
+      hiddenIFrame.height = 0;
+      hiddenIFrame.width = 0;
+      hiddenIFrame.tabindex = -1;
+      hiddenIFrame.title = 'empty';
+      hiddenIFrame.style.display = 'none';
+      document.body.appendChild(hiddenIFrame);
 
-        // add the hidden iframe
-        jQuery("body").append(iframe);
-        iframe.hide();
+      /* Direct the post into the iframe's window */
+      hiddenIFrame.contentWindow.name = uniqueString;
+      form.setAttribute("target", uniqueString);
+      form.setAttribute("action", "//" + _Hostname + "/survey_responses");
+      form.submit();
 
-        // direct the form post into the iframe's window
-        iframe[0].contentWindow.name = uniqueString;
-        form.attr("target", uniqueString);
-        form.attr("action", '//' + _hostname + '/survey_responses');
+      /* Load the ThankYou page */
+      loadThankYouPage();
+    };
 
-        // call the native submit, not the jQuery submit wrapper
-        // this is to avoid hitting this handler twice (and looping)
-        form[0].submit();
+    /*
+     * Private function to fetch the thank you page and replace the survey
+     * contents with the contents of the thank you page.
+     */
+    function loadThankYouPage() {
+      var _thankYouURL = "//" + _Hostname + "/surveys/" + _this.surveyId +
+        "/thank_you_page.json";
+      VOC.fn.getJSON(_thankYouURL, function(data) {
+        _this.surveyContainer.innerHTML = data.html;
+      });
+    };
 
-        // pull back the thank you page
-        jQuery.getJSON("//" + _hostname + "/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
-          jQuery("#" + _targetID).html(data.html);
-        });
 
-        e.preventDefault();
+    /*
+     * Bind the submit button from the survey to run our custom submit.
+     */
+    function bindSubmitForm() {
+      var _responseForm = _this.surveyContainer.querySelector('form');
+      VOC.fn.addEventListener(_responseForm, "submit", function(e) {
+        _this.postToIFrame(_responseForm);
+
+        if(e.preventDefault) e.preventDefault();
+        e.returnValue = false;
         return false;
       });
-
-      /* Add the survey control methods to the voc object */
-      jQuery.getScript('//<%= APP_CONFIG["host"] %>/assets/survey.js')
-        .done(function() { VOC.onPageLoad(); });
-
-      return _this;
-    }
-
-    function focusSurvey(targetID) {
-      var _surveyContainer = jQuery("#"+targetID);
-      var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
-      var focusableItems = _surveyContainer.find("*")
-        .filter(focusableElementsString)
-        .filter("*:visible");
-      focusableItems.first().focus();
-    }
-
-    return {
-      /* Define the publicly accessible methods */
-      getTargetID: getTargetID,
-      getSurveyID: getSurveyID,
-      getPageURL:  getPageURL,
-      setTargetID: setTargetID,
-      loadSurvey: loadSurvey
     };
+
   };
 
+  /* Called once the VOC library has been loaded */
+  function scriptLoadHandler(){
+    countScriptCalled++;
+    if(countScriptCalled > 1) return;
+    var interval = setInterval(function(){
+      if(VOC.fn !== undefined) {
+        clearInterval(interval);
+        main();
+      }
+    }, 100);
+  }
+
+  /* Load the VOC library helper functions */
+  function loadLibraryFunctions() {
+    var script_tag = document.createElement('script');
+    script_tag.setAttribute('type', 'text/javascript');
+    script_tag.setAttribute('src',
+        "//<%= APP_CONFIG['host'] %>/assets/voc.fn.js");
+
+    /* Wait for the script to load */
+    //Other browsers
+    if(script_tag.addEventListener) {
+      script_tag.addEventListener("load", scriptLoadHandler, false);
+    }
+    // For Old versions of IE
+    else if(script_tag.readyState) {
+      script_tag.onreadystatechange = scriptLoadHandler;
+    }
+
+    // Try to find the head, otherwise default to the documentElement
+    (document.getElementsByTagName("head")[0] || document.documentElement)
+      .appendChild(script_tag);
+  }
 
   function completed() {
     document.removeEventListener("DOMContentLoaded", completed);
     window.removeEventListener("load", completed);
-    main();
+    loadLibraryFunctions();
   }
 
   /* Handle the case where we don't execute this code until after the DOM has
@@ -126,7 +138,7 @@
    */
   if(document.readyState === "complete" ||
       (document.readyState !== "loading" && !document.documentElement.doScroll) ){
-    window.setTimeout(main());
+    window.setTimeout(loadLibraryFunctions());
   } else {
     document.addEventListener("DOMContentLoaded", completed);
     window.addEventListener("load", completed);
