@@ -15,9 +15,11 @@ window.VOC = window.VOC || {};
     var required_unanswered = false;
     var surveyContainer = VOC.fn.getParents(_this, ".voc-form")[0];
 
-    required_unanswered = check_for_unanswered_required(surveyContainer, page);
+    required_unanswered = VOC.fn.check_for_unanswered_required(surveyContainer, page);
 
-    if (!required_unanswered) {
+    if (required_unanswered) {
+      alert(survey_required_fields_error);
+    } else {
       var currentPage = surveyContainer.querySelector("#page_" + page);
       VOC.fn.removeClass(currentPage, "current_page");
       VOC.fn.addClass(currentPage, "hidden_page");
@@ -35,73 +37,9 @@ window.VOC = window.VOC || {};
       document.title = replace_page_number_in_title(document.title, next_page_number);
 
       /* Focus the first focusable on the limit */
-      focusFirstElementIn(nextPage);
-    } else {
-      alert(survey_required_fields_error);
+      VOC.fn.focusFirstElementIn(nextPage);
     }
 
-  }
-
-  function focusFirstElementIn(obj) {
-    var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
-    focusableItems = obj.querySelectorAll(focusableElementsString);
-    Array.prototype.filter.call(focusableItems, function(el) {
-      return (el.offsetWidth > 0 || el.offsetHeight > 0 ||
-          el.getClientRects().length > 0);
-    });
-  }
-
-  function check_for_unanswered_required(surveyContainer, page) {
-    var required = false;
-    var elements = surveyContainer
-      .querySelectorAll("#page_" + page + " input[type='hidden'].required_question");
-
-    /* Loop through the required elements and make sure they have answers */
-    Array.prototype.forEach.call(elements, function(el, index) {
-        /* Check if the question requires an answer */
-        if (el.value == 'true') {
-          var question_number = el.id.split('_')[1];
-          var question_answer = surveyContainer
-            .querySelector(".question_" + question_number + "_answer");
-          var question_answer_type = question_answer.type;
-
-          switch(question_answer_type) {
-            case "radio":
-              var answers = surveyContainer.querySelectorAll(".question_" +
-                  question_number + "_answer");
-              var selected = Array.prototype.filter.call(answers, function(answer) {
-                return answer.checked;
-              });
-              if(selected.length == 0) {
-                required = true;
-              }
-              break;
-            case "checkbox":
-              var answers = surveyContainer.querySelectorAll(".question_" +
-                  question_number + "_answer");
-              var selected = Array.prototype.filter.call(answers, function(answer) {
-                return answer.checked;
-              });
-              if(selected.length == 0) {
-                required = true;
-              }
-              break;
-            case "text":
-              if(question_answer.value == "") {
-                required = true;
-              }
-              break;
-            default:
-              var tagName = question_answer.tagName.toLowerCase();
-              if(tagName == "select" || tagName == "textarea") {
-                if(question_answer.value == "") {
-                  required = true;
-                }
-              }
-          };
-        }
-      });
-    return required;
   }
 
   function replace_page_number_in_title(title, number) {
@@ -124,7 +62,7 @@ window.VOC = window.VOC || {};
 
     document.title = replace_page_number_in_title(document.title, prev_page);
 
-    focusFirstElementIn(prevPageElem);
+    VOC.fn.focusFirstElementIn(prevPageElem);
   }
 
   function set_next_page(element, current_page, next_page) {
@@ -142,27 +80,13 @@ window.VOC = window.VOC || {};
 
   function validate_before_submit(button, page) {
     var surveyContainer = VOC.fn.getParents(button, ".voc-form")[0];
-    if (!check_for_unanswered_required(surveyContainer, page)) {
-      clearPartialTimeout();
-      return true;
-    } else {
+    if (VOC.fn.check_for_unanswered_required(surveyContainer, page)) {
       alert(survey_required_fields_error);
       return false;
+    } else {
+      clearPartialTimeout();
+      return true;
     }
-
-  }
-
-  function serializeForm(form) {
-    var formData = Array.prototype.filter.call(form.elements, function(el) {
-      return !(el.type in ['checkbox', 'radio'] || el.checked)
-    })
-    .filter(function(el) { return !!el.name; })
-    .filter(function(el) { return !el.disabled; })
-    .map(function(el) {
-      return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
-    }).join('&');
-
-    return formData;
   }
 
   /* Publicly available functions through the VOC object */
@@ -172,7 +96,7 @@ window.VOC = window.VOC || {};
 
     // Add on change handlers
     document.querySelector(".voc-form").addEventListener("change", function(event) {
-      timer_form(serializeForm(this));
+      timer_form(VOC.fn.serializeForm(this));
     });
 
     function timer_form(form_data) {
@@ -227,4 +151,3 @@ window.VOC = window.VOC || {};
     window.addEventListener("load", completed);
   }
 })();
-
