@@ -109,18 +109,22 @@ window.VOC = window.VOC || {};
   }
 
   function show_prev_page(link, page) {
-    var _this = link;
-    var surveyContainer = $(_this).parents("form.voc-form");
-    var prev_page = surveyContainer.find("#page_" + page + "_prev_page")
-      .val();
-    surveyContainer.find("#page_" + page)
-      .hide();
-    surveyContainer.find("#page_" + prev_page)
-      .show();
+    var surveyContainer = VOC.fn.getParents(link, ".voc-form")[0];
+    var prev_page = surveyContainer
+      .querySelector("#page_" + page + "_prev_page")
+      .value;
+    var prevPageElem = surveyContainer.querySelector("#page_" + prev_page);
+    var currentPage = surveyContainer.querySelector("#page_" + page);
+
+    /* Hide the current page and show the target page */
+    VOC.fn.removeClass(currentPage, "current_page");
+    VOC.fn.addClass(currentPage, "hidden_page");
+    VOC.fn.removeClass(prevPageElem, "hidden_page");
+    VOC.fn.addClass(prevPageElem, "current_page");
 
     document.title = replace_page_number_in_title(document.title, prev_page);
 
-    focusFirstElementIn(surveyContainer.find("#page_" + prev_page));
+    focusFirstElementIn(prevPageElem);
   }
 
   function set_next_page(element, current_page, next_page) {
