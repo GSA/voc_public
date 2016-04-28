@@ -159,11 +159,13 @@ window.VOC = (function(voc) {
     }
 
     function post_form(form_data) {
-      if ((new Date()
-          .getTime() - lastSubmitted) > changeInterval) {
-        lastSubmitted = new Date()
-          .getTime();
-        $.post(voc.Url + "/survey_responses/partial", form_data);
+      if ((new Date().getTime() - lastSubmitted) > changeInterval) {
+        lastSubmitted = new Date().getTime();
+        var url = voc.Url + "/survey_responses/partial";
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.send(form_data);
       }
     }
   }
