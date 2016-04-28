@@ -3,6 +3,10 @@
 # View helpers for SurveyResponse functionality.
 module SurveysHelper
 
+  def submit_button_text
+    @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text
+  end
+
   def display_poll_results?(survey, survey_version)
     survey.survey_type_id == SurveyType::POLL &&
       survey_version.choice_questions.any? {|q| q.display_results? }
