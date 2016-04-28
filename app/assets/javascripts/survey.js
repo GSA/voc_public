@@ -128,11 +128,11 @@ window.VOC = window.VOC || {};
   }
 
   function set_next_page(element, current_page, next_page) {
-    var surveyContainer = $(element).parents("form.voc-form");
-    surveyContainer.find("#page_" + current_page + "_next_page")
-      .val(next_page);
-    surveyContainer.find("#page_" + next_page + "_prev_page")
-      .val(current_page);
+    var surveyContainer = VOC.fn.getParents(element, ".voc-form")[0];
+    surveyContainer.querySelector("#page_" + current_page + "_next_page")
+      .value = next_page;
+    surveyContainer.querySelector("#page_" + next_page + "_prev_page")
+      .value = current_page;
   }
 
   function set_prev_page(surveyContainer, current_page, prev_page) {
@@ -141,8 +141,7 @@ window.VOC = window.VOC || {};
   }
 
   function validate_before_submit(button, page) {
-    var _this = button;
-    var surveyContainer = $(_this).parents("form.voc-form");
+    var surveyContainer = VOC.fn.getParents(button, ".voc-form")[0];
     if (!check_for_unanswered_required(surveyContainer, page)) {
       clearPartialTimeout();
       return true;
