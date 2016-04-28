@@ -1,6 +1,7 @@
 window.VOC = window.VOC || {};
 
 window.VOC = (function($, voc) {
+window.VOC = (function(voc) {
   var changeTimer,
     changeInterval = 5000,
     lastSubmitted;
@@ -175,6 +176,6 @@ window.VOC = (function($, voc) {
   voc.validate_before_submit = validate_before_submit;
 
   return voc;
-})(jQuery, window.VOC);
+})(window.VOC);
 
 jQuery(VOC.onPageLoad);
