@@ -118,8 +118,8 @@ window.VOC = window.VOC || {};
   }
 
   function set_prev_page(surveyContainer, current_page, prev_page) {
-    surveyContainer.find("#page_" + prev_page + "_prev_page")
-      .val(current_page);
+    surveyContainer.querySelector("#page_" + prev_page + "_prev_page")
+      .value = current_page;
   }
 
   function validate_before_submit(button, page) {
