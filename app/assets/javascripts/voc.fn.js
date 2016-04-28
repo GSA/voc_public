@@ -157,7 +157,13 @@ window.VOC.fn = (function(){
     },
     getJSON: function(url, successHandler) {
       var request = new XMLHttpRequest();
-      request.open('GET', url, true);
+      if("withCredentials" in request) {
+        request.open('GET', url, true);
+      } else {
+        // XDomainRequest for IE
+        request = new XDomainRequest();
+        request.open('GET', url);
+      }
 
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
