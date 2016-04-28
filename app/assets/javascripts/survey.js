@@ -44,9 +44,11 @@ window.VOC = window.VOC || {};
 
   function focusFirstElementIn(obj) {
     var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
-    focusableItems = obj.find("*")
-      .filter(focusableElementsString).filter(':visible');
-    focusableItems.get(0).focus();
+    focusableItems = obj.querySelectorAll(focusableElementsString);
+    Array.prototype.filter.call(focusableItems, function(el) {
+      return (el.offsetWidth > 0 || el.offsetHeight > 0 || 
+          el.getClientRects().length > 0);
+    });
   }
 
   function check_for_unanswered_required(surveyContainer, page) {
