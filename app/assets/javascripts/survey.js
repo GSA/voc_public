@@ -46,45 +46,59 @@ window.VOC = window.VOC || {};
     var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
     focusableItems = obj.querySelectorAll(focusableElementsString);
     Array.prototype.filter.call(focusableItems, function(el) {
-      return (el.offsetWidth > 0 || el.offsetHeight > 0 || 
+      return (el.offsetWidth > 0 || el.offsetHeight > 0 ||
           el.getClientRects().length > 0);
     });
   }
 
   function check_for_unanswered_required(surveyContainer, page) {
-    required = false;
-    surveyContainer.find("#page_" + page + " input[type=hidden].required_question")
-      .each(function(index) {
-        if ($(this)
-          .val() == 'true') {
-          question_number = $(this)
-            .attr('id')
-            .split('_')[1]; // q_{number}_required
-          /* if the element is a radio button that is required then check to make sure one is checked */
-          if (surveyContainer.find(".question_" + question_number + "_answer")
-            .attr('type') == "radio" && surveyContainer.find(".question_" + question_number + "_answer:checked")
-            .length == 0) {
-            required = true;
-          } else if (surveyContainer.find("select.question_" + question_number + "_answer")
-            .length > 0 && surveyContainer.find("select.question_" + question_number + "_answer")
-            .val() == "") {
-            required = true;
-          } else if (surveyContainer.find(".question_" + question_number + "_answer")
-            .attr('type') == "checkbox" && surveyContainer.find(".question_" + question_number + "_answer")
-            .length > 0 && surveyContainer.find(".question_" + question_number + "_answer:checked")
-            .length == 0) {
-            required = true;
-          } else if (surveyContainer.find(".question_" + question_number + "_answer")
-            .attr('type') == "text" && surveyContainer.find(".question_" + question_number + "_answer")
-            .val() == "") {
-            required = true;
-          } else if (surveyContainer.find(".question_" + question_number + "_answer")
-            .prop('tagName')
-            .toLowerCase() == "textarea" && surveyContainer.find(".question_" + question_number + "_answer")
-            .val() == "") {
-            /* a textarea does not have a an attr('type') so use the prop('tagName') */
-            required = true;
-          }
+    var required = false;
+    var elements = surveyContainer
+      .querySelectorAll("#page_" + page + " input[type='hidden'].required_question");
+
+    /* Loop through the required elements and make sure they have answers */
+    Array.prototype.forEach.call(elements, function(el, index) {
+        /* Check if the question requires an answer */
+        if (el.value == 'true') {
+          var question_number = el.id.split('_')[1];
+          var question_answer = surveyContainer
+            .querySelector(".question_" + question_number + "_answer");
+          var question_answer_type = question_answer.type;
+
+          switch(question_answer_type) {
+            case "radio":
+              var answers = surveyContainer.querySelectorAll(".question_" +
+                  question_number + "_answer");
+              var selected = Array.prototype.filter.call(answers, function(answer) {
+                return answer.checked;
+              });
+              if(selected.length == 0) {
+                required = true;
+              }
+              break;
+            case "checkbox":
+              var answers = surveyContainer.querySelectorAll(".question_" +
+                  question_number + "_answer");
+              var selected = Array.prototype.filter.call(answers, function(answer) {
+                return answer.checked;
+              });
+              if(selected.length == 0) {
+                required = true;
+              }
+              break;
+            case "text":
+              if(question_answer.value == "") {
+                required = true;
+              }
+              break;
+            default:
+              var tagName = question_answer.tagName.toLowerCase();
+              if(tagName == "select" || tagName == "textarea") {
+                if(question_answer.value == "") {
+                  required = true;
+                }
+              }
+          };
         }
       });
     return required;
