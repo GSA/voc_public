@@ -17,8 +17,7 @@ class SurveysController < ApplicationController
           :layout => false,
           :locals => { survey: @survey, survey_version: @survey_version }
         json = {:html => html}.to_json
-        render :text => "#{params[:callback]}(#{json})",
-          :content_type => "text/javascript", :layout => false
+        render json: json
       end
     end
   end
