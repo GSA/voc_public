@@ -178,4 +178,24 @@ window.VOC = (function(voc) {
   return voc;
 })(window.VOC);
 
-jQuery(VOC.onPageLoad);
+
+/* bind the onPageLoad function to the DOMContentLoaded event */
+(function() {
+  function completed() {
+    document.removeEventListener("DOMContentLoaded", completed);
+    window.removeEventListener("load", completed);
+    VOC.onPageLoad();
+  }
+
+  /* Handle the case where we don't execute this code until after the DOM has
+   * finished loading.
+   */
+  if(document.readyState === "complete" ||
+      (document.readyState !== "loading" && !document.documentElement.doScroll) ){
+    window.setTimeout(VOC.onPageLoad);
+  } else {
+    document.addEventListener("DOMContentLoaded", completed);
+    window.addEventListener("load", completed);
+  }
+})();
+
