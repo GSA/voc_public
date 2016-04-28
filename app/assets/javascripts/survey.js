@@ -1,6 +1,8 @@
+//= require voc.fn
+
 window.VOC = window.VOC || {};
 
-window.VOC = (function(voc) {
+(function(voc) {
   var changeTimer,
     changeInterval = 5000,
     lastSubmitted;
