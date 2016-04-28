@@ -1,6 +1,5 @@
 window.VOC = window.VOC || {};
 
-window.VOC = (function($, voc) {
 window.VOC = (function(voc) {
   var changeTimer,
     changeInterval = 5000,
