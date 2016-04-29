@@ -24,15 +24,15 @@
     var _this = this;
     _this.targetId = targetId;
     _this.surveyId = surveyId;
-    _this.pageURL = (window.location.origin + window.location.pathname);
+    _this.pageURL = document.URL;
     _this.surveyContainer = document.getElementById(_this.targetId);
 
     /*
      * Load the survey into the target container
      */
     _this.loadSurvey = function() {
-      var surveyUrl = _Hostname + '/surveys/' + _this.surveyId + '.json?page_url' +
-        _this.pageURL;
+      var surveyUrl = _Hostname + '/surveys/' + _this.surveyId +
+        '.json?page_url=' + _this.pageURL;
       VOC.fn.getJSON(surveyUrl, function(data) {
         _this.surveyContainer.innerHTML = data.html;
         bindSubmitForm();
