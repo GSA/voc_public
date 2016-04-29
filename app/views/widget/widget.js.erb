@@ -82,8 +82,10 @@
      */
     function bindSubmitForm() {
       var _responseForm = _this.surveyContainer.querySelector('form');
+      var pageNumber = _this.surveyContainer.querySelector(".current_page").id.split('_')[1];
       VOC.fn.addEventListener(_responseForm, "submit", function(e) {
-        _this.postToIFrame(_responseForm);
+        if(VOC.fn.validateBeforeSubmit(e))
+          _this.postToIFrame(_responseForm);
 
         if(e.preventDefault) e.preventDefault();
         e.returnValue = false;

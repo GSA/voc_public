@@ -6,13 +6,13 @@ window.VOC.fn = (function(){
   }
 
   return {
-    validateBeforeSubmit: function(button, page) {
-      var surveyContainer = VOC.fn.getParents(button, ".voc-form")[0];
-      if (VOC.fn.check_for_unanswered_required(surveyContainer, page)) {
+    validateBeforeSubmit: function(e) {
+      var surveyContainer = e.target;
+      var pageNumber = surveyContainer.querySelector(".current_page").id.split('_')[1];
+      if (VOC.fn.check_for_unanswered_required(surveyContainer, pageNumber)) {
         alert(survey_required_fields_error);
         return false;
       } else {
-        clearPartialTimeout();
         return true;
       }
     },

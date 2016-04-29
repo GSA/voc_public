@@ -36,6 +36,8 @@ window.VOC = window.VOC || {};
     /* Bind pagination links */
     VOC.fn.bindPaginationLinks(surveyContainer);
 
+    VOC.fn.addEventListener(surveyContainer, "submit", VOC.fn.validateBeforeSubmit)
+
     function timer_form(form_data) {
       // if not submitted in the last 10 seconds, submit the survey
       clearPartialTimeout();
