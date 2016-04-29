@@ -305,10 +305,11 @@
 
     // attach a listener to redirect the tab to the modal window if the user
     // somehow gets out of the modal window
-    if(mainContent)
+    if(mainContent) {
       VOC.fn.addEventListener(mainContent, 'focusin', function(e) {
         VOC.fn.focusFirstElementIn(obj);
       });
+    }
 
     // save current focus
     focusedElementBeforeModal = document.activeElement;

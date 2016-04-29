@@ -4,8 +4,8 @@
 # {http://en.wikipedia.org/wiki/Cross-origin_resource_sharing cross-origin resource sharing (CORS)}.
 class ApplicationController < ActionController::Base
 
-  before_filter :cors_preflight_check
-  after_filter :cors_set_access_control_headers
+  #before_filter :cors_preflight_check
+  #after_filter :cors_set_access_control_headers
 
   # For all responses in this controller, return the CORS access control headers.
   def cors_set_access_control_headers

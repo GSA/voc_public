@@ -148,10 +148,15 @@ window.VOC.fn = (function(){
     focusFirstElementIn: function(obj) {
       var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
       focusableItems = obj.querySelectorAll(focusableElementsString);
-      Array.prototype.filter.call(focusableItems, function(el) {
-        return (el.offsetWidth > 0 || el.offsetHeight > 0 ||
-            el.getClientRects().length > 0);
+      focusableItems = [].filter.call(focusableItems, function(el) {
+        var width = el.offsetWidth;
+        var height = el.offsetHeight;
+
+        return ((width > 0 || height > 0) ||
+            (!((el.style && el.style.display) || window.getComputedStyle(el, 'display')) === "none"));
       });
+
+      focusableItems[0].focus();
     },
     check_for_unanswered_required: function(surveyContainer, pageNumber) {
       var required = false;
