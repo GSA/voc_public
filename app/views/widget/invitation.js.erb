@@ -119,6 +119,29 @@
   function loadModal() {
     showInvitation();
 
+    /* Add class level event bindings */
+    var elements = document.getElementsByClassName("vocCancelButton");
+    Array.prototype.forEach.call(elements, function(el, index) {
+      VOC.fn.addEventListener(el, 'click', function(e) {
+        hideModal();
+      });
+    });
+
+    elements = document.getElementsByClassName("vocModalCloseButton");
+    Array.prototype.forEach.call(elements, function(el, index) {
+      VOC.fn.addEventListener(el, 'click', function(e) {
+        hideModal();
+      });
+    });
+
+    elements = document.getElementsByClassName("cancel");
+    Array.prototype.forEach.call(elements, function(el, index) {
+      VOC.fn.addEventListener(el, 'click', function(e) {
+        hideModal();
+      });
+    });
+
+    /* Add Id event bindings */
     VOC.fn.addEventListener(document.getElementById('startModal'), 'click', function(e) {
       showModal(document.getElementById('vocModal'));
     });
