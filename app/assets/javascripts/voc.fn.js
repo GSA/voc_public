@@ -1,5 +1,9 @@
 window.VOC = window.VOC || {};
 window.VOC.fn = (function(){
+  function survey_required_fields_error(surveyContainer) {
+    return surveyContainer.querySelector(".required_fields_error").getAttribute("data-msg");
+  }
+
   function set_prev_page(surveyContainer, current_page, prev_page) {
     surveyContainer.querySelector("#page_" + prev_page + "_prev_page")
       .value = current_page;
@@ -34,7 +38,7 @@ window.VOC.fn = (function(){
       var surveyContainer = e.target;
       var pageNumber = surveyContainer.querySelector(".current_page").id.split('_')[1];
       if (VOC.fn.check_for_unanswered_required(surveyContainer, pageNumber)) {
-        alert(survey_required_fields_error);
+        alert(survey_required_fields_error(surveyContainer));
         return false;
       } else {
         return true;
@@ -70,7 +74,7 @@ window.VOC.fn = (function(){
         _currentPageNumber);
 
       if(anyUnanswered) {
-        alert(survey_required_fields_error);
+        alert(survey_required_fields_error(_surveyContainer));
       } else {
         var _nextPageNumber = _surveyContainer
           .querySelector('div.current_page input[name="next_page"]').value;

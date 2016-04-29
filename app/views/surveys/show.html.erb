@@ -153,13 +153,12 @@
             <% end %>
           </span>
         </div>
-        <script>
+
         <% if @survey.js_required_fields_error.blank? %>
-          var survey_required_fields_error = "Please answer all required questions before moving on to the next page."
+          <div class="hidden_page required_fields_error" data-msg="Please answer all required questions before moving on to the next page."></div>
         <% else %>
-          var survey_required_fields_error = "<%== @survey.js_required_fields_error %>";
+          <div class="hidden_page required_fields_error" data-msg="<%= @survey.js_required_fields_error %>"></div>
         <% end %>
-        </script>
       </div> <!-- close page div -->
     <% end -%>
   <% end -%>
