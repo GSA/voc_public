@@ -1,6 +1,7 @@
 /* Use an immediately invoked function to isolate variables */
 (function(){
   var _mainContentId = "<%= params[:content_id] || 'main-content' %>";
+  var _mobileTargetId = "<%= params[:mobile_target_id] %>";
 
   // Fix for window.location.origin for IE
   if (!window.location.origin) {
@@ -12,10 +13,9 @@
   /* main - Main function for the voc invitation.  This function is called once */
   /* jQuery has been loaded.                                                */
   function main() {
-    /* Browser detected as: <%= browser.inspect %> */
-    if(jQuery.browser.mobile) {
-      var $target = jQuery('#<%= params[:mobile_target_id] %>');
-      var targetHTML = $target.html();
+    if(VOC.fn.isMobile(navigator.userAgent || navigator.vendor || window.opera)) {
+      var _target = document.getElementById(_mobileTargetId);
+      var targetHTML = _target.innerHTML;
       var pageurl  = window.location.origin + window.location.pathname;
       var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
       <% if params[:stylesheet] %>
@@ -26,14 +26,17 @@
       <% end %>
       popurl = popurl + "page_url=" + pageurl;
       var aTag = "<a href='" + popurl + "' target='_blank'>" + targetHTML + "</a>";
-      $target.html(aTag);
+      _target.innerHTML = aTag;
     } else {
-      jQuery('#<%= params[:mobile_target_id] %>').hide();
+      /* Hide the mobile target div */
+      var mobileTarget = document.getElementById(_mobileTargetId);
+      if(mobileTarget)
+        mobileTarget.style.display = 'none';
       var cookieName = 'survey_invitation_<%= params[:survey_id] %>';
       var invitationInterval = <%= @survey.invitation_interval %>;
       if(invitationInterval == 0 || readCookie(cookieName) == null || <%= @test_invitation %>) {
         var invite = false;
-        <% if @survey.invitation_percent == 100 || @test_invitation %>
+        <% if @test_invitation %>
           invite = true
         <% elsif @survey.invitation_percent > 0 %>
           invite = Math.random() < <%= @survey.invitation_percent %> / 100
@@ -42,7 +45,8 @@
           /* Load the passed stylesheet into the page */
           var stylesheet = '<%= params[:stylesheet] %>';
           if(stylesheet.length > 0) {
-            jQuery('head').append('<link rel="stylesheet" href="' + stylesheet + '" type="text/css" />');
+            document.getElementByName('head')
+              .appendChild('<link rel="stylesheet" href="' + stylesheet + '" type="text/css" />');
           }
 
           loadModal();
@@ -113,35 +117,35 @@
   var focusedElementBeforeModal;
 
   function loadModal() {
-    jQuery(function() {
-      var modalCloseSelector = "#cancel, #vocCancelButton, " +
-        "#vocModalCloseButton, .vocCancelButton, .vocModalCloseButton, " +
-        ".cancel";
-      showInvitation();
+    showInvitation();
 
-      jQuery('#vocEnter').click(function(e) {
-        enterButtonModal();
-      });
-      jQuery('#vocModal').on('click', '#startModal',function(e) {
-        showModal(jQuery('#vocModal'));
-      });
-      jQuery('#vocModal').on('click', modalCloseSelector, function(e) {
-        hideModal();
-      });
-      jQuery('#vocModal').on('keydown', '#vocModalCloseButton', function(event) {
-        trapSpaceKey(jQuery(this), event, hideModal);
-      });
-      jQuery('#vocModal').keydown(function(event) {
-        trapTabKey(jQuery(this), event);
-      });
-      jQuery('body').keydown(function(event) {
-        trapEscapeKey(jQuery(this), event);
-      });
+    VOC.fn.addEventListener(document.getElementById('startModal'), 'click', function(e) {
+      showModal(document.getElementById('vocModal'));
     });
-
+    VOC.fn.addEventListener(document.getElementById('cancel'), 'click', function(e) {
+      hideModal();
+    });
+    VOC.fn.addEventListener(document.getElementById('vocCancelButton'), 'click', function(e) {
+      hideModal();
+    });
+    VOC.fn.addEventListener(document.getElementById('vocEnter'), 'click', function(e) {
+      enterButtonModal();
+    });
+    VOC.fn.addEventListener(document.getElementById('vocModalCloseButton'),'click', function(e) {
+      hideModal();
+    });
+    VOC.fn.addEventListener(document.getElementById('vocModalCloseButton'), 'keydown', function(e) {
+      trapSpaceKey(this, e, hideModal);
+    });
+    VOC.fn.addEventListener(document.getElementById('vocModal'), 'keydown', function(e) {
+      trapTabKey(this, e);
+    });
+    VOC.fn.addEventListener(document.querySelector('body'), 'keydown', function(e) {
+      trapEscapeKey(this, e);
+    });
   }
 
-  function trapSpaceKey(obj, evt, f) {
+  function trapSpaceKey(_obj, evt, f) {
     // if space key pressed
     if (evt.which == 32) {
         // fire the user passed event
@@ -150,7 +154,7 @@
     }
   }
 
-  function trapEscapeKey(obj, evt) {
+  function trapEscapeKey(_obj, evt) {
     // if escape pressed
     if (evt.which == 27) {
       hideModal();
@@ -246,13 +250,14 @@
   }
 
   function showInvitation() {
-    var targetId = '#<%= params[:target_id] %>';
+    var targetId = '<%= params[:target_id] %>';
     var modalSurvey = <%= params[:modal] == 'true' %>;
-    jQuery(targetId).html("<%= escape_javascript(render('invite_modal')) %>");
+    document.getElementById(targetId)
+      .innerHTML = "<%= escape_javascript(render('invite_modal')) %>";
     if(modalSurvey== true && '<%= @survey.suppress_invitation %>' == 'true') {
       enterButtonModal();
     }
-    showModal(jQuery('#vocModal'));
+    showModal(document.getElementById('vocModal'));
   }
 
   function setFocusToFirstItemInModal(obj){
@@ -264,30 +269,95 @@
   }
 
   function showModal(obj) {
-      jQuery('#'+ _mainContentId).attr('aria-hidden', 'true'); // mark the main page as hidden
-      jQuery('#vocModalOverlay').css('display', 'block'); // show overlay
-      obj.css('display', 'block'); // make the modal window visible
-      obj.attr('aria-hidden', 'false'); // mark the modal window as visible
-      jQuery('body').css('overflow', 'hidden'); // hide the main content scrollbar
+    var mainContent = document.getElementById(_mainContentId)
+    if(mainContent)
+      mainContent.setAttribute('aria-hidden', true);
+    document.getElementById('vocModalOverlay').style.display = 'block';
+    obj.style.display = 'block';
+    obj.setAttribute('aria-hidden', false);
+    document.querySelector('body').style.overflow = 'hidden';
 
-      // attach a listener to redirect the tab to the modal window if the user somehow gets out of the modal window
-      jQuery('body').on('focusin','#site-wrapper',function() {
-          setFocusToFirstItemInModal(obj);
-      })
+    // attach a listener to redirect the tab to the modal window if the user
+    // somehow gets out of the modal window
+    if(mainContent)
+      VOC.fn.addEventListener(mainContent, 'focusin', function(e) {
+        VOC.fn.focusFirstElementIn(obj);
+      });
 
-      // save current focus
-      focusedElementBeforeModal = jQuery(':focus');
-      setFocusToFirstItemInModal(obj);
+    // save current focus
+    focusedElementBeforeModal = document.activeElement;
+    VOC.fn.focusFirstElementIn(obj);
   }
 
   function hideModal() {
-      jQuery('#vocModalOverlay').css('display', 'none'); // hide overlay
-      jQuery('#vocModal').css('display', 'none'); // hide the modal window
-      jQuery('body').css('overflow', 'visible');  // Re-enable the scrollbar
-      jQuery('#vocModal').attr('aria-hidden', 'true'); // mark the modal window as hidden
-      jQuery('#'+ _mainContentId).attr('aria-hidden', 'false'); // mark the main page as visible
+    document.getElementById('vocModalOverlay').style.display = 'none';
+    document.getElementById('vocModal').style.display = 'none';
+    document.querySelector('body').style.overflow = 'visible';
+    document.getElementById('vocModal').setAttribute('aria-hidden', true);
+    if(document.getElementById(_mainContentId))
+      document.getElementById(_mainContentId).setAttribute('aria-hidden', false);
 
-      // set focus back to element that had it before the modal was opened
-      focusedElementBeforeModal.focus();
+    // set focus back to element that had it before the modal was opened
+    focusedElementBeforeModal.focus();
   }
+
+
+  /*
+   * The below code is used to load the VOC tool and show the invitation once
+   * the page content has been loaded.
+   */
+  var countScriptCalled = 0;
+
+  /* Called once the VOC library has been loaded */
+  function scriptLoadHandler(){
+    countScriptCalled++;
+    if(countScriptCalled > 1) return;
+    var interval = setInterval(function(){
+      if(VOC.fn !== undefined) {
+        clearInterval(interval);
+        main();
+      }
+    }, 100);
+  }
+
+
+  /* Load the VOC library helper functions */
+  function loadLibraryFunctions() {
+    var script_tag = document.createElement('script');
+    script_tag.setAttribute('type', 'text/javascript');
+    script_tag.setAttribute('src',
+        "//<%= APP_CONFIG['host'] %>/assets/voc.fn.js");
+
+    /* Wait for the script to load */
+    //Other browsers
+    if(script_tag.addEventListener) {
+      script_tag.addEventListener("load", scriptLoadHandler, false);
+    }
+    // For Old versions of IE
+    else if(script_tag.readyState) {
+      script_tag.onreadystatechange = scriptLoadHandler;
+    }
+
+    // Try to find the head, otherwise default to the documentElement
+    (document.getElementsByTagName("head")[0] || document.documentElement)
+      .appendChild(script_tag);
+  }
+
+  function completed() {
+    document.removeEventListener("DOMContentLoaded", completed);
+    window.removeEventListener("load", completed);
+    loadLibraryFunctions();
+  }
+
+  /* Handle the case where we don't execute this code until after the DOM has
+   * finished loading.
+   */
+  if(document.readyState === "complete" ||
+      (document.readyState !== "loading" && !document.documentElement.doScroll) ){
+    window.setTimeout(loadLibraryFunctions());
+  } else {
+    document.addEventListener("DOMContentLoaded", completed);
+    window.addEventListener("load", completed);
+  }
+
 })();
