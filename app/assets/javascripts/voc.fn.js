@@ -87,6 +87,12 @@ window.VOC.fn = (function(){
         VOC.fn.addClass(_nextPage, "current_page");
         VOC.fn.removeClass(_nextPage, "hidden_page");
 
+        /* Enable the submit button if it is on the page */
+        var submitButton = _nextPage.querySelector("input[type='submit'][disabled]");
+        if(submitButton) {
+          submitButton.disabled = false;
+        }
+
         /* Focus the first focusable element of the new page */
         VOC.fn.focusFirstElementIn(_nextPage);
       }
