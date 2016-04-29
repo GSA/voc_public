@@ -245,6 +245,8 @@ window.VOC.fn = (function(){
         el.className += " " + className;
     },
     addEventListener: function(el, eventName, handler) {
+      if(el === undefined || el === null)
+        return;
       if(el.addEventListener) {
         el.addEventListener(eventName, handler);
       } else {
