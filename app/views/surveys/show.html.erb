@@ -149,7 +149,7 @@
           <% end %>
           <span class="surveyNavSub">
             <% if page.page_number == @survey_version.pages.count %>
-              <%= submit_tag(submit_button_text, disabled: 'disabled') %>
+              <%= submit_tag(submit_button_text, disabled: (page.page_number != 1)) %>
             <% end %>
           </span>
         </div>
