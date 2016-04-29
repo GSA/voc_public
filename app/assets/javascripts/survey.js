@@ -14,13 +14,6 @@ window.VOC = window.VOC || {};
     return title.replace(/ - Page \d+ - /, " - Page " + number + " - ");
   }
 
-  function set_next_page(element, current_page, next_page) {
-    var surveyContainer = VOC.fn.getParents(element, ".voc-form")[0];
-    surveyContainer.querySelector("#page_" + current_page + "_next_page")
-      .value = next_page;
-    surveyContainer.querySelector("#page_" + next_page + "_prev_page")
-      .value = current_page;
-  }
 
   /* Publicly available functions through the VOC object */
   function onPageLoad() {
@@ -60,7 +53,6 @@ window.VOC = window.VOC || {};
     }
   }
 
-  voc.set_next_page = set_next_page;
   voc.onPageLoad = onPageLoad;
   voc.validate_before_submit = VOC.fn.validateBeforeSubmit;
 

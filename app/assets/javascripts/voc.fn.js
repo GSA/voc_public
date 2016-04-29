@@ -1,4 +1,21 @@
 window.VOC = window.VOC || {};
+
+window.VOC.set_next_page = function set_next_page(element, current_page, next_page) {
+  var surveyContainer = VOC.fn.getParents(element, ".voc-form")[0];
+  surveyContainer.querySelector("#page_" + current_page + "_next_page")
+    .value = next_page;
+  surveyContainer.querySelector("#page_" + next_page + "_prev_page")
+    .value = current_page;
+};
+
+window.VOC.show_next_page = function(el, currentPageNumber) {
+  var _surveyContainer = VOC.fn.getParents(".voc-form")[0];
+  var _currentPage = _surveyContainer.querySelector("page_" + currentPageNumber);
+
+  VOC.fn.showNextPage(_currentPage);
+
+};
+
 window.VOC.fn = (function(){
   function survey_required_fields_error(surveyContainer) {
     return surveyContainer.querySelector(".required_fields_error").getAttribute("data-msg");
