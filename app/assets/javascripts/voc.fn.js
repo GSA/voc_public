@@ -10,6 +10,26 @@ window.VOC.fn = (function(){
   }
 
   return {
+    getScript: function(url, scriptLoadHandler) {
+      var script_tag = document.createElement('script');
+      script_tag.setAttribute('type', 'text/javascript');
+      script_tag.setAttribute('src', url);
+
+      /* Wait for the script to load */
+      //Other browsers
+      if(script_tag.addEventListener) {
+        script_tag.addEventListener("load", scriptLoadHandler, false);
+      }
+      // For Old versions of IE
+      else if(script_tag.readyState) {
+        script_tag.onreadystatechange = scriptLoadHandler;
+      }
+
+      // Try to find the head, otherwise default to the documentElement
+      (document.getElementsByTagName("head")[0] || document.documentElement)
+        .appendChild(script_tag);
+
+    },
     validateBeforeSubmit: function(e) {
       var surveyContainer = e.target;
       var pageNumber = surveyContainer.querySelector(".current_page").id.split('_')[1];
@@ -159,12 +179,11 @@ window.VOC.fn = (function(){
         });
       return required;
     },
-    getJSON: function(url, successHandler) {
+    get: function(url, successHandler) {
       var request = new XMLHttpRequest();
       if("withCredentials" in request) {
         request.open('GET', url, true);
       } else {
-        // XDomainRequest for IE
         request = new XDomainRequest();
         request.open('GET', url);
       }
@@ -172,8 +191,8 @@ window.VOC.fn = (function(){
       request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
           // Success!
-          var data = JSON.parse(request.responseText);
-          successHandler(data);
+          if(successHandler)
+            successHandler(request.responseText);
         } else {
           // We reached our target server, but it returned an error
         }
@@ -184,7 +203,12 @@ window.VOC.fn = (function(){
       };
 
       request.send();
-
+    },
+    getJSON: function(url, successHandler) {
+      VOC.fn.get(url, function(responseText) {
+       var data = JSON.parse(responseText);
+       successHandler(data);
+      });
     },
     getParents: function(elem, selector) {
         var parents = [];

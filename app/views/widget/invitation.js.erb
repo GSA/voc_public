@@ -222,14 +222,14 @@
     <% if @test_invitation %>
       invitationurl = invitationurl + "?test_invitation=true"
     <% end %>
-    jQuery.get(invitationurl);
+    VOC.fn.get(invitationurl);
   }
 
   function openSurveyInModal() {
     var widgetUrl = "//<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=modalContents&survey_id=<%= @survey.id %>&focus=true"
-    jQuery.getScript(widgetUrl).done(function() {
+    VOC.fn.getScript(widgetUrl, function() {
       hideModal();
-      showModal(jQuery("#vocModal"));
+      showModal(document.getElementById("vocModal"));
     });
   }
 
