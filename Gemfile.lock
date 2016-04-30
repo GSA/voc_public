@@ -112,7 +112,6 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     rack (1.5.5)
-    rack-cors (0.4.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -237,7 +236,6 @@ DEPENDENCIES
   paperclip
   protected_attributes
   pry-rails
-  rack-cors
   rails (= 4.0.13)
   rails-observers
   redis-objects

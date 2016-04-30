@@ -12,8 +12,6 @@ gem 'browser'
 gem "protected_attributes"
 gem "rails-observers"
 
-gem "rack-cors", require: 'rack/cors'
-
 # NEW: Resque
 gem 'resque'
 gem 'resque_mailer'
