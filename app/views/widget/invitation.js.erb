@@ -211,7 +211,7 @@
 
           // get the index of the currently focused item
           var focusedItemIndex;
-          focusedItemIndex = focusableItems.index(focusedItem);
+          focusedItemIndex = focusableItems.indexOf(focusedItem);
 
           if (evt.shiftKey) {
               //back tab
@@ -256,6 +256,7 @@
     VOC.fn.getScript(widgetUrl, function() {
       hideModal();
       showModal(document.getElementById("vocModal"));
+      VOC.fn.focusFirstElementIn(document.getElementById("vocModal"));
     });
   }
 
