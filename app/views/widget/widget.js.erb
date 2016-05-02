@@ -37,6 +37,9 @@
         _this.surveyContainer.innerHTML = data.html;
         bindSubmitForm();
         VOC.fn.bindPaginationLinks(_this.surveyContainer);
+        var focus = "<%= params[:focus] %>";
+        if(focus == "true")
+          VOC.fn.focusFirstElementIn(_this.surveyContainer);
       });
     };
 
