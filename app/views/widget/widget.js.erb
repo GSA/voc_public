@@ -1,7 +1,7 @@
 /* Use an immediately invoked function to isolate widget variables */
 (function(){
   var countScriptCalled = 0;
-  var _Hostname = "https://<%= APP_CONFIG['host'] %>";
+  var _Hostname = "//<%= APP_CONFIG['host'] %>";
 
   /* main - Main function for the voc widget.  This function is called once
    * the VOC library has been loaded.
@@ -13,7 +13,7 @@
 
     /* create the voc object */
     VOC.Survey =  Survey;
-    VOC.HOSTNAME = "https://<%= APP_CONFIG['host'] %>";
+    VOC.HOSTNAME = "//<%= APP_CONFIG['host'] %>";
 
     var survey = new VOC.Survey(<%= params[:survey_id].to_i %>, "<%= params[:target_id] %>");
     survey.loadSurvey();
