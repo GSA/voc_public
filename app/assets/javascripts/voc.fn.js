@@ -16,6 +16,15 @@ window.VOC.show_next_page = function(el, currentPageNumber) {
 
 };
 
+/* Shim for the matches function */
+HTMLElement.prototype.matches = HTMLElement.prototype.matches ||
+  HTMLElement.prototype.matchesSelector ||
+  HTMLElement.prototype.webkitMatchesSelector ||
+  HTMLElement.prototype.mozMatchesSelector ||
+  HTMLElement.prototype.msMatchesSelector ||
+  HTMLElement.prototype.oMatchesSelector;
+
+
 window.VOC.fn = (function(){
   function survey_required_fields_error(surveyContainer) {
     return surveyContainer.querySelector(".required_fields_error").getAttribute("data-msg");
@@ -299,6 +308,12 @@ window.VOC.fn = (function(){
         el.classList.add(className);
       else
         el.className += " " + className;
+    },
+    on: function(el, selector, eventName, handler) {
+      VOC.fn.addEventListener(el, eventName, function(e) {
+        if(e.target.matches(selector))
+          handler.call(e.target, e);
+      });
     },
     addEventListener: function(el, eventName, handler) {
       if(el === undefined || el === null)
