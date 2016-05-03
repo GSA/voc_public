@@ -9,8 +9,8 @@ window.VOC.set_next_page = function set_next_page(element, current_page, next_pa
 };
 
 window.VOC.show_next_page = function(el, currentPageNumber) {
-  var _surveyContainer = VOC.fn.getParents(".voc-form")[0];
-  var _currentPage = _surveyContainer.querySelector("page_" + currentPageNumber);
+  var _surveyContainer = VOC.fn.getParents(el, ".voc-form")[0];
+  var _currentPage = _surveyContainer.querySelector("#page_" + currentPageNumber);
 
   VOC.fn.showNextPage(_currentPage);
 
