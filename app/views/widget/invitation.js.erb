@@ -45,8 +45,12 @@
           /* Load the passed stylesheet into the page */
           var stylesheet = '<%= params[:stylesheet] %>';
           if(stylesheet.length > 0) {
-            document.getElementByName('head')
-              .appendChild('<link rel="stylesheet" href="' + stylesheet + '" type="text/css" />');
+            var stylesheetLinkNode = document.createElement('link');
+            stylesheetLinkNode.rel = "stylesheet";
+            stylesheetLinkNode.type = "text/css";
+            stylesheetLinkNode.href = stylesheet;
+            document.querySelector('head')
+              .appendChild(stylesheetLinkNode);
           }
 
           loadModal();
