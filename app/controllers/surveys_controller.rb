@@ -26,9 +26,8 @@ class SurveysController < ApplicationController
   def index
     @surveys = Survey.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @surveys }
+    if Rails.env == "production"
+      render nothing: true
     end
   end
 
@@ -37,7 +36,6 @@ class SurveysController < ApplicationController
     get_survey_and_version
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @survey }
       format.json do
         html = render_to_string(action: "show", layout: false, formats: [:html])
         render json: {html: html}, callback: params[:callback]
