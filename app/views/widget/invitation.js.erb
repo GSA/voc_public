@@ -10,7 +10,7 @@
       window.location.port: '');
   }
 
-  /* main - Main function for the voc invitation.  
+  /* main - Main function for the voc invitation.
    */
   function main() {
     if(VOC.fn.isMobile(navigator.userAgent || navigator.vendor || window.opera)) {
@@ -125,29 +125,22 @@
 
     /* Add class level event bindings */
     var modal = document.getElementById("vocModal");
-    var selector = ".vocCancelButton, .vocModalCloseButton, .cancel";
-    VOC.fn.on(modal, selector, eventName, function(e) {
+    var selector = ".vocCancelButton, .vocModalCloseButton, .cancel, " +
+      "#vocCancelButton, #vocModalCloseButton, #cancel";
+    VOC.fn.on(modal, selector, "click", function(e) {
       hideModal();
+    });
+
+    VOC.fn.on(modal, "#vocModalCloseButton", "keydown", function(e) {
+      trapSpaceKey(this, e, hideModal);
     });
 
     /* Add Id event bindings */
     VOC.fn.addEventListener(document.getElementById('startModal'), 'click', function(e) {
       showModal(document.getElementById('vocModal'));
     });
-    VOC.fn.addEventListener(document.getElementById('cancel'), 'click', function(e) {
-      hideModal();
-    });
-    VOC.fn.addEventListener(document.getElementById('vocCancelButton'), 'click', function(e) {
-      hideModal();
-    });
     VOC.fn.addEventListener(document.getElementById('vocEnter'), 'click', function(e) {
       enterButtonModal();
-    });
-    VOC.fn.addEventListener(document.getElementById('vocModalCloseButton'),'click', function(e) {
-      hideModal();
-    });
-    VOC.fn.addEventListener(document.getElementById('vocModalCloseButton'), 'keydown', function(e) {
-      trapSpaceKey(this, e, hideModal);
     });
     VOC.fn.addEventListener(document.getElementById('vocModal'), 'keydown', function(e) {
       trapTabKey(this, e);
