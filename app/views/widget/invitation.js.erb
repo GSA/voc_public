@@ -116,24 +116,21 @@
 
   function loadModal() {
     jQuery(function() {
+      var modalCloseSelector = "#cancel, #vocCancelButton, " +
+        "#vocModalCloseButton, .vocCancelButton, .vocModalCloseButton, " +
+        ".cancel";
       showInvitation();
 
-      jQuery('#startModal').click(function(e) {
-        showModal(jQuery('#vocModal'));
-      });
-      jQuery('#cancel').click(function(e) {
-        hideModal();
-      });
-      jQuery('#vocCancelButton').click(function(e) {
-        hideModal();
-      });
       jQuery('#vocEnter').click(function(e) {
         enterButtonModal();
       });
-      jQuery('#vocModalCloseButton').click(function(e) {
+      jQuery('#vocModal').on('click', '#startModal',function(e) {
+        showModal(jQuery('#vocModal'));
+      });
+      jQuery('#vocModal').on('click', modalCloseSelector, function(e) {
         hideModal();
       });
-      jQuery('#vocModalCloseButton').keydown(function(event) {
+      jQuery('#vocModal').on('keydown', '#vocModalCloseButton', function(event) {
         trapSpaceKey(jQuery(this), event, hideModal);
       });
       jQuery('#vocModal').keydown(function(event) {
