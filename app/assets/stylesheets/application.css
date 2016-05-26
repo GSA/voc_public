@@ -378,6 +378,16 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 }
 
 /** Poll Result Bar **/
+.label_container {
+  display: inline-block;
+  max-width: 15%;
+}
+
+.bar_container {
+  width: 85%;
+  display: inline-block;
+}
+
 .poll_result_bar {
   /*background-color: #000; */
   background-color: lightblue;

@@ -13,10 +13,10 @@
           <% next if !(answer =~ /\A[-+]?\d+\z/) || ChoiceAnswer.where(id: answer.to_i).empty? %>
           <% answer_percent = total_answers == 0 ? 0 : ((answer_count.to_f / total_answers.to_f) * 100) %>
           <div class="poll_answer" data-answer="<%= ChoiceAnswer.find(answer.to_i).try(:answer) %>">
-              <div style="display: inline-block; max-width: 15%">
+              <div class="label_container">
                 <span class="answer_statement"><%= ChoiceAnswer.find(answer.to_i).try(:answer) %> : </span>
               </div>
-              <div class="bar_container" style="width: 85%; display:inline-block">
+              <div class="bar_container" >
                 <div class="poll_result_bar" style="width:<%= answer_percent.to_i %>%">&nbsp;</div>
                 <span class="answer_percentage"><%= "#{answer_count} (#{answer_percent.round(1)}%)" %></span>
               </div>
