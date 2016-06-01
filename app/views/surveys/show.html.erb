@@ -78,13 +78,21 @@
                   answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
                  end -%>
               <div class="vocquestiontext">
-                <% if @survey.show_numbers? %> <span class="vocquestionnumber"><%= "#{question_number}." %> </span> <% end %>
-                <%= answer_tag_id ? label_tag(answer_tag_id, label_for_element(element)) : element.assetable.question_content.statement %>
-                <%= "*" if element.assetable.required %>
+                <% if @survey.show_numbers? %>
+                  <span class="vocquestionnumber">
+                    <%= "#{question_number}." %>
+                  </span>
+                <% end %>
+                <% if answer_tag_id %>
+                  <%= label_tag(answer_tag_id, label_for_element(element)) %>
+                <% else %>
+                  <%= label_for_element(element) %>
+                <% end %>
               </div>
               <% if element.assetable_type == "ChoiceQuestion" %>
                 <% if element.assetable.answer_type == ChoiceAnswer::RADIO
-                  choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
+                     choice_a_size = (element.assetable.choice_answers.map {|x| 
+                       x.answer}).join('----').size
                   %>
                   <div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
                     <fieldset>
