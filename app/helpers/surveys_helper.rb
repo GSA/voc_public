@@ -3,6 +3,15 @@
 # View helpers for SurveyResponse functionality.
 module SurveysHelper
 
+  def page_class(page)
+    page_number = params.fetch(:page){1}.to_i
+    if page.page_number == page_number
+      'current_page'
+    else
+      'hidden_page'
+    end
+  end
+
   def submit_button_text
     @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text
   end
