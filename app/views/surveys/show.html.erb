@@ -31,32 +31,43 @@
             end %>
             <% if element.assetable_type == "MatrixQuestion" %>
               <% if element.assetable_type != 'Asset' && @survey.show_numbers? %>
-                <span class="vocquestionnumber"><%= "#{question_number}." %></span><%= element.assetable.question_content.statement %>
+                <span class="vocquestionnumber">
+                  <%= "#{question_number}." %>
+                </span>
+                <%= element.assetable.question_content.statement %>
               <% end %>
-                    <table>
-                      <tr>
-                        <td></td>
-                        <% for column_header in element.assetable.choice_questions.first.choice_answers do %>
-                         <th scope="col"><%= column_header.answer %></th>
-                        <% end -%>
-                      </tr>
-                      <% for row_header in element.assetable.choice_questions do %>
-                        <tr>
-                          <td scope="row">
-                            <%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
-                            <%= hidden_field_tag "q_#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
-                          </td>
-                          <% row_header.choice_answers.each do |a| %>
-                            <td>
-                            <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id, :id => nil %>
-                            <%= label_tag "response_raw_responses_attributes_#{index}_answer_#{a.id}", "a.answer", :style => "position: absolute; left: -10000px; height: 1px; width: 1px; overflow: hidden;" %>
-                            <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer" %>
-                            </td>
-                          <% end %>
-                        </tr>
-                        <% index = index + 1%>
-                      <% end -%>
-                    </table>
+              <table>
+                <tr>
+                  <td></td>
+                  <% element.assetable.choice_questions.first.choice_answers.each do |column_header| %>
+                    <th scope="col"><%= column_header.answer %></th>
+                  <% end -%>
+                </tr>
+                <% element.assetable.choice_questions.each do |row_header| %>
+                  <tr>
+                    <td scope="row">
+                      <%= row_header.question_content.statement%>
+                      <%= "*" if row_header.question_content.required? || element.assetable.required %>
+                      <%= hidden_field_tag "q_#{row_header.question_content.id}_required",
+                        row_header.question_content.required || element.assetable.question_content.required,
+                        :class => "required_question" %>
+                    </td>
+                    <% row_header.choice_answers.each do |a| %>
+                      <td>
+                        <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]",
+                          row_header.question_content.id, :id => nil %>
+                        <%= label_tag "response_raw_responses_attributes_#{index}_answer_#{a.id}",
+                          "a.answer",
+                          :style => "position: absolute; left: -10000px; height: 1px; width: 1px; overflow: hidden;" %>
+                        <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]",
+                          a.id, false,
+                          :class => "question_#{row_header.question_content.id}_answer" %>
+                      </td>
+                    <% end %>
+                  </tr>
+                  <% index = index + 1%>
+                <% end -%>
+              </table>
             <% elsif element.assetable_type != "Asset" %>
               <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
               <%= hidden_field_tag "q_#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
