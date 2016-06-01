@@ -19,9 +19,10 @@
       <% question_number = 0 %>
       <div class="<%= page_class(page) %>" id="page_<%=page.page_number%>">
         <a name="PAGE_<%= page.page_number%>"></a>
-        <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
-        <%= hidden_field_tag :prev_page, (params[:page].present? && params[:page].to_i == page.page_number ? 1 : page.prev_page.try(:page_number)), :id => "page_#{page.page_number}_prev_page" %>
-
+        <%= hidden_field_tag :next_page, page.next_page.try(:page_number),
+          :id => "page_#{page.page_number}_next_page" %>
+        <%= hidden_field_tag :prev_page, prev_page_number(page),
+          :id => "page_#{page.page_number}_prev_page" %>
         <ul class="showList">
         <% page.survey_elements.order("element_order asc").each do |element| %>
           <li class="outter">

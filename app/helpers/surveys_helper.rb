@@ -2,6 +2,9 @@
 #
 # View helpers for SurveyResponse functionality.
 module SurveysHelper
+  def prev_page_number(page)
+    params.fetch(:page, 1) == page.page_number ? 1 : page.prev_page.try(:page_number)
+  end
 
   def page_class(page)
     page_number = params.fetch(:page){1}.to_i
