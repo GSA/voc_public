@@ -68,6 +68,7 @@ window.VOC.fn = (function(){
       var pageNumber = surveyContainer.querySelector(".current_page").id.split('_')[1];
       if (VOC.fn.check_for_unanswered_required(surveyContainer, pageNumber)) {
         alert(survey_required_fields_error(surveyContainer));
+        e.preventDefault();
         return false;
       } else {
         return true;
