@@ -1,0 +1,16 @@
+APP_PUBLIC_HOST_PORT=public:8080
+
+REDIS_HOST_PORT=redis:6379
+REDIS_EXPIRE=86400
+
+GA_ID=UA-00000000-1
+GA_SITE=example.gov
+
+MYSQL_DB_HOST=mysql
+MYSQL_DB_PORT=3306
+MYSQL_DB_NAME=comment_tool_app_development
+MYSQL_DB_USER=root
+MYSQL_DB_PASS=
+
+RAILS_ENV=development
+RAILS_COOKIE_TOKEN=hex string of 30+ characters
