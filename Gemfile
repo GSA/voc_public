@@ -27,17 +27,17 @@ platform :ruby do
   gem 'mysql2', '< 0.3'
 end
 
-platform :jruby do
-  gem 'activerecord-jdbc-adapter'
-  gem 'jdbc-mysql'
-  gem 'activerecord-jdbcmysql-adapter'
-
-  gem 'jruby-openssl', :require => false
-
-  gem 'jruby-rack', :require => false
-
-  gem 'warbler'
-end
+# platform :jruby do
+#   gem 'activerecord-jdbc-adapter'
+#   gem 'jdbc-mysql'
+#   gem 'activerecord-jdbcmysql-adapter'
+#
+#   gem 'jruby-openssl', :require => false
+#
+#   gem 'jruby-rack', :require => false
+#
+#   gem 'warbler'
+# end
 
 group :development, :test do
   gem 'pry-rails'
