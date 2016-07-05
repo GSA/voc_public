@@ -17,7 +17,7 @@ module CommentToolPublic
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += %W(#{config.root}/lib)
-    
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -41,7 +41,14 @@ module CommentToolPublic
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-      
+
     config.autoload_paths += Dir["#{config.root}/app/models/**/"]
+
+    # Added by Jake, 7/5/2016: tag logging for Docker
+    config.log_level = :debug
+    config.log_tags  = [:subdomain, :uuid]
+
+    # RAILS 3.2+:
+    # config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   end
 end
