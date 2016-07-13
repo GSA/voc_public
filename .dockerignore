@@ -9,3 +9,4 @@ tmp/
 .rspec
 .ruby-*
 sync_public_folder.sh
+.env.local

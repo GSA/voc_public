@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'authlogic'
 gem 'browser'
+gem 'dotenv-rails'
 
 gem "protected_attributes"
 gem "rails-observers"
@@ -24,22 +25,8 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier', '>= 1.0.3'
 
-platform :ruby do
-  gem 'unicorn-rails'
-  gem 'mysql2', "~> 0.3.18"
-end
-
-# platform :jruby do
-#   gem 'activerecord-jdbc-adapter'
-#   gem 'jdbc-mysql'
-#   gem 'activerecord-jdbcmysql-adapter'
-#
-#   gem 'jruby-openssl', :require => false
-#
-#   gem 'jruby-rack', :require => false
-#
-#   gem 'warbler'
-# end
+gem 'unicorn-rails'
+gem 'mysql2', "~> 0.3.18"
 
 group :development, :test do
   gem 'pry-rails'
