@@ -1,11 +1,7 @@
 /* Use an immediately invoked function to isolate variables */
-(function(existing_jquery){
-
-  // jQuery formatted selector to search for focusable items
-  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
-
-  // store the item that has focus before opening the modal window
-  var focusedElementBeforeModal;
+(function(){
+  var _mainContentId = "<%= params[:content_id] || 'main-content' %>";
+  var _mobileTargetId = "<%= params[:mobile_target_id] %>";
 
   // Fix for window.location.origin for IE
   if (!window.location.origin) {
@@ -14,41 +10,55 @@
       window.location.port: '');
   }
 
-  <%= render 'load_jquery' %>
-
-  /* main - Main function for the voc invitation.  This function is called once */
-  /* jQuery has been loaded.                                                */
+  /* main - Main function for the voc invitation.
+   */
   function main() {
-    if(jQuery.browser.mobile) {
-      var $target = jQuery('#<%= params[:mobile_target_id] %>');
-      var targetHTML = $target.html();
+    if(VOC.fn.isMobile(navigator.userAgent || navigator.vendor || window.opera)) {
+      var _target = document.getElementById(_mobileTargetId);
+      var targetHTML = _target.innerHTML;
       var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+      var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
       <% if params[:stylesheet] %>
           popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
       <% end %>
+      <% if @test_invitation %>
+        popurl = popurl + "&test_invitation=true"
+      <% end %>
       popurl = popurl + "page_url=" + pageurl;
-
       var aTag = "<a href='" + popurl + "' target='_blank'>" + targetHTML + "</a>";
-
-      $target.html(aTag);
-
+      _target.innerHTML = aTag;
     } else {
-      jQuery('#<%= params[:mobile_target_id] %>').hide();
+      /* Hide the mobile target div */
+      var mobileTarget = document.getElementById(_mobileTargetId);
+      if(mobileTarget)
+        mobileTarget.style.display = 'none';
       var cookieName = 'survey_invitation_<%= params[:survey_id] %>';
       var invitationInterval = <%= @survey.invitation_interval %>;
-      if(invitationInterval == 0 || readCookie(cookieName) == null) {
+      if(invitationInterval == 0 || readCookie(cookieName) == null || <%= @test_invitation %>) {
         var invite = false;
-        <% if @survey.invitation_percent == 100 %>
+        <% if @test_invitation %>
           invite = true
         <% elsif @survey.invitation_percent > 0 %>
           invite = Math.random() < <%= @survey.invitation_percent %> / 100
         <% end %>
         if(invite) {
-          loadModal();
-          if(invitationInterval > 0) {
-            createCookie(cookieName, true, invitationInterval);
+          /* Load the passed stylesheet into the page */
+          var stylesheet = '<%= params[:stylesheet] %>';
+          if(stylesheet.length > 0) {
+            var stylesheetLinkNode = document.createElement('link');
+            stylesheetLinkNode.rel = "stylesheet";
+            stylesheetLinkNode.type = "text/css";
+            stylesheetLinkNode.href = stylesheet;
+            document.querySelector('head')
+              .appendChild(stylesheetLinkNode);
           }
+
+          loadModal();
+          <% unless @test_invitation %>
+            if(invitationInterval > 0) {
+              createCookie(cookieName, true, invitationInterval);
+            }
+          <% end %>
         }
       }
     }
@@ -104,64 +114,57 @@
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
 
+  // jQuery formatted selector to search for focusable items
+  var focusableElementsString = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]:not([tabindex='-1'])";
+
+  // store the item that has focus before opening the modal window
+  var focusedElementBeforeModal;
+
   function loadModal() {
-      jQuery('#<%= params[:target_id] %>').html("<%= escape_javascript(render('invite_modal')) %>");
-      showModal(jQuery('#vocModal'));
-      jQuery('#startModal').click(function(e) {
-          showModal(jQuery('#vocModal'));
-      });
-      jQuery('#cancel').click(function(e) {
-          hideModal();
-          e.preventDefault();
-      });
-      jQuery('.vocCancelButton').click(function(e) {
-          hideModal();
-          e.preventDefault();
-      });
-      jQuery('#vocEnter').click(function(e) {
-          enterButtonModal();
-      });
-      jQuery('#vocModalCloseButton').click(function(e) {
-          hideModal();
-      });
-      jQuery('#vocModalCloseButton').keydown(function(event) {
-          trapSpaceKey(jQuery(this), event, hideModal);
-      });
-      jQuery('#vocModal').keydown(function(event) {
-          trapTabKey(jQuery(this), event);
-      });
-      jQuery('#vocModal').keydown(function(event) {
-          trapEscapeKey(jQuery(this), event);
-      });
+    showInvitation();
 
+    /* Add class level event bindings */
+    var modal = document.getElementById("vocModal");
+    var selector = ".vocCancelButton, .vocModalCloseButton, .cancel, " +
+      "#vocCancelButton, #vocModalCloseButton, #cancel";
+    VOC.fn.on(modal, selector, "click", function(e) {
+      hideModal();
+    });
+
+    VOC.fn.on(modal, "#vocModalCloseButton", "keydown", function(e) {
+      trapSpaceKey(this, e, hideModal);
+    });
+
+    /* Add Id event bindings */
+    VOC.fn.addEventListener(document.getElementById('startModal'), 'click', function(e) {
+      showModal(document.getElementById('vocModal'));
+    });
+    VOC.fn.addEventListener(document.getElementById('vocEnter'), 'click', function(e) {
+      enterButtonModal();
+    });
+    VOC.fn.addEventListener(document.getElementById('vocModal'), 'keydown', function(e) {
+      trapTabKey(this, e);
+    });
+    VOC.fn.addEventListener(document.querySelector('body'), 'keydown', function(e) {
+      trapEscapeKey(this, e);
+    });
   }
 
-
-  function trapSpaceKey(obj, evt, f) {
-      // if space key pressed
-      if (evt.which == 32) {
-          // fire the user passed event
-          f();
-          evt.preventDefault();
-      }
+  function trapSpaceKey(_obj, evt, f) {
+    // if space key pressed
+    if (evt.which == 32) {
+        // fire the user passed event
+        f();
+        evt.preventDefault();
+    }
   }
 
-  function trapEscapeKey(obj, evt) {
-
-      // if escape pressed
-      if (evt.which == 27) {
-
-          // get list of all children elements in given object
-          var o = obj.find('*');
-
-          // get list of focusable items
-          var cancelElement;
-          cancelElement = o.filter("#cancel")
-
-          // close the modal window
-          cancelElement.click();
-          evt.preventDefault();
-      }
+  function trapEscapeKey(_obj, evt) {
+    // if escape pressed
+    if (evt.which == 27) {
+      hideModal();
+      evt.preventDefault();
+    }
 
   }
 
@@ -171,15 +174,18 @@
       if (evt.which == 9) {
 
           // get list of all children elements in given object
-          var o = obj.find('*');
+          var o = obj.querySelectorAll(focusableElementsString);
 
           // get list of focusable items
           var focusableItems;
-          focusableItems = o.filter(focusableElementsString).filter(':visible')
+          focusableItems = Array.prototype.filter.call(o, function(el) {
+            return (el.offsetWidth > 0 || el.offsetHeight > 0 ||
+                el.getClientRects().length > 0);
+          });
 
           // get currently focused item
           var focusedItem;
-          focusedItem = jQuery(':focus');
+          focusedItem = document.activeElement;
 
           // get the number of focusable items
           var numberOfFocusableItems;
@@ -187,13 +193,13 @@
 
           // get the index of the currently focused item
           var focusedItemIndex;
-          focusedItemIndex = focusableItems.index(focusedItem);
+          focusedItemIndex = focusableItems.indexOf(focusedItem);
 
           if (evt.shiftKey) {
               //back tab
               // if focused on first item and user preses back-tab, go to the last focusable item
               if (focusedItemIndex == 0) {
-                  focusableItems.get(numberOfFocusableItems - 1).focus();
+                  focusableItems[numberOfFocusableItems - 1].focus();
                   evt.preventDefault();
               }
 
@@ -201,7 +207,7 @@
               //forward tab
               // if focused on the last item and user preses tab, go to the first focusable item
               if (focusedItemIndex == numberOfFocusableItems - 1) {
-                  focusableItems.get(0).focus();
+                  focusableItems[0].focus();
                   evt.preventDefault();
               }
           }
@@ -209,66 +215,159 @@
 
   }
 
-  function setInitialFocusModal(obj) {
-      // get list of all children elements in given object
-      var o = obj.find('*');
-
-      // set focus to first focusable item
-      var focusableItems;
-      focusableItems = o.filter(focusableElementsString).filter(':visible').first().focus();
-
+  function enterButtonModal() {
+    var modalSurvey = <%= params[:modal] == 'true' %>;
+    incrementInvitationAcceptCount();
+    if(modalSurvey) {
+      openSurveyInModal();
+    } else {
+      openSurveyInNewWindow();
+    }
   }
 
-  function enterButtonModal() {
-      // BEGIN logic for executing the Enter button action for the modal window
-      var pageurl  = window.location.origin + window.location.pathname;
-      var popurl = "http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/holding_page?"
-      <% if params[:stylesheet] %>
-      popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
-      <% end %>
-      popurl = popurl + "page_url=" + pageurl;
-      new_window = window.open(popurl,"","width=600,height=270,scrollbars,");
-      // END logic for executing the Enter button action for the modal window
-      hideModal();
-      jQuery.post("http://<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept");
+  function incrementInvitationAcceptCount() {
+    invitationurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>/invitation_accept"
+    <% if @test_invitation %>
+      invitationurl = invitationurl + "?test_invitation=true"
+    <% end %>
+    VOC.fn.get(invitationurl);
+  }
 
-      if (new_window != null && window.focus) {
-        new_window.focus();
-      }
+  function openSurveyInModal() {
+    var widgetUrl = "//<%= APP_CONFIG['host'] %>/widget/widget.js?target_id=modalContents&survey_id=<%= @survey.id %>&focus=true"
+    VOC.fn.getScript(widgetUrl, function() {
+      hideModal();
+      showModal(document.getElementById("vocModal"));
+      VOC.fn.focusFirstElementIn(document.getElementById("vocModal"));
+    });
+  }
+
+  function openSurveyInNewWindow() {
+    // BEGIN logic for executing the Enter button action for the modal window
+    var pageurl  = window.location.origin + window.location.pathname;
+    var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+    <% if params[:stylesheet] %>
+    popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
+    <% end %>
+    popurl = popurl + "page_url=" + pageurl;
+    <% if @test_invitation %>
+      popurl = popurl + "&test_invitation=true"
+    <% end %>
+    window.open(popurl,"","width=600,height=500,scrollbars,");
+    // END logic for executing the Enter button action for the modal window
+    hideModal();
+  }
+
+  function showInvitation() {
+    var targetId = '<%= params[:target_id] %>';
+    var modalSurvey = <%= params[:modal] == 'true' %>;
+    document.getElementById(targetId)
+      .innerHTML = "<%= escape_javascript(render('invite_modal')) %>";
+    if(modalSurvey== true && '<%= @survey.suppress_invitation %>' == 'true') {
+      enterButtonModal();
+    }
+    showModal(document.getElementById('vocModal'));
+  }
+
+  function setFocusToFirstItemInModal(obj){
+    // get list of all children elements in given object
+    var o = obj.find('*');
+
+    // set the focus to the first keyboard focusable item
+    o.filter(focusableElementsString).filter(':visible').first().focus();
   }
 
   function showModal(obj) {
-      jQuery('#mainPage').attr('aria-hidden', 'true'); // mark the main page as hidden
-      jQuery('#vocModalOverlay').css('display', 'block'); // insert an overlay to prevent clicking and make a visual change to indicate the main apge is not available
-      jQuery('#vocModal').css('display', 'block'); // make the modal window visible
-      jQuery('#vocModal').attr('aria-hidden', 'false'); // mark the modal window as visible
+    var mainContent = document.getElementById(_mainContentId)
+    if(mainContent)
+      mainContent.setAttribute('aria-hidden', true);
+    document.getElementById('vocModalOverlay').style.display = 'block';
+    obj.style.display = 'block';
+    obj.setAttribute('aria-hidden', false);
+    document.querySelector('body').style.overflow = 'hidden';
 
-      // save current focus
-      focusedElementBeforeModal = jQuery(':focus');
+    // attach a listener to redirect the tab to the modal window if the user
+    // somehow gets out of the modal window
+    if(mainContent) {
+      VOC.fn.addEventListener(mainContent, 'focusin', function(e) {
+        VOC.fn.focusFirstElementIn(obj);
+      });
+    }
 
-      // get list of all children elements in given object
-      var o = obj.find('*');
-
-      // Safari and VoiceOver shim
-      // if VoiceOver in Safari is used, set the initial focus to the modal window itself instead of
-      // the first keyboard focusable item. This causes VoiceOver to announce the aria-labelled
-      // attributes. Otherwise, Safari and VoiceOver will not announce the labels attached to the
-      // modal window.
-
-      // set the focus to the first keyboard focusable item
-      o.filter(focusableElementsString).filter(':visible').first().focus();
-
-
+    // save current focus
+    focusedElementBeforeModal = document.activeElement;
+    VOC.fn.focusFirstElementIn(obj);
   }
 
   function hideModal() {
-      jQuery('#vocModalOverlay').css('display', 'none'); // remove the overlay in order to make the main screen available again
-      jQuery('#vocModal').css('display', 'none'); // hide the modal window
-      jQuery('#vocModal').attr('aria-hidden', 'true'); // mark the modal window as hidden
-      jQuery('#mainPage').attr('aria-hidden', 'false'); // mark the main page as visible
+    document.getElementById('vocModalOverlay').style.display = 'none';
+    document.getElementById('vocModal').style.display = 'none';
+    document.querySelector('body').style.overflow = 'visible';
+    document.getElementById('vocModal').setAttribute('aria-hidden', true);
+    if(document.getElementById(_mainContentId))
+      document.getElementById(_mainContentId).setAttribute('aria-hidden', false);
 
-      // set focus back to element that had it before the modal was opened
-      focusedElementBeforeModal.focus();
+    // set focus back to element that had it before the modal was opened
+    focusedElementBeforeModal.focus();
   }
 
-})(<%= params[:jquery] || 'undefined' %>);
+
+  /*
+   * The below code is used to load the VOC tool and show the invitation once
+   * the page content has been loaded.
+   */
+  var countScriptCalled = 0;
+
+  /* Called once the VOC library has been loaded */
+  function scriptLoadHandler(){
+    countScriptCalled++;
+    if(countScriptCalled > 1) return;
+    var interval = setInterval(function(){
+      if(VOC.fn !== undefined) {
+        clearInterval(interval);
+        main();
+      }
+    }, 100);
+  }
+
+
+  /* Load the VOC library helper functions */
+  function loadLibraryFunctions() {
+    var script_tag = document.createElement('script');
+    script_tag.setAttribute('type', 'text/javascript');
+    script_tag.setAttribute('src',
+        "//<%= APP_CONFIG['host'] %>/assets/voc.fn.js");
+
+    /* Wait for the script to load */
+    //Other browsers
+    if(script_tag.addEventListener) {
+      script_tag.addEventListener("load", scriptLoadHandler, false);
+    }
+    // For Old versions of IE
+    else if(script_tag.readyState) {
+      script_tag.onreadystatechange = scriptLoadHandler;
+    }
+
+    // Try to find the head, otherwise default to the documentElement
+    (document.getElementsByTagName("head")[0] || document.documentElement)
+      .appendChild(script_tag);
+  }
+
+  function completed() {
+    document.removeEventListener("DOMContentLoaded", completed);
+    window.removeEventListener("load", completed);
+    loadLibraryFunctions();
+  }
+
+  /* Handle the case where we don't execute this code until after the DOM has
+   * finished loading.
+   */
+  if(document.readyState === "complete" ||
+      (document.readyState !== "loading" && !document.documentElement.doScroll) ){
+    window.setTimeout(loadLibraryFunctions());
+  } else {
+    document.addEventListener("DOMContentLoaded", completed);
+    window.addEventListener("load", completed);
+  }
+
+})();

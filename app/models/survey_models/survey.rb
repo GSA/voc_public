@@ -13,12 +13,12 @@ class Survey < ActiveRecord::Base
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  scope :get_archived,            where(:archived => true)
-  scope :get_unarchived,          where(:archived => false)
-  scope :get_alpha_list,          order('name asc')
-  scope :search,          ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
+  scope :get_alpha_list, -> { order('name asc') }
+  scope :search, ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
 
-  default_scope where(:archived => false)
+  default_scope { where(:archived => false) }
 
   after_create :create_new_major_version
 
@@ -45,7 +45,7 @@ class Survey < ActiveRecord::Base
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
 
     #create new version
-    new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0, :published=>false, :locked => false, :archived => false)
+    new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0)
     new_sv.pages.build :page_number => 1, :survey_version => new_sv
     puts new_sv.pages.first.errors unless new_sv.valid?
     new_sv.tap {|sv| sv.save!}

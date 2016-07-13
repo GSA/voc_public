@@ -1,9 +1,16 @@
 <% title "#{survey.name} - Thank You - #{survey.survey_type.name.titleize}" %>
 
+<% if display_poll_results?(@survey, @survey_version) %>
+  <%= render partial: 'surveys/poll_results',
+    locals: { survey: @survey, survey_version: @survey_version,
+    results: @results }
+  %>
+<% end %>
+
 <% if survey_version.present? && survey_version.thank_you_page.present? %>
-	<%= survey_version.thank_you_page.html_safe %>
+  <%= survey_version.thank_you_page.html_safe %>
 <% else %>
-	<div id="thank_you_text">
-		<span id="important_to_us">Your feedback is important to us.</span> Thank you for taking our survey!
-	</div>
+  <div id="thank_you_text">
+    <span id="important_to_us">Your feedback is important to us.</span> Thank you for taking our survey!
+  </div>
 <% end %>

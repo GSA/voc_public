@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Multiple Surveys Test Page</title>
+    <link rel="stylesheet" type="text/css" href="voc-test.css" />
+  </head>
+  <body>
+    <div id="widget_target"></div>
+    <div id="modal_invitation_target"></div>
+    <!-- change the survey_id to use a different survey -->
+    <script type="application/javascript" src="http://localhost:3000/widget/widget.js?survey_id=1&target_id=widget_target"></script>
+    <script type="application/javascript"
+      src="http://localhost:3000/widget/invitation.js?survey_id=1&target_id=modal_invitation_target&test_invitation=true&modal=true&stylesheet=http://localhost:8000/voc-test.css">
+    </script>
+
+    <!-- <script type="application/javascript" src="http://stage-voc.cloud.hhs.gov/widget/widget.js?survey_id=78&target_id=widget_target"></script> -->
+    <!-- <script type="application/javascript"
+      src="http://stage-voc.cloud.hhs.gov/widget/invitation.js?survey_id=14&target_id=modal_invitation_target&test_invitation=true&modal=true&stylesheet=http://localhost:8000/voc-test.css">
+    </script> -->
+  </body>
+</html>

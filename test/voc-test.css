@@ -1,0 +1,46 @@
+.voc-form .hidden_page {
+  display: none;
+}
+
+.voc-form ol.outter, .voc-form ul.outter {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 10px 0px 0px 40px;
+}
+
+.voc-form ul.showList, .voc-form ol.showList {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	/*margin: 3px 0px 0px 30px;*/
+	margin: 0px;
+}
+
+.voc-form li.outter {
+	margin: 0px 0px 15px 10px;
+	padding: 0px;
+	list-style-type: none;
+	list-style-position: outside;
+}
+
+.voc-form li.inner {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 0px 0px 2px;
+}
+
+.voc-form li.showList-ul {
+	padding: 0px 0px 3px;
+	list-style-type: none;
+}
+
+.voc-form li.showList-ol {
+	padding: 0px 0px 3px;
+	list-style-type: decimal;
+	list-style-position: inside;
+}

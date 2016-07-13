@@ -2,6 +2,27 @@
 #
 # View helpers for SurveyResponse functionality.
 module SurveysHelper
+  def prev_page_number(page)
+    params.fetch(:page, 1) == page.page_number ? 1 : page.prev_page.try(:page_number)
+  end
+
+  def page_class(page)
+    page_number = params.fetch(:page){1}.to_i
+    if page.page_number == page_number
+      'current_page'
+    else
+      'hidden_page'
+    end
+  end
+
+  def submit_button_text
+    @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text
+  end
+
+  def display_poll_results?(survey, survey_version)
+    survey.survey_type_id == SurveyType::POLL &&
+      survey_version.choice_questions.any? {|q| q.display_results? }
+  end
 
   # For a given ChoiceQuestion with flow control at the ChoiceAnswer level,
   # generates the Javascript logic to enforce correct page switching.
@@ -27,18 +48,14 @@ module SurveysHelper
   def generate_onclick(element, page, answer)
     onclick = ""
     if element.assetable.question_content.flow_control
-      onclick += "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)});"
+      onclick += "VOC.set_next_page(this, #{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)});"
     end
 
     if element.assetable.auto_next_page
-      onclick += "show_next_page(#{page.page_number});"
+      onclick += "VOC.show_next_page(this, #{page.page_number});"
     end
 
     onclick
-  end
-
-  def use_fieldset?(question)
-    question.answer_type == ChoiceAnswer::RADIO || question.answer_type == ChoiceAnswer::CHECKBOX
   end
 
   def device_type
@@ -49,5 +66,13 @@ module SurveysHelper
     else
       'Desktop'
     end
+  end
+
+  def label_for_element(element)
+    "#{element.assetable.question_content.statement}#{' *' if element.assetable.question_content.required}"
+  end
+
+  def use_fieldset?(question)
+    question.answer_type == ChoiceAnswer::RADIO || question.answer_type == ChoiceAnswer::CHECKBOX
   end
 end

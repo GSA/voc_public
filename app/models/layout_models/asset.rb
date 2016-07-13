@@ -10,7 +10,7 @@ class Asset < ActiveRecord::Base
   validates :snippet, :presence => true
 
   # There is no associated Answer, so it's never required
-  # 
+  #
   # @return [false]
   def required
     false
@@ -27,7 +27,7 @@ class Asset < ActiveRecord::Base
   end
 
   # Duplicates the Asset upon cloning a SurveyVersion.
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [Asset] the cloned Asset
   def clone_me(target_sv)
@@ -39,7 +39,7 @@ class Asset < ActiveRecord::Base
   end
 
   # Duplicates the Asset upon cloning the Page.
-  # 
+  #
   # @param [Page] page the Page destination for the new cloned copy
   # @return [Asset] the newly-copied Asset
   def copy_to_page(page)
