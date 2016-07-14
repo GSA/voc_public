@@ -11,7 +11,6 @@ gem 'browser'
 gem 'dotenv-rails'
 
 gem "protected_attributes"
-gem "rails-observers"
 
 # NEW: Resque
 gem 'resque'
