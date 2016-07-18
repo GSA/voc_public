@@ -1,4 +1,4 @@
-FROM ctac/ruby-base:1.9
+FROM ctac/ruby-base:2.2
 
 ARG RAILS_ENV=production
 ENV APP_HOME /voc
