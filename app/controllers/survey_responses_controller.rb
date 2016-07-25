@@ -8,9 +8,10 @@ class SurveyResponsesController < ApplicationController
     # save the raw @submission, then queue a survey response job
     raw_submission(true)
 
-    # The survey respondent doesn't care if the submit actually succeeded or not.  Delay the processing
+    # The survey respondent doesn't care if the submit actually succeeded or not.
+    # Delay the processing
     # of the response so the browser will return immediately
-    resque_args = @submission.id, params[:survey_version_id]
+    resque_args = params[:response], params[:survey_version_id]
 
     begin
       Resque.enqueue(SurveyResponseCreateJob, *resque_args)
@@ -21,7 +22,10 @@ class SurveyResponsesController < ApplicationController
 
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
-    redirect_to thank_you_page_survey_path(@survey_version.survey, params.slice(:stylesheet).reject {|k, v| v.blank?})
+    redirect_to thank_you_page_survey_path(
+      @survey_version.survey,
+      params.slice(:stylesheet).reject {|k, v| v.blank?}
+    )
   end
 
 
