@@ -23,6 +23,7 @@ gem 'redis-objects'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier', '>= 1.0.3'
+gem 'therubyracer'
 
 gem 'unicorn-rails'
 gem 'mysql2', "~> 0.3.18"

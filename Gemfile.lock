@@ -88,6 +88,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.10.0)
+    libv8 (3.16.14.15)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     memcache-client (1.8.5)
@@ -140,6 +141,7 @@ GEM
       redis (~> 3.0, >= 3.0.4)
     redis-objects (1.2.1)
       redis (>= 3.0.2)
+    ref (2.0.0)
     request_store (1.2.1)
     resque (1.25.2)
       mono_logger (~> 1.0)
@@ -194,6 +196,9 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
@@ -243,6 +248,7 @@ DEPENDENCIES
   rspec-rails (~> 3.4.0)
   sass-rails
   shoulda-matchers
+  therubyracer
   uglifier (>= 1.0.3)
   unicorn-rails
   yard
