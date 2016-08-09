@@ -1,0 +1,117 @@
+/**** General ****/
+body {
+  background-color: #f0eff7;
+  margin: 0px;
+  padding: 0px;
+  font-family: helvetica;
+  color: #464646;
+}
+#skipNav{
+  display:none
+}
+#container {
+  width: 960px;
+  margin: 10px auto 0px;
+}
+#content {
+  background-color: #fff;
+  border-left: 1px solid #98afd5;
+  border-right: 1px solid #98afd5;
+  margin: 0px;
+  padding: 20px;
+}
+.separator {
+  display: inline-block;
+  margin: 0px 15px 0px;
+}
+h1 {
+  font-weight: normal;
+  font-size: 26px;
+}
+p, label, li {
+  font-size: 13px;
+  font-weight: normal;
+}
+.bold {
+  font-weight: bold;
+}
+.not_bold {
+  font-weight: normal;
+}
+.italic {
+  font-style: italic;
+}
+table {
+  margin: 10px 0px;
+  padding: 0px;
+  border-collapse: collapse;
+}
+tr:hover {
+  border: 1px double #c5dde6;
+}
+tr:first-child, tr:first-child:hover {
+  border: none;
+}
+th {
+  font-size: 13px;
+  text-align: left;
+  font-weight: bold;
+  padding: 0px 5px 3px;
+  color: #404041;
+  vertical-align: bottom;
+}
+td {
+  font-size: 11px;
+  padding: 5px;
+  vertical-align: top;
+}
+.white {
+  background-color: #fff;
+  border: 1px solid #fff;
+}
+.gray {
+  background-color: #f5f7f8;
+  border: 1px solid #f5f7f8;
+}
+
+/**** Links ****/
+a {
+  color: #003e7a;
+  text-decoration: none;
+  font-size: 13px;
+}
+a:hover {
+  color: #003e7a;
+  text-decoration: underline;
+}
+th a {
+  color: #404041;
+}
+th a:hover {
+  color: #ffad05;
+  text-decoration: none;
+}
+td a {
+  font-size: 13px;
+  color: #3378ac;
+}
+td a:hover {
+  font-size: 13px;
+  color: #396393;
+}
+
+/**** Public Site ****/
+#surveys_all .col1 {
+  width: 399px;
+}
+#surveys_all .col2 {
+  width: 30px;
+  text-align: center;
+}
+#surveys_all .col3 {
+  width: 399px;
+}
+#surveys_all .col4 {
+  width: 50px;
+  text-align: center;
+}

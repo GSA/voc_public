@@ -1,12 +1,15 @@
 
-#ENV['RAILS_RELATIVE_URL_ROOT'] = "/vocsub"
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+# Pick the frameworks you want:
+require "active_record/railtie"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "sprockets/railtie"
 
-# If you have a Gemfile, require the gems listed there, including any gems
+# Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(*Rails.groups)
 
 module CommentToolPublic
   class Application < Rails::Application
@@ -17,7 +20,8 @@ module CommentToolPublic
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += %W(#{config.root}/lib)
-    
+    config.autoload_paths += Dir["#{config.root}/app/models/**/"]
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -33,15 +37,22 @@ module CommentToolPublic
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # JavaScript files you want as :defaults (application.js is always included).
-    # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
-
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-      
+
     config.autoload_paths += Dir["#{config.root}/app/models/**/"]
+
+    # Added by Jake, 7/5/2016: tag logging for Docker
+    config.log_level = :debug
+    config.log_tags  = [:subdomain, :uuid]
+
+    # RAILS 3.2+:
+    # config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'ALLOWALL'
+    }
   end
 end

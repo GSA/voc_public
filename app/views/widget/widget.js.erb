@@ -1,185 +1,151 @@
 /* Use an immediately invoked function to isolate widget variables */
 (function(){
+  var countScriptCalled = 0;
+  var _Hostname = "//<%= APP_CONFIG['host'] %>";
 
-  <%= render 'load_jquery' %>
-
-  // Fix for window.location.origin for IE
-  if (!window.location.origin) {
-    window.location.origin = window.location.protocol + "//" +
-      window.location.hostname + (window.location.port ? ':' +
-      window.location.port: '');
-  }
-
-  /* main - Main function for the voc widget.  This function is called once */
-  /* jQuery has been loaded.                                                */
+  /* main - Main function for the voc widget.  This function is called once
+   * the VOC library has been loaded.
+   */
   function main() {
-    /* create window jquery object */
-    window.VOCjQuery = jQuery;
-    /* create the voc object */
-    window.voc = {
-      Survey: survey
-    }
+    var changeTimer,
+      changeInterval = 5000,
+      lastSubmitted;
 
-    survey = voc.Survey({surveyID: <%= params[:survey_id].to_i %>});
-    <% unless params[:target_id].blank? %>
-      survey.setTargetID('<%= params[:target_id] %>');
-    <% end %>
+    /* create the voc object */
+    VOC.Survey =  Survey;
+    VOC.HOSTNAME = "//<%= APP_CONFIG['host'] %>";
+
+    var survey = new VOC.Survey(<%= params[:survey_id].to_i %>, "<%= params[:target_id] %>");
     survey.loadSurvey();
+
   }
 
-  /* define the survey module using the revealing module pattern.          */
-  function survey(opts){
-    var _opts = opts || {};
-
-    var _targetID = _opts.targetID || "vocSurveyDiv";
-    var _pageURL  = _opts.pageURL  || (window.location.origin + window.location.pathname);
-    var _surveyID = _opts.surveyID;
+  function Survey(surveyId, targetId) {
     var _this = this;
+    _this.targetId = targetId;
+    _this.surveyId = surveyId;
+    _this.pageURL = document.URL;
+    _this.surveyContainer = document.getElementById(_this.targetId);
 
-    /* getters and setters for private variables */
-    function getTargetID()         { return _targetID; }
-    function getSurveyID()         { return _surveyID; }
-    function getPageURL()          { return _pageURL;  }
-
-    function setTargetID(targetID) { _targetID = targetID; }
-    function setPageURL(url)       { _pageURL = url; }
-
-
-    /* loadSurvey(success: FunctionPointer, error: FunctionPointer)       */
-    /* Attempt to load the survey with id _surveyID into the DOM element  */
-    /* with id _targetID.                                                 */
-    function loadSurvey() {
-      var _hostname = "<%= APP_CONFIG['host'] %>";
-      var _url = "https://"+ _hostname + "/surveys/" + _surveyID + ".json";
-      var target = jQuery("#" + _targetID)
-      var surveyID = _surveyID
-
-      /* get the survey identified by id _surveyID and insert it into the */
-      /* DOM element _targetID.                                           */
-      jQuery.getJSON(_url, "callback=?&page_url=" + _pageURL, function(data){
-        target.html(data.html);
+    /*
+     * Load the survey into the target container
+     */
+    _this.loadSurvey = function() {
+      var surveyUrl = _Hostname + '/surveys/' + _this.surveyId +
+        '.json?page_url=' + _this.pageURL;
+      VOC.fn.getJSON(surveyUrl, function(data) {
+        _this.surveyContainer.innerHTML = data.html;
+        bindSubmitForm();
+        VOC.fn.bindPaginationLinks(_this.surveyContainer);
+        var focus = "<%= params[:focus] %>";
+        if(focus == "true")
+          VOC.fn.focusFirstElementIn(_this.surveyContainer);
       });
+    };
 
-      jQuery(document).on("submit", "#"+_targetID+" form", function(){
+    /* Create a hidden iFrame to post to in order to avoid cross-domain
+     * POST limitations.
+     */
+    _this.postToIFrame = function(form) {
+      var uniqueString = "surveyPostContainerIframe" + _this.targetId;
 
-        // create and post to a hidden iframe to avoid cross-domain POST limitations
-        var iframe = jQuery("<iframe>");
-        var uniqueString = "surveyPostContainerIframe";
-        var form = target.children("form").first();
+      var hiddenIFrame = document.createElement("iframe");
+      hiddenIFrame.height = 0;
+      hiddenIFrame.width = 0;
+      hiddenIFrame.tabindex = -1;
+      hiddenIFrame.title = 'empty';
+      hiddenIFrame.style.display = 'none';
+      document.body.appendChild(hiddenIFrame);
 
-        // add the hidden iframe
-        jQuery("body").append(iframe);
-        iframe.hide();
+      /* Direct the post into the iframe's window */
+      hiddenIFrame.contentWindow.name = uniqueString;
+      form.setAttribute("target", uniqueString);
+      form.setAttribute("action", _Hostname + "/survey_responses");
+      form.submit();
 
-        // direct the form post into the iframe's window
-        iframe[0].contentWindow.name = uniqueString;
-        form.attr("target", uniqueString);
-        form.attr("action", 'https://' + _hostname + '/survey_responses');
+      /* Load the ThankYou page */
+      loadThankYouPage();
+    };
 
-        // call the native submit, not the jQuery submit wrapper
-        // this is to avoid hitting this handler twice (and looping)
-        form[0].submit();
+    /*
+     * Private function to fetch the thank you page and replace the survey
+     * contents with the contents of the thank you page.
+     */
+    function loadThankYouPage() {
+      var _thankYouURL = _Hostname + "/surveys/" + _this.surveyId +
+        "/thank_you_page.json";
+      VOC.fn.getJSON(_thankYouURL, function(data) {
+        _this.surveyContainer.innerHTML = data.html;
+      });
+    };
 
-        // pull back the thank you page
-        jQuery.getJSON("https://" + _hostname + "/surveys/" + _surveyID + "/thank_you_page.json", "callback=?", function(data){
-          jQuery("#" + _targetID).html(data.html);
-        });
 
+    /*
+     * Bind the submit button from the survey to run our custom submit.
+     */
+    function bindSubmitForm() {
+      var _responseForm = _this.surveyContainer.querySelector('form');
+      var pageNumber = _this.surveyContainer.querySelector(".current_page").id.split('_')[1];
+      VOC.fn.addEventListener(_responseForm, "submit", function(e) {
+        if(VOC.fn.validateBeforeSubmit(e))
+          _this.postToIFrame(_responseForm);
+
+        if(e.preventDefault) e.preventDefault();
+        e.returnValue = false;
         return false;
       });
-
-      return _this;
-    }
-
-    return {
-      /* Define the publicly accessible methods */
-      getTargetID: getTargetID,
-      getSurveyID: getSurveyID,
-      getPageURL:  getPageURL,
-      setTargetID: setTargetID,
-      loadSurvey: loadSurvey
     };
+
   };
 
-})();
-
-/******************* Survey.js ******************************************/
-function focus_on_page(page){
-  input_element = jQuery("#page_" + page + " :input:enabled:visible:first");
-  if(input_element.length) {
-    input_element.focus();
-  } else {
-    jQuery("#page_" + page).focus();
-  }
-}
-
-function show_next_page(page){
-  var required_unanswered = false;
-
-  required_unanswered = check_for_unanswered_required(page);
-
-  if (!required_unanswered){
-    jQuery("#page_" + page).hide();
-    var next_page = jQuery("#page_" + page + "_next_page").val();
-
-    /* Set the prev page on next page */
-    set_prev_page(page, next_page);
-
-    jQuery("#page_"+ next_page).show();
-    window.location.hash="PAGE_" + next_page;
-    focus_on_page(next_page)
-  } else {
-    alert(survey_required_fields_error);
-  }
-
-}
-
-function show_prev_page(page){
-  jQuery("#page_"+page).hide();
-  var prev_page = jQuery("#page_" + page + "_prev_page").val();
-  jQuery("#page_"+ prev_page).show();
-  window.location.hash = "PAGE_" + prev_page;
-  focus_on_page(prev_page)
-}
-
-function set_next_page(current_page, next_page) {
-  jQuery("#page_" + current_page + "_next_page").val(next_page);
-  jQuery("#page_" + next_page + "_prev_page").val(current_page);
-}
-
-function set_prev_page(current_page, prev_page) {
-  jQuery("#page_" + prev_page + "_prev_page").val(current_page);
-}
-
-function check_for_unanswered_required(page) {
-  required = false;
-    jQuery("#page_"+page+" input[type=hidden].required_question").each(function(index){
-      if(jQuery(this).val() == 'true'){
-        question_number = jQuery(this).attr('id').split('_')[1]; // q_{number}_required
-        /* if the element is a radio button that is required then check to make sure one is checked */
-        if( jQuery(".question_" + question_number + "_answer").attr('type') == "radio" && jQuery(".question_" + question_number + "_answer:checked").length == 0 ) {
-          required =  true;
-        } else if( jQuery("select.question_" + question_number + "_answer").length > 0 && jQuery(".question_" + question_number + "_answer:selected").length == 0 ) {
-          required =  true;
-        } else if( jQuery(".question_" + question_number + "_answer").attr('type') == "checkbox" && jQuery(".question_" + question_number + "_answer").length > 0 && jQuery(".question_" + question_number + "_answer:checked").length == 0 ) {
-          required =  true;
-        } else if( jQuery(".question_" + question_number + "_answer").attr('type') == "text" && jQuery(".question_" + question_number + "_answer").val() == "") {
-          required =  true;
-        } else if( jQuery(".question_" + question_number + "_answer").prop('tagName').toLowerCase() == "textarea" && jQuery(".question_" + question_number + "_answer").val() == "") {
-          /* a textarea does not have a an attr('type') so use the prop('tagName') */
-          required =  true;
-        }
+  /* Called once the VOC library has been loaded */
+  function scriptLoadHandler(){
+    countScriptCalled++;
+    if(countScriptCalled > 1) return;
+    var interval = setInterval(function(){
+      if(VOC.fn !== undefined) {
+        clearInterval(interval);
+        main();
       }
-    });
-    return required;
-}
-
-function validate_before_submit(page){
-  if (!check_for_unanswered_required(page)){
-    return true;
-  } else {
-    alert(survey_required_fields_error);
-    return false;
+    }, 100);
   }
 
-}
+  /* Load the VOC library helper functions */
+  function loadLibraryFunctions() {
+    var script_tag = document.createElement('script');
+    script_tag.setAttribute('type', 'text/javascript');
+    script_tag.setAttribute('src',
+        "//<%= APP_CONFIG['host'] %>/assets/voc.fn.js");
+
+    /* Wait for the script to load */
+    //Other browsers
+    if(script_tag.addEventListener) {
+      script_tag.addEventListener("load", scriptLoadHandler, false);
+    }
+    // For Old versions of IE
+    else if(script_tag.readyState) {
+      script_tag.onreadystatechange = scriptLoadHandler;
+    }
+
+    // Try to find the head, otherwise default to the documentElement
+    (document.getElementsByTagName("head")[0] || document.documentElement)
+      .appendChild(script_tag);
+  }
+
+  function completed() {
+    document.removeEventListener("DOMContentLoaded", completed);
+    window.removeEventListener("load", completed);
+    loadLibraryFunctions();
+  }
+
+  /* Handle the case where we don't execute this code until after the DOM has
+   * finished loading.
+   */
+  if(document.readyState === "complete" ||
+      (document.readyState !== "loading" && !document.documentElement.doScroll) ){
+    window.setTimeout(loadLibraryFunctions());
+  } else {
+    document.addEventListener("DOMContentLoaded", completed);
+    window.addEventListener("load", completed);
+  }
+})();

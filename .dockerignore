@@ -1,0 +1,12 @@
+.bundle/
+.git/
+doc/
+log/
+spec/
+tmp/
+
+.gitignore
+.rspec
+.ruby-*
+sync_public_folder.sh
+.env.local

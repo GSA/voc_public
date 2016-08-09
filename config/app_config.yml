@@ -1,0 +1,20 @@
+development:
+  host: <%= ENV['APP_PUBLIC_HOST_PORT'] %>
+  redis: <%= ENV['REDIS_HOST_PORT'] %>
+  redis-expire: <%= ENV['REDIS_EXPIRE'] %>
+  ga_id: <%= ENV['GA_ID'] %>
+  ga_site: <%= ENV['GA_SITE'] %>
+
+test:
+  host: <%= ENV['APP_PUBLIC_HOST_PORT'] %>
+  redis: <%= ENV['REDIS_HOST_PORT'] %>
+  redis-expire: <%= ENV['REDIS_EXPIRE'] %>
+  ga_id: <%= ENV['GA_ID'] %>
+  ga_site: <%= ENV['GA_SITE'] %>
+
+production:
+  host: <%= ENV['APP_PUBLIC_HOST_PORT'] %>
+  redis: <%= ENV['REDIS_HOST_PORT'] %>
+  redis-expire: <%= ENV['REDIS_EXPIRE'] %>
+  ga_id: <%= ENV['GA_ID'] %>
+  ga_site: <%= ENV['GA_SITE'] %>

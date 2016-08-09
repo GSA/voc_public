@@ -3,38 +3,21 @@
 # Manages the Survey lifecycle.
 
 class SurveysController < ApplicationController
-  caches_action :show, :cache_path => Proc.new {|c|
-    c.params.delete_if {|k,v| k.starts_with?('utm_')}
-  }
-
   # GET /surveys/:id/thank_you_page(.:format)
   def thank_you_page
     get_survey_and_version
-
+    @results = PollResults.new(@survey_version)
     respond_to do |format|
-      if @survey.survey_type_id == SurveyType::POLL && @survey_version.choice_questions.any? {|q| q.display_results? }
-        @results = PollResults.new(@survey_version)
-        format.html do
-          render 'surveys/poll_results', :layout => 'application',
-                 locals: { survey: @survey, survey_version: @survey_version, results: @results }
-        end
-        format.json do
-          html = render_to_string :template => 'surveys/poll_results.html.erb', :layout => false,
-                                  locals: { survey: @survey, survey_version: @survey_version, results: @results }
-          json = {:html => html}.to_json
-          render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
-        end
-      else
-        format.html do
-          render 'surveys/thank_you', :layout => 'application',
-                 locals: { survey: @survey, survey_version: @survey_version }
-        end
-        format.json do
-            html = render_to_string :template => "surveys/thank_you.html.erb", :layout => false,
-                                    :locals => { survey: @survey, survey_version: @survey_version }
-            json = {:html => html}.to_json
-            render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript", :layout => false
-        end
+      format.html do
+        render 'surveys/thank_you', :layout => 'application',
+          locals: { survey: @survey, survey_version: @survey_version }
+      end
+      format.json do
+        html = render_to_string :template => "surveys/thank_you.html.erb",
+          :layout => false,
+          :locals => { survey: @survey, survey_version: @survey_version }
+        json = {:html => html}.to_json
+        render json: json
       end
     end
   end
@@ -57,16 +40,17 @@ class SurveysController < ApplicationController
   # GET     /surveys/:id(.:format)
   def show
     get_survey_and_version
-    #@survey_version = params[:version].blank? ? @survey.published_version : get_survey_version(@survey, params[:version])
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @survey }
       format.json do
-        html = render_to_string(:template => "surveys/show.html.erb")
-        json = {:html => html}.to_json
-        render :text => "#{params[:callback]}(#{json})", :content_type => "text/javascript"
+        html = render_to_string(action: "show", layout: false, formats: [:html])
+        render json: {html: html}, callback: params[:callback]
       end
     end
+  end
+
+  # GET      /surveys/:id/test_invitation
+  def test_invitation
   end
 
   # GET     /surveys/:id/visit(.:format)
@@ -82,13 +66,15 @@ class SurveysController < ApplicationController
 
   def invitation
     get_survey_and_version
-    @survey_version.increment_temp_invitation_count
+    @test_invitation = params[:test_invitation].present?
+    @survey_version.increment_temp_invitation_count unless @test_invitation
     render :nothing => true
   end
 
   def invitation_accept
     get_survey_and_version
-    @survey_version.increment_temp_invitation_accepted_count
+    @test_invitation = params[:test_invitation].present?
+    @survey_version.increment_temp_invitation_accepted_count unless @test_invitation
     render :nothing => true
   end
 
@@ -106,5 +92,10 @@ class SurveysController < ApplicationController
   def get_survey_version(survey, version)
     major, minor = version.split('.')
     @survey_version = survey.survey_versions.where(:major => major, :minor => minor).first
+  end
+
+  def display_poll_results?
+    @survey.survey_type_id == SurveyType::POLL &&
+      @survey_version.choice_questions.any? {|q| q.display_results? }
   end
 end

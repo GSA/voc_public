@@ -1,25 +1,25 @@
 <% title "All Surveys" %>
 <% stylesheet "admin" %>
 <div id="content">
-	<h1>All Surveys</h1>
+  <h1>All Surveys</h1>
 
-	<table id="surveys_all">
-	  <tr>
-	    <th class="col1" scope="col">Survey</th>
-	    <th class="col2" scope="col">Ver.</th>
-	    <th class="col3" scope="col">Description</th>
-	    <th class="col4" scope="col">Type</th>
-	  </tr>
+  <table id="surveys_all">
+    <tr>
+      <th class="col1" scope="col">Survey</th>
+      <th class="col2" scope="col">Ver.</th>
+      <th class="col3" scope="col">Description</th>
+      <th class="col4" scope="col">Type</th>
+    </tr>
 
-	<% @surveys.each do |survey| %>
-	  <% survey.survey_versions.get_unarchived.published.each do |version| %>
-	  <tr class="<%= cycle('gray','white') %>">
-	    <td class="col1"><%= link_to version.survey.name, survey_path(survey, :version => version.version_number) %></td>
-	    <td class="col2"><%= version.version_number %></td>
-	    <td class="col3"><%= version.survey.description %></td>
-	    <td class="col4"><%= version.survey.survey_type.name.titleize %></td>
-	  </tr>
-		<% end -%>
-	<% end %>
-	</table>
+  <% @surveys.each do |survey| %>
+    <% survey.survey_versions.get_unarchived.published.each do |version| %>
+    <tr class="<%= cycle('gray','white') %>">
+      <td class="col1"><%= link_to version.survey.name, survey_path(survey, :version => version.version_number) %></td>
+      <td class="col2"><%= version.version_number %></td>
+      <td class="col3"><%= version.survey.description %></td>
+      <td class="col4"><%= version.survey.survey_type.name.titleize %></td>
+    </tr>
+    <% end -%>
+  <% end %>
+  </table>
 </div>

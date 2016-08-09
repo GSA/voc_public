@@ -33,12 +33,12 @@ class SurveyVersion < ActiveRecord::Base
   validates :survey, :presence => true
 
   # Scopes for partitioning survey versions
-  scope :published, where(:published => true)
-  scope :unpublished, where(:published => false)
+  scope :published, -> { where(:published => true) }
+  scope :unpublished, -> { where(:published => false) }
 
   # these need updated to make sure the survey hasn't been archved
-  scope :get_archived, where(:archived => true)
-  scope :get_unarchived, where(:archived => false)
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
 
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true

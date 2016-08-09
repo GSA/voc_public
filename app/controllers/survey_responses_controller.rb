@@ -8,9 +8,10 @@ class SurveyResponsesController < ApplicationController
     # save the raw @submission, then queue a survey response job
     raw_submission(true)
 
-    # The survey respondent doesn't care if the submit actually succeeded or not.  Delay the processing
+    # The survey respondent doesn't care if the submit actually succeeded or not.
+    # Delay the processing
     # of the response so the browser will return immediately
-    resque_args = @submission.id, params[:survey_version_id]
+    resque_args = params[:response], params[:survey_version_id]
 
     begin
       Resque.enqueue(SurveyResponseCreateJob, *resque_args)
@@ -21,7 +22,10 @@ class SurveyResponsesController < ApplicationController
 
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
-    redirect_to thank_you_page_survey_path(@survey_version.survey, params.slice(:stylesheet).reject {|k, v| v.blank?})
+    redirect_to thank_you_page_survey_path(
+      @survey_version.survey,
+      params.slice(:stylesheet).reject {|k, v| v.blank?}
+    )
   end
 
 
@@ -34,17 +38,19 @@ class SurveyResponsesController < ApplicationController
 
 
   private
-
   def raw_submission(submitted = false)
     if cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"] == nil
       cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"] = {
         :value => SecureRandom.uuid, :expires => 1.hour.from_now }
     end
     @submission = RawSubmission.find_or_create_by_uuid_key(cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"])
-    @submission.survey_id = params[:survey_id].to_i
-    @submission.survey_version_id = params[:survey_version_id].to_i
-    @submission.post = params.to_hash
-    @submission.submitted = submitted
-    @submission.save
+    unless @submission.submitted?
+      @submission.survey_id = params[:survey_id].to_i
+      @submission.survey_version_id = params[:survey_version_id].to_i
+      @submission.post = params.to_hash
+      @submission.submitted = submitted
+      @submission.save
+    end
+    @submission
   end
 end
