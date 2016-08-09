@@ -9,3 +9,4 @@ tmp/
 public/test
 test/
 dump.rdb
+.env.local
