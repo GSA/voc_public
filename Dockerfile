@@ -9,13 +9,14 @@ WORKDIR $APP_HOME
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   git \
+  zip unzip \
   build-essential \
   && apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD Gemfile* $APP_HOME/
 
-RUN bundle install --without development test
+RUN bundle install --without test development
 
 ADD . $APP_HOME
 
