@@ -1,3 +1,7 @@
+<%# HHS will never set this ENV. GSA invites will not inject the stylesheet
+    into the embedding document without explicit param. %>
+<% style_page = (ENV['INVITE_SKIP_PARENT_STYLE'].blank? || params[:style_page].present?) ? 'true' : 'false' %>
+
 /* Use an immediately invoked function to isolate variables */
 (function(){
   var _mainContentId = "<%= params[:content_id] || 'main-content' %>";
@@ -42,15 +46,17 @@
           invite = Math.random() < <%= @survey.invitation_percent %> / 100
         <% end %>
         if(invite) {
-          /* Load the passed stylesheet into the page */
-          var stylesheet = '<%= params[:stylesheet] %>';
-          if(stylesheet.length > 0) {
-            var stylesheetLinkNode = document.createElement('link');
-            stylesheetLinkNode.rel = "stylesheet";
-            stylesheetLinkNode.type = "text/css";
-            stylesheetLinkNode.href = stylesheet;
-            document.querySelector('head')
-              .appendChild(stylesheetLinkNode);
+          if (<%= style_page %>) {
+            /* Load the passed stylesheet into the page */
+            var stylesheet = '<%= params[:stylesheet] %>';
+            if(stylesheet.length > 0) {
+              var stylesheetLinkNode = document.createElement('link');
+              stylesheetLinkNode.rel = "stylesheet";
+              stylesheetLinkNode.type = "text/css";
+              stylesheetLinkNode.href = stylesheet;
+              document.querySelector('head')
+                .appendChild(stylesheetLinkNode);
+            }
           }
 
           loadModal();
