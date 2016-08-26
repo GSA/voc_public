@@ -95,8 +95,10 @@
                        x.answer}).join('----').size
                   %>
                   <div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
+                    <% if ENV['SKIP_FIELDSET_MARKUP'].blank? %>
                     <fieldset>
                       <legend><span class="legendText">Select answer:</span></legend>
+                    <% end %>
                       <% for answer in element.assetable.choice_answers %>
                         <span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
                                       :onclick => generate_onclick(element, page, answer),
@@ -107,7 +109,9 @@
                         <%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href))%></span>
                         <% if element.assetable.answer_placement %><br/><% end %>
                       <% end -%>
+                    <% if ENV['SKIP_FIELDSET_MARKUP'].blank? %>
                     </fieldset>
+                    <% end %>
                   </div>
                 <% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
                   <span class="vocdropdown"><%= select_tag answer_tag_id,
