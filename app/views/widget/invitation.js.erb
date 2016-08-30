@@ -262,12 +262,6 @@
     window.open(popurl,"","width=600,height=<%= ENV['USE_START_PAGE'].present? ? '280' : '500' %>,scrollbars,");
     // END logic for executing the Enter button action for the modal window
     hideModal();
-
-    <% if ENV['USE_START_PAGE'] %>
-      if (new_window != null && window.focus) {
-        new_window.focus();
-      }
-    <% end %>
   }
 
   function showInvitation() {
