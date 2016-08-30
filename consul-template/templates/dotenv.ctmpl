@@ -39,6 +39,7 @@ SMTP_USER={{key_or_default (printf "project_app_voc/%s/smtp/user" $env_id) ""}}
 RAILS_ENV={{key_or_default (printf "project_app_voc/%s/rails_env" $env_id) ""}}
 INVITE_SKIP_PARENT_STYLE={{key_or_default (printf "project_app_voc/%s/invite_skip_parent_style" $env_id) ""}}
 SKIP_FIELDSET_MARKUP={{key_or_default (printf "project_app_voc/%s/skip_fieldset_markup" $env_id) ""}}
+USE_START_PAGE={{key_or_default (printf "project_app_voc/%s/use_start_page" $env_id) ""}}
 
 # public DNS for public and admin apps
 APP_PUBLIC_HOST_PORT={{key_or_default (printf "project_app_voc/%s/public_port" $env_id) ""}}

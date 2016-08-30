@@ -251,7 +251,7 @@
   function openSurveyInNewWindow() {
     // BEGIN logic for executing the Enter button action for the modal window
     var pageurl  = window.location.origin + window.location.pathname;
-    var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %>?";
+    var popurl = "//<%= APP_CONFIG['host'] %>/surveys/<%= @survey.id %><%= '/holding_page' if ENV['USE_START_PAGE'].present? %>?";
     <% if params[:stylesheet] %>
     popurl = popurl + "stylesheet=<%= params[:stylesheet] %>&";
     <% end %>
@@ -259,9 +259,15 @@
     <% if @test_invitation %>
       popurl = popurl + "&test_invitation=true"
     <% end %>
-    window.open(popurl,"","width=600,height=500,scrollbars,");
+    window.open(popurl,"","width=600,height=<% ENV['USE_START_PAGE'].present? ? 270 : 500 %>,scrollbars,");
     // END logic for executing the Enter button action for the modal window
     hideModal();
+
+    <% if ENV['USE_START_PAGE'] %>
+      if (new_window != null && window.focus) {
+        new_window.focus();
+      }
+    <% end %>
   }
 
   function showInvitation() {
