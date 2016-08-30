@@ -259,7 +259,7 @@
     <% if @test_invitation %>
       popurl = popurl + "&test_invitation=true"
     <% end %>
-    window.open(popurl,"","width=600,height=<% ENV['USE_START_PAGE'].present? ? 270 : 500 %>,scrollbars,");
+    window.open(popurl,"","width=600,height=500,scrollbars,");
     // END logic for executing the Enter button action for the modal window
     hideModal();
 
