@@ -126,9 +126,6 @@ window.VOC.fn = (function(){
         if(submitButton) {
           submitButton.disabled = false;
         }
-
-        /* Focus the first focusable element of the new page */
-        VOC.fn.focusFirstElementIn(_nextPage);
       }
     },
     showPrevPage: function(_currentPage) {
@@ -144,7 +141,6 @@ window.VOC.fn = (function(){
       /* Show the next page */
       VOC.fn.addClass(_prevPage, "current_page");
       VOC.fn.removeClass(_prevPage, "hidden_page");
-      VOC.fn.focusFirstElementIn(_prevPage);
     },
     serializeForm: function(form) {
       var formData = Array.prototype.filter.call(form.elements, function(el) {
