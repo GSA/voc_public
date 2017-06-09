@@ -97,7 +97,8 @@
                   <div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
                     <% if ENV['SKIP_FIELDSET_MARKUP'].blank? %>
                     <fieldset>
-                      <legend><span class="legendText">Select answer:</span></legend>
+                      <% radio_selection_legend = @survey.radio_selection_legend.blank? ? "Select answer:" : @survey.radio_selection_legend %>
+                      <legend><span class="legendText"><%= radio_selection_legend %></span></legend>
                     <% end %>
                       <% for answer in element.assetable.choice_answers %>
                         <span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
@@ -129,7 +130,8 @@
                   %>
                   <div class="voccheckboxes<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
                     <fieldset>
-                      <legend><span class="legendText">Select answer(s):</span></legend>
+                      <% checkbox_selection_legend = @survey.checkbox_selection_legend.blank? ? "Select answer(s):" : @survey.checkbox_selection_legend %>
+                      <legend><span class="legendText"><%= checkbox_selection_legend %></span></legend>
                       <% for answer in element.assetable.choice_answers %>
                         <span class="voccheckbox"><%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]",
                                               answer.id,

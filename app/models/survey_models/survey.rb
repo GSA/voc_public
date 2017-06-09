@@ -80,4 +80,6 @@ end
 #  js_required_fields_error :string(255)
 #  invitation_percent       :integer(4)      not null, default(100)
 #  invitation_interval      :integer(4)      not null, default(30)
+#  radio_selection_legend     :string(255)
+#  checkbox_selection_legend  :string(255)
 #
