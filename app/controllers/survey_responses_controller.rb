@@ -3,6 +3,8 @@
 # Manages the SurveyResponse lifecycle.
 class SurveyResponsesController < ApplicationController
 
+  before_filter :set_as_private
+
   # POST    /survey_responses(.:format)
   def create
     # save the raw @submission, then queue a survey response job
@@ -53,4 +55,9 @@ class SurveyResponsesController < ApplicationController
     end
     @submission
   end
+
+  def set_as_private
+    expires_now
+  end
+  
 end

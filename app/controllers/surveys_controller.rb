@@ -3,6 +3,9 @@
 # Manages the Survey lifecycle.
 
 class SurveysController < ApplicationController
+
+  before_filter :set_as_cached
+
   # GET /surveys/:id/thank_you_page(.:format)
   def thank_you_page
     get_survey_and_version
@@ -97,5 +100,9 @@ class SurveysController < ApplicationController
   def display_poll_results?
     @survey.survey_type_id == SurveyType::POLL &&
       @survey_version.choice_questions.any? {|q| q.display_results? }
+  end
+
+  def set_as_cached
+    expires_in 60.minutes, :public => true
   end
 end
