@@ -41,6 +41,10 @@ class SurveyResponsesController < ApplicationController
 
   private
   def raw_submission(submitted = false)
+    params[:response].merge!(
+      referrer: request.referrer,
+      user_agent: request.user_agent
+    )
     if cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"] == nil
       cookies["comment_tool_#{params[:survey_id]}_#{params[:survey_version_id]}"] = {
         :value => SecureRandom.uuid, :expires => 1.hour.from_now }
