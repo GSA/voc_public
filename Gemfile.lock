@@ -37,7 +37,7 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    browser (1.1.0)
+    browser (2.5.3)
     builder (3.1.4)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -226,7 +226,7 @@ DEPENDENCIES
   authlogic
   better_errors
   binding_of_caller
-  browser
+  browser (~> 2.5.3)
   capybara-webkit
   coffee-rails
   database_cleaner
@@ -254,4 +254,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.12.5
+   1.16.0

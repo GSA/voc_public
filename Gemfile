@@ -7,7 +7,7 @@ gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'authlogic'
-gem 'browser'
+gem 'browser', '~> 2.5.3'
 gem 'dotenv-rails'
 
 gem "protected_attributes"
@@ -43,4 +43,3 @@ group :test do
   gem "database_cleaner"
   gem "shoulda-matchers"
 end
-

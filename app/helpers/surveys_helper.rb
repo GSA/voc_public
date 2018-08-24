@@ -59,9 +59,20 @@ module SurveysHelper
   end
 
   def device_type
-    if browser.tablet?
+    if (
+         browser.device.blackberry_playbook? ||
+         browser.device.tablet? ||
+         browser.device.ipad? ||
+         browser.device.kindle? ||
+         browser.device.kindle_fire? ||
+         browser.device.surface?
+       )
       'Tablet'
-    elsif browser.mobile?
+    elsif (
+            browser.device.mobile? ||
+            browser.device.iphone? ||
+            browser.device.ipod_touch?
+          )
       'Mobile'
     else
       'Desktop'

@@ -13,7 +13,7 @@ class SurveyResponsesController < ApplicationController
     # The survey respondent doesn't care if the submit actually succeeded or not.
     # Delay the processing
     # of the response so the browser will return immediately
-    resque_args = params[:response], params[:survey_version_id]
+    resque_args = params[:response].merge(device: device_type), params[:survey_version_id]
 
     begin
       Resque.enqueue(SurveyResponseCreateJob, *resque_args)
@@ -59,5 +59,25 @@ class SurveyResponsesController < ApplicationController
   def set_as_private
     expires_now
   end
-  
+
+  def device_type
+    if (
+         browser.device.blackberry_playbook? ||
+         browser.device.tablet? ||
+         browser.device.ipad? ||
+         browser.device.kindle? ||
+         browser.device.kindle_fire? ||
+         browser.device.surface?
+       )
+      'Tablet'
+    elsif (
+            browser.device.mobile? ||
+            browser.device.iphone? ||
+            browser.device.ipod_touch?
+          )
+      'Mobile'
+    else
+      'Desktop'
+    end
+  end
 end
